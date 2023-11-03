@@ -12,16 +12,13 @@ import Loading from "./Loading";
 import AlertMessage from "./AlertMessage";
 import regstyles from "../styles/register.module.css";
 // component
-import Iconify from './Iconify';
-import WalletConnectProvider from "@walletconnect/web3-provider";
-import { providers } from "ethers";
-import Web3 from "web3";
-import { functions } from 'lodash';
-import { faLock } from '@fortawesome/free-solid-svg-icons';
 
 // ----------------------------------------------------------------------
 library.add(faEye, faEyeSlash);
 const RegSuccess = () =>  {
+
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(false);
 
   const router = useRouter();
 
@@ -29,17 +26,32 @@ const RegSuccess = () =>  {
   
   const username = name;
 
+  const ResendVerifyEmail = async () => {
+    const config = {
+        headers: {
+          "Content-type": "application/json"
+        }
+      }
+      const {data} = await axios.post("http://localhost:7000/api/users/resendverifyemail", {
+            username,
+      }, config);
+      if(data) {
+        setLoading(false);
+        setError(data.message)
+      }
+  }
 
   return (
     <>
         <a href='/register' rel='noopener noreferrer' className={regstyles.back}> <FontAwesomeIcon icon={faChevronLeft} />Back </a>
         <div className={regstyles.regsuccess}>
             <div className={regstyles.regs_in}>
-              <h3>Registration Successful <FontAwesomeIcon icon={faCheckCircle} /></h3>
-              <div>
-                  <p>Hello, <span>{username}</span>, you've successfully registered with TafaXtra</p>
-                  <a href='/dapp' rel='noreferrer noopener'>Log In To Dapp</a>
-              </div>
+                <h3>Registration Successful <FontAwesomeIcon icon={faCheckCircle} /></h3>
+                <div>
+                    <p>Hello, <span>{username}</span>, an email has been sent to the email you registered with</p>
+                    <p>If you didn't see any email in 15 minutes, check your spam folder</p>
+                    <button type='button' onClick={ResendVerifyEmail}> Resend Email </button>
+                </div>
             </div>
         </div>
     </>

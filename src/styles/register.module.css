@@ -22,7 +22,7 @@
     color: #e2d7d7;margin-top: 1rem;padding: .6rem 0;font-family: "Montserrat";font-size: 14px;
 }
 .formTag {
-    background-color: transparent;border-radius: 8px;padding: 1rem;margin: auto;height: 100vh;width: 60vw;padding-top: 5rem;
+    background-color: transparent;border-radius: 8px;padding: 1rem;margin: auto;height: 100%;width: 60vw;padding-top: 5rem;
 }
 .formTag .fhead {
     margin: 1rem auto;
@@ -57,20 +57,24 @@
 .regsuccess {
     height: 100vh;margin: 5rem auto;text-align: center;
 }
+.regsuccess .regs_in {
+    width: fit-content;height: auto;padding: 20px;background-color: #e2d7d7;margin: 1rem auto;border-radius: 16px;
+}
 .regsuccess h3 {
-    color: #e2d7d7;font-size: 32px;font-family: "Poppins", sans-serif;
+    color: #1c1f2b;font-size: 32px;font-family: "Poppins", sans-serif;
 }
 .regsuccess p {
-    color: #e2d7d7;font-size: 14px;font-family: "Montserrat";margin: 2rem auto;
+    color: #1c1f2b;font-size: 14px;font-family: "Montserrat";margin: .5rem auto;text-align: left;
 }
 .regsuccess span {
-    text-transform: capitalize;color: blueviolet;
+    text-transform: capitalize;color: rgb(30, 62, 247);font-weight: 600;
 }
-.regsuccess a {
-    color: #1c1f2b;background-color: #e2d7d7;width: fit-content;margin: 5px auto;text-align: center;
+.regsuccess a, .regsuccess button {
+    color: #e2d7d7;background-color: #1c1f2b;width: fit-content;margin: 5px auto;text-align: center;
     font-family: "Poppins",sans-serif;font-size: 16px;font-weight: 600;border-radius: 120px;
     padding: 4px 20px;
 }
+
 @media (max-width: 991px) {
     .formTag {
         height: 100vh;padding-top: 5rem;
@@ -78,5 +82,8 @@
     }   
     .btns .registerButton {
         padding: .4rem 20px;
+    }
+    .regsuccess {
+        width: 96%;
     }
 }

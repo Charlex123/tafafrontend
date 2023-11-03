@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useRouter } from 'next/navigation';
+import { useRouter } from 'next/router';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from "@fortawesome/fontawesome-svg-core";
@@ -9,7 +9,7 @@ import { faChevronLeft  } from "@fortawesome/free-solid-svg-icons";
 // material
 import { Stack, TextField, IconButton, InputAdornment } from '@mui/material';
 import Loading from "./Loading";
-import ErrorMessage from "./ErrorMessage";
+import AlertMessage from "./AlertMessage";
 import regstyles from "../styles/register.module.css";
 // component
 import Iconify from './Iconify';
@@ -23,11 +23,10 @@ import { faLock } from '@fortawesome/free-solid-svg-icons';
 library.add(faEye, faEyeSlash);
 const RegisterForm = () =>  {
 
-  const navigate = useRouter();
+  const router = useRouter();
 
-  const { id } = useParams();
   
-  const sponsorId = id;
+  
   const [email, setEmail] = useState("");
   const [username, setUserame] = useState("");
   const [pic, setPic] = useState(
@@ -37,6 +36,9 @@ const RegisterForm = () =>  {
   const [confirmpassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState(null);
   const [error, setError] = useState(false);
+  const [refsponsor, setRefSponsor] = useState("");
+  const [sponsor_, setSponsor_] = useState("");
+  const [sponsor, setSponsor] = useState(router.query.name);
   const [level, setLevel] = useState("White Label");
   const [tpin, setTPin] = useState(1234);
   const [loading, setLoading] = useState(false);
@@ -60,9 +62,6 @@ const RegisterForm = () =>  {
     const bscwalletaddress = bscaccount.address;
     const bscwalletprivatekey = bscaccount.privateKey;
 
-    console.log('bsc wall add',bscwalletaddress)
-    console.log('bsc private key',bscwalletprivatekey)
-    
     const togglePasswordVisiblity = () => {
     if(passwordinputType === "password") {
       setpasswordinputType("text")
@@ -73,7 +72,48 @@ const RegisterForm = () =>  {
     }
   };
   
-  
+  const checkPass = (e) => {
+    if (password !== confirmpassword) {
+      setError("Passwords do not match");
+    }else {
+      setError(null);
+    }
+  } 
+
+  const checkUsername = async (e) => {
+    setLoading(true);
+    setUserame(e.target.value)
+    console.log(username)
+    const config = {
+      headers: {
+        "Content-type": "application/json"
+      }
+    }
+    const {data} = await axios.post("http://localhost:7000/api/users/checkusername", {
+          username,
+    }, config);
+    if(data) {
+      setLoading(false);
+      setError(data.message)
+    }
+  }
+
+  const checkEmail = async (e) => {
+    setLoading(true);
+    setEmail(e.target.value)
+    const config = {
+      headers: {
+        "Content-type": "application/json"
+      }
+    }
+    const {data} = await axios.post("http://localhost:7000/api/users/checkemail", {
+          email,
+    }, config);
+    if(data) {
+      setLoading(false);
+      setError(data.message)
+    }
+  }
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -88,12 +128,19 @@ const RegisterForm = () =>  {
             "Content-type": "application/json"
           }
         }  
+        if(sponsor) {
+          setSponsor_(sponsor);
+        }else if(refsponsor){
+          setSponsor_(refsponsor);
+        }
+        alert(sponsor_)
+        alert(refsponsor)
         setLoading(true);
         setLevel("White Whale");
 
-        const {data} = await axios.post("https://tafabackend.onrender.com/api/users/register", {
+        const {data} = await axios.post("http://localhost:7000/api/users/register", {
           username,
-          sponsorId,
+          sponsor_,
           email,
           level,
           tpin,
@@ -107,10 +154,10 @@ const RegisterForm = () =>  {
           pic
         }, config);
   
-        console.log('log data',data)
+        console.log('Reg response data',data)
         localStorage.setItem("userInfo", JSON.stringify(data))
         setLoading(false)
-        navigate.push(`regsuccess/${data.username}`, { replace: true })
+        router.push(`/emailverifystatus/${data.message}`)
       } catch (error) {
         setError(error.response.data.message)
         console.log(error.response.data)
@@ -124,8 +171,8 @@ const RegisterForm = () =>  {
         <a href='/' rel='noopener noreferrer' className={regstyles.back}> <FontAwesomeIcon icon={faChevronLeft} />Back to home</a>
         <form className={regstyles.formTag} onSubmit={submitHandler}>
         
-        {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
-        {message && <ErrorMessage variant="danger">{message}</ErrorMessage>}
+        {error && <AlertMessage variant="danger">{error}</AlertMessage>}
+        {message && <AlertMessage variant="danger">{message}</AlertMessage>}
         {loading && <Loading />}
         
         <div className={regstyles.fhead}>
@@ -136,6 +183,7 @@ const RegisterForm = () =>  {
             <label className={regstyles.formlabel} htmlFor="grid-last-name">Username</label>
             <input className={regstyles.forminput} id="grid_user_name" type="varchar" placeholder="Enter username" required
               value={username}
+              onBlur={checkUsername}
               onChange={(e) => setUserame(e.target.value)}
               />
         </div>
@@ -144,6 +192,7 @@ const RegisterForm = () =>  {
           <label className={regstyles.formlabel} htmlFor="grid-email"> Email</label>
                 <input className={regstyles.forminput} id="email" type="email" placeholder="Enter email" required
                 value={email}
+                onBlur={checkEmail}
                 onChange={(e) => setEmail(e.target.value)}
                 />
         </div>
@@ -162,11 +211,20 @@ const RegisterForm = () =>  {
             <label className={regstyles.formlabel} htmlFor="grid-password">Confirm Password</label>
               <input className={regstyles.forminput} id="confirmpassword" type={passwordinputType} placeholder="Confirm password"
               value={confirmpassword}
+              onBlur={checkPass}
               onChange={(e) => setConfirmPassword(e.target.value)}
               />
               <button className={regstyles.passhideshowButton} onClick={togglePasswordVisiblity} type="button">{eyeIcon}</button>
             <p className={regstyles.formpTag}>Your password is encrypted and secured, we will not disclose your password with any third</p>
-          </div>
+        </div>
+
+        <div className={regstyles.form_group}>
+            <label className={regstyles.formlabel} htmlFor="grid-password">Sponsor</label>
+              <input className={regstyles.forminput} id="sponsor" type="text" placeholder="Sponsor"
+              value={refsponsor}
+              onChange={(e) => setRefSponsor(e.target.value)}
+              />
+        </div>
         
         <div className={regstyles.btns}>
           <button className={regstyles.registerButton} type="submit">

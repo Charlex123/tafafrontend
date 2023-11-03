@@ -10,7 +10,7 @@ import { faEye, faEyeSlash  } from "@fortawesome/free-regular-svg-icons";
 import { faChevronLeft  } from "@fortawesome/free-solid-svg-icons";
 // component
 import Loading from '../components/Loading';
-import ErrorMessage from '../components/ErrorMessage';
+import AlertMessage from './AlertMessage';
 import Iconify from '../components/Iconify';
 import { faLockOpen } from '@fortawesome/free-solid-svg-icons';
 
@@ -19,7 +19,7 @@ library.add(faEye, faEyeSlash);
 
 export default function LoginForm() {
   
-  const navigate = useRouter();
+  const router = useRouter();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -54,13 +54,15 @@ export default function LoginForm() {
       setLoading(true)
       console.log(email)
       console.log(password)
-      const {data} = await axios.post("https://tafabackend.onrender.com/api/users/signin", {
+      const {data} = await axios.post("http://localhost:7000/api/users/signin", {
         email,
         password
       }, config);
-      localStorage.setItem("userInfo", JSON.stringify(data))
+      localStorage.setItem("userInfo", JSON.stringify(data));
+      console.log('login res data',data)
+      console.log('login res username',data.username)
       setLoading(false)
-      navigate(`/dapp/${data.username}`, { replace: true })
+      router.push(`/dapp/`)
     } catch (error) {
       console.log(error.response.data)
     }
@@ -71,7 +73,7 @@ export default function LoginForm() {
         <div>
           <a href='/' rel='noopener noreferrer' className={loginstyles.back}> <FontAwesomeIcon icon={faChevronLeft} />Back to home</a>
           <form className={loginstyles.formTag} onSubmit={submitHandler}>
-          {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
+          {error && <AlertMessage variant="danger">{error}</AlertMessage>}
           {loading && <Loading />}
           <div className={loginstyles.fhead}>
               <h3>Sign In <FontAwesomeIcon icon={faLockOpen} /></h3>
@@ -95,6 +97,7 @@ export default function LoginForm() {
               />
               <button className={loginstyles.passhideshowButton} onClick={togglePasswordVisiblity} type="button">{eyeIcon}</button>
               <p className={loginstyles.formpTag}>Make it as long and as crazy as you'd like</p>
+              <div className={loginstyles.fpass}><a href='/forgotpassword' rel='noopener referrer'>Forgot Password?</a></div>
           </div>
               
           <div className={loginstyles.btns}>

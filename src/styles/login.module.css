@@ -43,6 +43,12 @@
 .btns .alink {
     color: #e2d7d7;padding-top: .4rem;font-size: 14px;
 }
+.fpass {
+    width: 100%;margin-right: 0;text-align: right;margin-top: 1rem;
+}
+.fpass a {
+    color: #dd1515;font-family: "Poppins",sans-serif;font-weight: 600;margin-top: 10px;text-align: right;
+}
 .btns a {
     font-family: "Montserrat", sans-serif;font-size: 14px;color: #79f17f;font-weight: 600;
 }

@@ -8,7 +8,7 @@ import DappSideBar from './Dappsidebar';
 // material
 import { Stack, TextField, IconButton, InputAdornment } from '@mui/material';
 import Loading from "./Loading";
-import ErrorMessage from "./ErrorMessage";
+import AlertMessage from "./AlertMessage";
 import dappstyles from "../styles/dapp.module.css";
 // component
 import Iconify from './Iconify';
