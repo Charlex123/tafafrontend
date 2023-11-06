@@ -22,6 +22,7 @@ function Navbar() {
     const [dropdwnIcon2, setDropdownIcon2] = useState(<FontAwesomeIcon icon={faChevronDown} size='lg' className={styles.navlisttoggle}/>);
     const [dropdwnIcon3, setDropdownIcon3] = useState(<FontAwesomeIcon icon={faChevronDown} size='lg' className={styles.navlisttoggle}/>);
 
+    
     useEffect(() => {
     // Function to handle window resize
     const handleResize = () => {
