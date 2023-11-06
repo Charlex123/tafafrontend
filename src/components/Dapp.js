@@ -33,7 +33,7 @@ import {
   Input,
   Box
 } from "@chakra-ui/react";
-import SelectWalletModal from "./Modal";
+import SelectWalletModal from "./DappConnectModal";
 import { useWeb3React } from "@web3-react/core";
 import { Tooltip } from "@chakra-ui/react";
 import { networkParams } from "./Networks";
@@ -183,7 +183,7 @@ const Dapp = () =>  {
 
   const provider = window.localStorage.getItem("provider");
     if (provider) activate(connectors[provider]);
-    
+
   return () => {
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('resize', handleResize);
