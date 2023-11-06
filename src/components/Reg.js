@@ -117,7 +117,7 @@ const RegisterForm = () =>  {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    
+    console.log('uname',username)
     if (password !== confirmpassword) {
       setMessage("Passwords do not match");
     }else {
