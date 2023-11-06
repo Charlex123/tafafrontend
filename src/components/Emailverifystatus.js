@@ -28,6 +28,7 @@ const EmailVStatus = () =>  {
   const username = name;
 
   const ResendVerifyEmail = async () => {
+    setLoading(true);
     const config = {
         headers: {
           "Content-type": "application/json"
@@ -46,6 +47,8 @@ const EmailVStatus = () =>  {
     <>
         <a href='/register' rel='noopener noreferrer' className={regstyles.back}> <FontAwesomeIcon icon={faChevronLeft} />Back </a>
         <div className={regstyles.regsuccess}>
+        {error && <AlertMessage variant="danger">{error}</AlertMessage>}
+        {loading && <Loading />}
             <div className={regstyles.regs_in}>
                 <h3>Registration Successful <FontAwesomeIcon icon={faCheckCircle} /></h3>
                 <div>
