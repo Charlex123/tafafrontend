@@ -26,22 +26,7 @@ const EmailVStatus = () =>  {
   const { name } = router.query;
   
   const username = name;
-
-  const ResendVerifyEmail = async () => {
-    const config = {
-        headers: {
-          "Content-type": "application/json"
-        }
-      }
-      const {data} = await axios.post("https://tafabackend.onrender.com/api/users/resendverifyemail", {
-            username,
-      }, config);
-      if(data) {
-        setLoading(false);
-        setError(data.message)
-      }
-  }
-
+  
   return (
     <>
         <a href='/register' rel='noopener noreferrer' className={regstyles.back}> <FontAwesomeIcon icon={faChevronLeft} />Back </a>
