@@ -42,6 +42,30 @@ export default function LoginForm() {
     }
   };
   
+  const checkPass = (e) => {
+    if (newpassword !== confirmnewpassword) {
+      setError("Passwords do not match");
+    }else {
+      setError(null);
+    }
+  } 
+  const checkEmail = async (e) => {
+    setLoading(true);
+    setEmail(e.target.value)
+    const config = {
+      headers: {
+        "Content-type": "application/json"
+      }
+    }
+    const {data} = await axios.post("http://localhost:7000/api/users/checkforgotemail", {
+          email,
+    }, config);
+    if(data) {
+      setLoading(false);
+      setError(data.message)
+    }
+  }
+  
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -64,7 +88,7 @@ export default function LoginForm() {
       console.log('login res data',data)
       console.log('login res username',data.username)
       setLoading(false)
-      router.push(`/dapp/`)
+      router.push(`/signin`)
     } catch (error) {
       console.log(error.response.data)
     }
@@ -78,13 +102,14 @@ export default function LoginForm() {
             {error && <AlertMessage variant="danger">{error}</AlertMessage>}
             {loading && <Loading />}
             <div className={loginstyles.fhead}>
-                <h3>Sign In <FontAwesomeIcon icon={faLockOpen} /></h3>
+                <h3>Recover Password <FontAwesomeIcon icon={faLockOpen} /></h3>
             </div>
             <div className={loginstyles.form_group}>
               <label className={loginstyles.formlabel} htmlFor="grid-last-name">Email</label>
                   <input className={loginstyles.forminput} id="grid-last-name" required
                   type="email"
                   value={email}
+                  onBlur={checkEmail}
                   placeholder="Enter email"
                   onChange={(e) => setEmail(e.target.value)}
                   />
@@ -105,6 +130,7 @@ export default function LoginForm() {
                   type={passwordinputType}
                   value={confirmnewpassword}
                   placeholder="Confirm New Password"
+                  onMouseOut={checkPass}
                   onChange={(e) => setConfirmNewPassword(e.target.value)}
               />
               <button className={loginstyles.passhideshowButton} onClick={togglePasswordVisiblity} type="button">{eyeIcon}</button>

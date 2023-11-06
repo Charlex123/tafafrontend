@@ -47,11 +47,10 @@ const EmailVStatus = () =>  {
         <a href='/register' rel='noopener noreferrer' className={regstyles.back}> <FontAwesomeIcon icon={faChevronLeft} />Back </a>
         <div className={regstyles.regsuccess}>
             <div className={regstyles.regs_in}>
-                <h3>Registration Successful <FontAwesomeIcon icon={faCheckCircle} /></h3>
+                <h3>Account Activation Success <FontAwesomeIcon icon={faCheckCircle} /></h3>
                 <div>
-                    <p>Hello <span>{username}</span>, an email has been sent to the email you registered with</p>
-                    <p>If you didn't see any email in 15 minutes, check your spam folder</p>
-                    <button type='button' onClick={ResendVerifyEmail}> Resend Email </button>
+                    <p>Hello <span>{username}</span>, your account creation is successful</p>
+                    <a href='/signin' rel='noopener noreferrer'> Proceed To Login </a>
                 </div>
             </div>
         </div>
