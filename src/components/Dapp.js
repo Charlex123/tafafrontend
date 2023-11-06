@@ -14,7 +14,7 @@ import dappsidebarstyles from '../styles/dappsidebar.module.css';
 // component
 import Iconify from './Iconify';
 import WalletConnectProvider from "@walletconnect/web3-provider";
-import { providers } from "ethers";
+// import { providers } from "ethers";
 import Web3 from "web3";
 import { ThemeContext } from '../contexts/theme-context';
 import { functions } from 'lodash';
@@ -112,26 +112,26 @@ const Dapp = () =>  {
       setDropdownIcon3(<FontAwesomeIcon icon={faChevronDown} size='lg' className={dappsidebarstyles.sidebarlisttoggle}/>)
   }
 
- async function connectAccount() {
-    if(window.ethereum)  {
-        // window.web3 = new Web3(web3.currentProvider);
-        const accounts = await window.ethereum.request({
-            method: "eth_requestAccounts",
-        });
-        // setAccounts(accounts);
-    } else {
-        //  Create WalletConnect Provider
-        const provider = new WalletConnectProvider({
-            chainId: 57,
-            rpc:'https://bsc-dataseed.binance.org/'
-        });
+//  async function connectAccount() {
+//     if(window.ethereum)  {
+//         // window.web3 = new Web3(web3.currentProvider);
+//         const accounts = await window.ethereum.request({
+//             method: "eth_requestAccounts",
+//         });
+//         // setAccounts(accounts);
+//     } else {
+//         //  Create WalletConnect Provider
+//         const provider = new WalletConnectProvider({
+//             chainId: 57,
+//             rpc:'https://bsc-dataseed.binance.org/'
+//         });
         
-        //  Enable session (triggers QR Code modal)
-        await provider.enable();
+//         //  Enable session (triggers QR Code modal)
+//         await provider.enable();
 
-        const web3Provider = new providers.Web3Provider(provider);
-    }
-}
+//         const web3Provider = new providers.Web3Provider(provider);
+//     }
+// }
 
 const sideBarToggleCheck = dappsidebartoggle ? dappstyles.sidebartoggled : '';
 console.log('side bar t chaek',sideBarToggleCheck)
@@ -262,7 +262,7 @@ console.log('side bar t chaek',sideBarToggleCheck)
                               </div>
 
                               <div className={dappstyles.cw_btn_div}>
-                                <button className={dappstyles.cw_btn} onClick={connectAccount}>Connect Wallet</button>
+                                <button className={dappstyles.cw_btn} >Connect Wallet</button>
                               </div>
                           </div>
                         </div>
