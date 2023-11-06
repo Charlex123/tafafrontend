@@ -57,7 +57,7 @@ export default function LoginForm() {
         "Content-type": "application/json"
       }
     }
-    const {data} = await axios.post("http://localhost:7000/api/users/checkforgotemail", {
+    const {data} = await axios.post("https://tafabackend.onrender.com/api/users/checkforgotemail", {
           email,
     }, config);
     if(data) {
@@ -79,7 +79,7 @@ export default function LoginForm() {
       setLoading(true)
       console.log(email)
       console.log(newpassword)
-      const {data} = await axios.post("http://localhost:7000/api/users/resetpassword", {
+      const {data} = await axios.post("https://tafabackend.onrender.com/api/users/resetpassword", {
         email,
         newpassword,
         confirmnewpassword

@@ -33,7 +33,7 @@ const EmailVStatus = () =>  {
           "Content-type": "application/json"
         }
       }
-      const {data} = await axios.post("http://localhost:7000/api/users/resendverifyemail", {
+      const {data} = await axios.post("https://tafabackend.onrender.com/api/users/resendverifyemail", {
             username,
       }, config);
       if(data) {
