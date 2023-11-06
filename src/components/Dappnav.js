@@ -6,7 +6,7 @@ import logo from '../assets/images/logo.png';
 import Image from 'next/image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import WalletConnectProvider from "@walletconnect/web3-provider";
-import { providers } from "ethers";
+// import { providers } from "ethers";
 import Web3 from "web3";
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas, faCheck, faCheckCircle, faChevronDown,faAlignJustify, faUserCircle, faCircleDollarToSlot, faGift, faHandHoldingDollar, faPeopleGroup, faChevronUp, faAngleDoubleRight, faAngleRight } from '@fortawesome/free-solid-svg-icons'
@@ -56,26 +56,26 @@ function Navbar() {
     };
     }, []);
 
-    async function connectAccount() {
-        if(window.ethereum)  {
-            // window.web3 = new Web3(web3.currentProvider);
-            const accounts = await window.ethereum.request({
-                method: "eth_requestAccounts",
-            });
-            // setAccounts(accounts);
-        } else {
-            //  Create WalletConnect Provider
-            const provider = new WalletConnectProvider({
-                chainId: 57,
-                rpc:'https://bsc-dataseed.binance.org/'
-            });
+    // async function connectAccount() {
+    //     if(window.ethereum)  {
+    //         // window.web3 = new Web3(web3.currentProvider);
+    //         const accounts = await window.ethereum.request({
+    //             method: "eth_requestAccounts",
+    //         });
+    //         // setAccounts(accounts);
+    //     } else {
+    //         //  Create WalletConnect Provider
+    //         const provider = new WalletConnectProvider({
+    //             chainId: 57,
+    //             rpc:'https://bsc-dataseed.binance.org/'
+    //         });
             
-            //  Enable session (triggers QR Code modal)
-            await provider.enable();
+    //         //  Enable session (triggers QR Code modal)
+    //         await provider.enable();
     
-            const web3Provider = new providers.Web3Provider(provider);
-        }
-    }
+    //         const web3Provider = new providers.Web3Provider(provider);
+    //     }
+    // }
 
     // Function to toggle the navigation menu
     const toggleNav = () => {
@@ -156,7 +156,7 @@ function Navbar() {
                     </li>
                 </ul>
                 <ul className={styles.upa}>
-                    <li className={styles.ld}><button onClick={connectAccount}>Connect Wallet</button></li>
+                    <li className={styles.ld}><button>Connect Wallet</button></li>
                     <li className={styles.si}><a href='/signin' rel='noopener noreferrer'>Logout</a></li>
                 </ul>
                 </div>)

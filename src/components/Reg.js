@@ -136,7 +136,6 @@ const RegisterForm = () =>  {
         
         setLoading(true);
         setLevel("White Whale");
-
         const {data} = await axios.post("https://tafabackend.onrender.com/api/users/register", {
           username,
           sponsor_,
@@ -183,7 +182,7 @@ const RegisterForm = () =>  {
             <input className={regstyles.forminput} id="grid_user_name" type="varchar" placeholder="Enter username" required
               value={username}
               onBlur={checkUsername}
-              onChange={(e) => setUserame(e.target.value)}
+              onChange={(e) => setUserame(e.target.value.replace(' ', ''))}
               />
         </div>
             
@@ -192,7 +191,7 @@ const RegisterForm = () =>  {
                 <input className={regstyles.forminput} id="email" type="email" placeholder="Enter email" required
                 value={email}
                 onBlur={checkEmail}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => setEmail(e.target.value.replace(' ', ''))}
                 />
         </div>
 
@@ -200,7 +199,7 @@ const RegisterForm = () =>  {
             <label className={regstyles.formlabel} htmlFor="chromegrid-password"> Password</label>
               <input className={regstyles.forminput} id="password" type={passwordinputType} placeholder="Enter password"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => setPassword(e.target.value.replace(' ', ''))}
               />
               <button className={regstyles.passhideshowButton} onClick={togglePasswordVisiblity} type="button">{eyeIcon}</button>
               <p className={regstyles.formpTag}>Make it as long and as crazy as you'd like</p>
@@ -211,7 +210,7 @@ const RegisterForm = () =>  {
               <input className={regstyles.forminput} id="confirmpassword" type={passwordinputType} placeholder="Confirm password"
               value={confirmpassword}
               onBlur={checkPass}
-              onChange={(e) => setConfirmPassword(e.target.value)}
+              onChange={(e) => setConfirmPassword(e.target.value.replace(' ', ''))}
               />
               <button className={regstyles.passhideshowButton} onClick={togglePasswordVisiblity} type="button">{eyeIcon}</button>
             <p className={regstyles.formpTag}>Your password is encrypted and secured, we will not disclose your password with any third</p>
@@ -221,7 +220,7 @@ const RegisterForm = () =>  {
             <label className={regstyles.formlabel} htmlFor="grid-password">Sponsor</label>
               <input className={regstyles.forminput} id="sponsor" type="text" placeholder="Sponsor"
               value={refsponsor}
-              onChange={(e) => setRefSponsor(e.target.value)}
+              onChange={(e) => setRefSponsor(e.target.value.replace(' ', ''))}
               />
         </div>
         
