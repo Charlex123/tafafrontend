@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { coinbaseWallet, hooks } from '../../connectors/coinbaseWallet'
+import { coinbaseWallet, hooks } from '../../connectors/coinBaseWallet'
 import { Accounts } from '../Accounts'
 import { Card } from '../Card'
 import { Chain } from '../Chain'

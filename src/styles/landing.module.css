@@ -250,6 +250,22 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
+.chronoh1 {
+  font-size: 16px !important;font-family: "Poppins";text-transform: capitalize;font-weight: 900;padding: 0;
+}
+.chronop {
+  font-size: 15px !important;font-family: "Poppins";text-transform: capitalize;color: #18221b;font-weight: 700;
+  text-align: center;margin: 0 auto;
+}
+.chronoicon {
+  color: green;
+}
+.chronotitleicon {
+  color: rgb(66, 252, 115);margin-left: 6px;
+}
+.chronotitleicon2 {
+  color: orange;
+}
  .homemain {
     margin: 0 auto 0 auto;padding: 30px 0 10px 0;overflow-y: hidden;
 }

@@ -26,11 +26,10 @@ import fantlogo from '../../assets/images/blockchain-fantom-white-0b93e569.png';
 import polychlogo from '../../assets/images/blockchain-polygon-white-024b04f0.png';
 import { ThemeContext } from '../../contexts/theme-context';
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { VerticalTimeline, VerticalTimelineElement }  from 'react-vertical-timeline-component';
-// import { Chrono } from "react-chrono";
+import { Chrono } from "react-chrono";
 import 'react-vertical-timeline-component/style.min.css';
-import { fas, faCheck, faCheckCircle, faCheckSquare,faAlignJustify, faUserCircle } from '@fortawesome/free-solid-svg-icons'
-import { faTwitter, faFontAwesome, faGoogle } from '@fortawesome/free-brands-svg-icons'
+import { fas, faCheck, faCheckCircle,faAlignJustify, faCircleChevronRight } from '@fortawesome/free-solid-svg-icons'
+import { faTwitter, faFontAwesome } from '@fortawesome/free-brands-svg-icons'
 import { faQuestionCircle } from '@fortawesome/free-regular-svg-icons';
 library.add(fas, faTwitter, faFontAwesome,faQuestionCircle, faCheck,faCheckCircle,faAlignJustify)
 
@@ -39,19 +38,7 @@ const Home = () => {
 const [isNavOpen, setNavOpen] = useState(false);
 const { theme, drawerOpen } = useContext(ThemeContext);
 
-const items = [{
-  title: "May 1940",
-  cardTitle: "Dunkirk",
-  url: "http://www.history.com",
-  cardSubtitle:"Men of the British Expeditionary Force (BEF) wade out to..",
-  cardDetailedText: "Men of the British Expeditionary Force (BEF) wade out to..",
-  media: {
-    type: "IMAGE",
-    source: {
-      url: "http://someurl/image.jpg"
-    }
-  }
-},]
+
 useEffect(() => {
   // Function to handle window resize
   const handleResize = () => {
@@ -123,10 +110,10 @@ const toggleNav = () => {
 
       <div className={styles.exchmain}>
         <div className={styles.dexchanges}>
-          <a href='https://coingecko.com' rel='noreferrer noopener'><Image src={cgk} className={styles.dexlinks} /></a>
-          <a href='https://coinmarketcap.io' rel='noreferrer noopener'><Image src={cmc} className={styles.dexlinks} /></a>
-          <a href='https://dextools.io' rel='noreferrer noopener'><Image src={dextools} className={styles.dexlinks} /></a>
-          <a href='https://quickswap.exchange' rel='noreferrer noopener'><Image src={quckswap} className={styles.dexlinks} /></a>
+          <a href='https://coingecko.com' rel='noreferrer noopener'><Image src={cgk} className={styles.delginks} /></a>
+          <a href='https://coinmarketcap.io' rel='noreferrer noopener'><Image src={cmc} className={styles.delginks} /></a>
+          <a href='https://dextools.io' rel='noreferrer noopener'><Image src={dextools} className={styles.delginks} /></a>
+          <a href='https://quickswap.exchange' rel='noreferrer noopener'><Image src={quckswap} className={styles.delginks} /></a>
         </div>
       </div>
 
@@ -172,7 +159,7 @@ const toggleNav = () => {
               <h1>Token Launch Schedule</h1>
               <p>TAFAXTRA is launching in three stages over the coming months</p>
               <p>We start with a huge airdrop, allowing thousands of DeFi users to Free Claim some TAFAXTRA Tokens</p>
-              <div className={styles.dexlinks}>
+              <div className={styles.delginks}>
                 <a href='https://avax.network' rel='noreferrer noopener' className={styles.dl}><Image src={avllogo} className={styles.launchlinks} /></a>
                 <a href='https://bnbchain.org' rel='noreferrer noopener' className={styles.dl}><Image src={bnblogo} className={styles.launchlinks} /></a>
                 <a href='https://fantom.foundation' rel='noreferrer noopener' className={styles.dl}><Image src={fantlogo} className={styles.launchlinks} /></a>
@@ -202,98 +189,193 @@ const toggleNav = () => {
                 <h1>TAFAXTRA ROADMAP</h1>
                 <h4>A Timely Events of TAFAXTRA</h4>
                 <div className={styles.tmlc}>
-                <VerticalTimeline>
-                  <VerticalTimelineElement
-                    className="vertical-timeline-element--work"
-                    contentStyle={{ background: 'rgb(33, 150, 243)', color: '#fff' }}
-                    contentArrowStyle={{ borderRight: '7px solid  rgb(33, 150, 243)' }}
-                    date="2011 - present"
-                    iconStyle={{ background: 'rgb(33, 150, 243)', color: '#fff' }}
-                    icon={<FontAwesomeIcon icon={faCheckCircle} size='lg' className={styles.navdrbdwnbrandicon}/>}
-                  >
-                    <h3 className="vertical-timeline-element-title">Creative Director</h3>
-                    <h4 className="vertical-timeline-element-subtitle">Miami, FL</h4>
-                    <p>
-                      Creative Direction, User Experience, Visual Design, Project Management, Team Leading
-                    </p>
-                  </VerticalTimelineElement>
-                  <VerticalTimelineElement
-                    className="vertical-timeline-element--work"
-                    date="2010 - 2011"
-                    iconStyle={{ background: 'rgb(33, 150, 243)', color: '#fff' }}
-                    icon={<FontAwesomeIcon icon={faCheckCircle} size='lg' className={styles.navdrbdwnbrandicon}/>}
-                  >
-                    <h3 className="vertical-timeline-element-title">Art Director</h3>
-                    <h4 className="vertical-timeline-element-subtitle">San Francisco, CA</h4>
-                    <p>
-                      Creative Direction, User Experience, Visual Design, SEO, Online Marketing
-                    </p>
-                  </VerticalTimelineElement>
-                  <VerticalTimelineElement
-                    className="vertical-timeline-element--work"
-                    date="2008 - 2010"
-                    iconStyle={{ background: 'rgb(33, 150, 243)', color: '#fff' }}
-                    icon={<FontAwesomeIcon icon={faCheckCircle} size='lg' className={styles.navdrbdwnbrandicon}/>}
-                  >
-                    <h3 className="vertical-timeline-element-title">Web Designer</h3>
-                    <h4 className="vertical-timeline-element-subtitle">Los Angeles, CA</h4>
-                    <p>
-                      User Experience, Visual Design
-                    </p>
-                  </VerticalTimelineElement>
-                  <VerticalTimelineElement
-                    className="vertical-timeline-element--work"
-                    date="2006 - 2008"
-                    iconStyle={{ background: 'rgb(33, 150, 243)', color: '#fff' }}
-                    icon={<FontAwesomeIcon icon={faCheckCircle} size='lg' className={styles.navdrbdwnbrandicon}/>}
-                  >
-                    <h3 className="vertical-timeline-element-title">Web Designer</h3>
-                    <h4 className="vertical-timeline-element-subtitle">San Francisco, CA</h4>
-                    <p>
-                      User Experience, Visual Design
-                    </p>
-                  </VerticalTimelineElement>
-                  <VerticalTimelineElement
-                    className="vertical-timeline-element--education"
-                    date="April 2013"
-                    iconStyle={{ background: 'rgb(233, 30, 99)', color: '#fff' }}
-                    icon={<FontAwesomeIcon icon={faCheckCircle} size='lg' className={styles.navdrbdwnbrandicon}/>}
-                  >
-                    <h3 className="vertical-timeline-element-title">Content Marketing for Web, Mobile and Social Media</h3>
-                    <h4 className="vertical-timeline-element-subtitle">Online Course</h4>
-                    <p>
-                      Strategy, Social Media
-                    </p>
-                  </VerticalTimelineElement>
-                  <VerticalTimelineElement
-                    className="vertical-timeline-element--education"
-                    date="November 2012"
-                    iconStyle={{ background: 'rgb(233, 30, 99)', color: '#fff' }}
-                    icon={<FontAwesomeIcon icon={faCheckCircle} size='lg' className={styles.navdrbdwnbrandicon}/>}
-                  >
-                    <h3 className="vertical-timeline-element-title">Agile Development Scrum Master</h3>
-                    <h4 className="vertical-timeline-element-subtitle">Certification</h4>
-                    <p>
-                      Creative Direction, User Experience, Visual Design
-                    </p>
-                  </VerticalTimelineElement>
-                  <VerticalTimelineElement
-                    className="vertical-timeline-element--education"
-                    date="2002 - 2006"
-                    iconStyle={{ background: 'rgb(233, 30, 99)', color: '#fff' }}
-                    icon={<FontAwesomeIcon icon={faCheckCircle} size='lg' className={styles.navdrbdwnbrandicon}/>}
-                  >
-                    <h3 className="vertical-timeline-element-title">Bachelor of Science in Interactive Digital Media Visual Imaging</h3>
-                    <h4 className="vertical-timeline-element-subtitle">Bachelor Degree</h4>
-                    <p>
-                      Creative Direction, Visual Design
-                    </p>
-                  </VerticalTimelineElement>
-                  <VerticalTimelineElement
-                    iconStyle={{ background: 'rgb(16, 204, 82)', color: '#fff' }}
-                    icon={<FontAwesomeIcon icon={faCheckCircle} size='lg' className={styles.navdrbdwnbrandicon}/>}
-                  />
-                  </VerticalTimeline>
+                <Chrono 
+                  mode="VERTICAL_ALTERNATING" 
+                  theme={{
+                    primary: 'green',
+                    secondary: 'transparent',
+                    cardBgColor: 'green',
+                    cardTitle: 'green',
+                    titleColor: 'white',
+                    titleColorActive: 'white',
+                  }}
+                  cardHeight = "auto"
+                  cardWidth = "auto"
+                  fontSizes={{
+                    cardTitle: '.1rem',
+                    title: '1rem',
+                    cardText: '10rem'
+                  }}
+                  
+                  items={[
+                    {
+                      title: "22-09-2023",
+                     },
+                    {
+                      title: "22-09-2023",
+                     },{
+                      title: "22-09-2023",
+                     },{
+                      title: "22-09-2023",
+                    },{
+                      title: "22-09-2023",
+                     }
+                    ,{
+                      title: "22-09-2023",
+                    }
+                    ,{
+                      title: "22-09-2023",
+                    },
+                    {
+                      title: "22-09-2023",
+                     },
+                     {
+                      title: "Coming Soon",
+                     },
+                     {
+                      title: "Coming Soon",
+                    },
+                    {
+                      title: "Coming Soon",
+                     },
+                     {
+                      title: "Coming Soon",
+                    },
+                    {
+                      title: "22-09-2023",
+                     },
+                     {
+                      title: "Coming Soon",
+                     },
+                     {
+                      title: "Coming Soon",
+                    },
+                    {
+                      title: "Coming Soon",
+                     },
+                     {
+                      title: "Coming Soon",
+                    },
+                    {
+                      title: "22-09-2023",
+                     },
+                     {
+                      title: "Coming Soon",
+                     },
+                     {
+                      title: "Coming Soon",
+                    },
+                    {
+                      title: "Coming Soon",
+                     },
+                     {
+                      title: "Coming Soon",
+                    }
+                  ]}
+                  
+                >
+                  <div>
+                    <h1 className={styles.chronoh1}>website design <FontAwesomeIcon icon={faCheckCircle} size='lg' className={styles.chronotitleicon}/></h1>
+                    <p className={styles.chronop}>TafaXtra Web Design Completed </p>
+                  </div>
+                  <div>
+                    <h1 className={styles.chronoh1}>token contract development <FontAwesomeIcon icon={faCheckCircle} size='lg' className={styles.chronotitleicon}/></h1>
+                    <p className={styles.chronop}>TafaXtra Smart Contract Completed </p>
+                  </div>
+                  <div>
+                    <h1 className={styles.chronoh1}>Contract Audit <FontAwesomeIcon icon={faCheckCircle} size='lg' className={styles.chronotitleicon}/></h1>
+                    <p className={styles.chronop}>Contract Audited And approved </p>
+                  </div>
+                  <div>
+                    <h1 className={styles.chronoh1}>Pancakeswap listing <FontAwesomeIcon icon={faCheckCircle} size='lg' className={styles.chronotitleicon}/></h1>
+                    <p className={styles.chronop}>PancakeSwap Listing Successful </p>
+                  </div>
+                  <div>
+                    <h1 className={styles.chronoh1}>10k Telegram and Twitter<FontAwesomeIcon icon={faCheckCircle} size='lg' className={styles.chronotitleicon}/></h1>
+                    <p className={styles.chronop}>10k Telegram and Twitter community membership </p>
+                  </div>
+                  <div>
+                    <h1 className={styles.chronoh1}>500+ tafa holders <FontAwesomeIcon icon={faCheckCircle} size='lg' className={styles.chronotitleicon}/></h1>
+                    <p className={styles.chronop}>500+ tafa holders </p>
+                  </div>
+                  <div>
+                    <h1 className={styles.chronoh1}>Website redesign/relaunch <FontAwesomeIcon icon={faCheckCircle} size='lg' className={styles.chronotitleicon}/></h1>
+                    <p className={styles.chronop}>Website redesign/relaunch</p>
+                  </div>
+                  <div>
+                    <h1 className={styles.chronoh1}>Launch of staking program <FontAwesomeIcon icon={faCheckCircle} size='lg' className={styles.chronotitleicon}/></h1>
+                    <p className={styles.chronop}>Launch of staking program </p>
+                  </div>
+                  <div>
+                    <h1 className={styles.chronoh1}>Coin Gecko listing <FontAwesomeIcon icon={faCircleChevronRight} size='lg' className={styles.chronotitleicon2}/></h1>
+                    <p className={styles.chronop}>Coin Gecko listing </p>
+                  </div>
+                  <div>
+                    <h1 className={styles.chronoh1}>CMC listing <FontAwesomeIcon icon={faCircleChevronRight} size='lg' className={styles.chronotitleicon2}/></h1>
+                    <p className={styles.chronop}>CMC Listing </p>
+                  </div>
+                  <div>
+                    <h1 className={styles.chronoh1}> 2M market cap ($1/1 tafa) <FontAwesomeIcon icon={faCircleChevronRight} size='lg' className={styles.chronotitleicon2}/></h1>
+                    <p className={styles.chronop}>2M market cap ($1/1 tafa) </p>
+                  </div>
+                  <div>
+                    <h1 className={styles.chronoh1}>Listing on MEXC, Gate.io, HUOBI, Kucoin and Okx. <FontAwesomeIcon icon={faCircleChevronRight} size='lg' className={styles.chronotitleicon2}/></h1>
+                    <p className={styles.chronop}>Listing on MEXC, Gate.io, HUOBI, Kucoin and Okx. </p>
+                  </div>
+                  <div>
+                    <h1 className={styles.chronoh1}>20m mc  ($10/1tafa) <FontAwesomeIcon icon={faCircleChevronRight} size='lg' className={styles.chronotitleicon2}/></h1>
+                    <p className={styles.chronop}>20m mc  ($10/1tafa) </p>
+                  </div>
+                  <div>
+                    <h1 className={styles.chronoh1}>NFT <FontAwesomeIcon icon={faCircleChevronRight} size='lg' className={styles.chronotitleicon2}/></h1>
+                    <p className={styles.chronop}>NFT </p>
+                  </div>
+                  <div>
+                    <h1 className={styles.chronoh1}>Tafa  Taxi🚕 flag off <FontAwesomeIcon icon={faCircleChevronRight} size='lg' className={styles.chronotitleicon2}/></h1>
+                    <p className={styles.chronop}>Tafa  Taxi🚕 flag off </p>
+                  </div>
+                  <div>
+                    <h1 className={styles.chronoh1}>TAFA Swap <FontAwesomeIcon icon={faCircleChevronRight} size='lg' className={styles.chronotitleicon2}/></h1>
+                    <p className={styles.chronop}>TAFA Swap </p>
+                  </div>
+                  <div>
+                    <h1 className={styles.chronoh1}>100m mc  $50/1tafa <FontAwesomeIcon icon={faCircleChevronRight} size='lg' className={styles.chronotitleicon2}/></h1>
+                    <p className={styles.chronop}>100m mc  $50/1tafa</p>
+                  </div>
+                  <div>
+                    <h1 className={styles.chronoh1}>Tafa Block chain (TFA20) <FontAwesomeIcon icon={faCircleChevronRight} size='lg' className={styles.chronotitleicon2}/></h1>
+                    <p className={styles.chronop}>Tafa Block chain (TFA20) </p>
+                  </div>
+                  <div>
+                    <h1 className={styles.chronoh1}>Tafa partnerships <FontAwesomeIcon icon={faCircleChevronRight} size='lg' className={styles.chronotitleicon2}/></h1>
+                    <p className={styles.chronop}>Tafa partnerships </p>
+                  </div>
+                  <div>
+                    <h1 className={styles.chronoh1}>Listing on Binance, Kraken, bitstamp and Coinbase. <FontAwesomeIcon icon={faCircleChevronRight} size='lg' className={styles.chronotitleicon2}/></h1>
+                    <p className={styles.chronop}>Listing on Binance, Kraken, bitstamp and Coinbase. </p>
+                  </div>
+                  <div>
+                    <h1 className={styles.chronoh1}>1B mc ($500/1tafa)<FontAwesomeIcon icon={faCircleChevronRight} size='lg' className={styles.chronotitleicon2}/></h1>
+                    <p className={styles.chronop}>1B mc ($500/1tafa) </p>
+                  </div>
+                  <div>
+                    <h1 className={styles.chronoh1}>Tafa token burning <FontAwesomeIcon icon={faCircleChevronRight} size='lg' className={styles.chronotitleicon2}/></h1>
+                    <p className={styles.chronop}>Tafa token burning </p>
+                  </div>
+                  <div>
+                    <h1 className={styles.chronoh1}>Special tafa Target $5000/1tafa (2025) <FontAwesomeIcon icon={faCircleChevronRight} size='lg' className={styles.chronotitleicon2}/></h1>
+                    <p className={styles.chronop}>Special tafa Target $5000/1tafa (2025) </p>
+                  </div>
+                  <div>
+                    <h1 className={styles.chronoh1}>Meterverse building <FontAwesomeIcon icon={faCircleChevronRight} size='lg' className={styles.chronotitleicon2}/></h1>
+                    <p className={styles.chronop}>Meterverse building </p>
+                  </div>
+                  <div>
+                    <h1 className={styles.chronoh1}>Charity <FontAwesomeIcon icon={faCircleChevronRight} size='lg' className={styles.chronotitleicon2}/></h1>
+                    <p className={styles.chronop}>Charity </p>
+                  </div>
+                  </Chrono>
+                
                 </div>
              </div>   
         </div>
