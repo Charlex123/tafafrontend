@@ -159,7 +159,7 @@ const toggleNav = () => {
               <h1>Token Launch Schedule</h1>
               <p>TAFAXTRA is launching in three stages over the coming months</p>
               <p>We start with a huge airdrop, allowing thousands of DeFi users to Free Claim some TAFAXTRA Tokens</p>
-              <div className={styles.delginks}>
+              <div className={styles.dexlinks}>
                 <a href='https://avax.network' rel='noreferrer noopener' className={styles.dl}><Image src={avllogo} className={styles.launchlinks} /></a>
                 <a href='https://bnbchain.org' rel='noreferrer noopener' className={styles.dl}><Image src={bnblogo} className={styles.launchlinks} /></a>
                 <a href='https://fantom.foundation' rel='noreferrer noopener' className={styles.dl}><Image src={fantlogo} className={styles.launchlinks} /></a>
