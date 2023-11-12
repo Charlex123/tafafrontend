@@ -27,7 +27,7 @@ import polychlogo from '../../assets/images/blockchain-polygon-white-024b04f0.pn
 import { ThemeContext } from '../../contexts/theme-context';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { VerticalTimeline, VerticalTimelineElement }  from 'react-vertical-timeline-component';
-import { Chrono } from "react-chrono";
+// import { Chrono } from "react-chrono";
 import 'react-vertical-timeline-component/style.min.css';
 import { fas, faCheck, faCheckCircle, faCheckSquare,faAlignJustify, faUserCircle } from '@fortawesome/free-solid-svg-icons'
 import { faTwitter, faFontAwesome, faGoogle } from '@fortawesome/free-brands-svg-icons'

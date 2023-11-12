@@ -1,7 +1,6 @@
 import Drawer from '@material-ui/core/Drawer';
 import React, { useContext, useState, useEffect } from 'react';
 import { ThemeContext } from '../../contexts/theme-context';
-import { headerData } from '../../data/header-data';
 import styles from '../../styles/navbar.module.css';
 import Link from '../link';
 import logo from '../../assets/images/logo.png';

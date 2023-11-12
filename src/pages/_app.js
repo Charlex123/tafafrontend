@@ -4,9 +4,11 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import '../styles/globals.css';
 
 const App = ({ Component, pageProps }) => {
+
+
   return (
     <ThemeContextProvider>
-      <Component {...pageProps} />
+        <Component {...pageProps} />
     </ThemeContextProvider>
   );
 };

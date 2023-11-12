@@ -6,7 +6,7 @@
     height: 80px;align-items: center;vertical-align: auto;position: fixed;top: 0;right: 0;left: 0;z-index: 99999999999999999999999999999999999999999999999999999999999999999999999999;
 }
 .logoni {
-  width: 40px;
+  width: 180px;
 }
 .nav .nav_toggle_btn {
     position: fixed;right: 15px;top: 25px;background-color: transparent !important;border: none;
@@ -53,13 +53,13 @@
 }
 .nav .nav_container .nav_container_p ul.upa li.ld {
     list-style: none;vertical-align: auto;border: 1px solid #08d34f;height: fit-content;border-radius: 120px;
-    padding: 3px 18px 3px 18px;color: #08d34f;margin-top: 0;
+    padding: 6px 28px 6px 28px;color: #e2d7d7;margin-top: 0;font-weight: 900;background-color: #08d34f;
 }
 .nav .nav_container .nav_container_p ul.upa li.ld a {
-  color: #08d34f;
+  color: #2e2c2c;
 }
 .nav .nav_container .nav_container_p ul.upa li.ld:hover {
-  background-color: #f0eded49;border: 1px dashed #08d34f;color: #08d34f;
+  background-color: #f0eded49;border: none;color: #08d34f;
 }
 .nav .nav_container .nav_container_p ul.upa li.ld:hover > a {
   color: #7af8a6;
@@ -69,13 +69,13 @@
 }
 .nav .nav_container .nav_container_p ul.upa li.si {
   list-style: none;vertical-align: auto;border: 1px solid #e0f7e8;height: fit-content;border-radius: 120px;
-  padding: 3px 18px 3px 18px;color: #e0f7e8;margin-top: 0;margin-right: -.5rem;
+  padding: 3px 18px 3px 18px;color: #e0f7e8;margin-top: 5px;margin-right: -.5rem;font-weight: 900;
 }
 .nav .nav_container .nav_container_p ul.upa li.si a {
 color: #e0f7e8;
 }
 .nav .nav_container .nav_container_p ul.upa li.si:hover {
-background-color: #f0eded49;border: 1px dashed #e0f7e8;color: #e0f7e8;
+background-color: #f0eded49;border: none;color: #e0f7e8;
 }
 .nav .nav_container .nav_container_p ul.upa li.si:hover > a {
 color: #e0f7e8;
