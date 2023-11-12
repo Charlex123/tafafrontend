@@ -5,11 +5,11 @@ import {
 import Footer from '../components/Footer'
 import BackToTop from '../components/back-to-top/back-to-top';
 import ChangeTheme from '../components/change-theme/change-theme';
-import CoinbaseWalletCard from '../components/connectorCards/CoinbaseWalletCard'
-import GnosisSafeCard from '../components/connectorCards/GnosisSafeCard'
-import MetaMaskCard from '../components/connectorCards/MetaMaskCard'
-import NetworkCard from '../components/connectorCards/NetworkCard'
-import WalletConnectCard from '../components/connectorCards/WalletConnectCard'
+// import CoinbaseWalletCard from '../components/connectorCards/CoinbaseWalletCard'
+// import GnosisSafeCard from '../components/connectorCards/GnosisSafeCard'
+// import MetaMaskCard from '../components/connectorCards/MetaMaskCard'
+// import NetworkCard from '../components/connectorCards/NetworkCard'
+// import WalletConnectCard from '../components/connectorCards/WalletConnectCard'
 import ProviderExample from '../components/ProviderExample'
 
 function HomePage() {
@@ -20,11 +20,7 @@ function HomePage() {
       <BackToTop />
       <ChangeTheme />
       <Navbar />
-      <MetaMaskCard />
-      <WalletConnectCard />
-      {/* <CoinbaseWalletCard /> */}
-      {/* <NetworkCard /> */}
-      {/* <GnosisSafeCard /> */}
+      
       <Landing />
       <Footer />
     </>
