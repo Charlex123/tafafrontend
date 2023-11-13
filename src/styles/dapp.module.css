@@ -16,7 +16,7 @@
 }
 .main_c .sidebar_toggle_btn {
     margin-left: 15px;margin-top: 15px;background-color: transparent !important;border: none;
-    color: #ffffff !important;z-index: 9999999999999999999;
+    color: #ffffff !important;z-index: 9999999999999999999;position: relative;
 }
 .main_c .sidebar_toggle_btn .toggle_icon {
     color: #f1f1f1;font-size: 28px;z-index: 99;
@@ -133,10 +133,32 @@ background: linear-gradient(90deg, rgba(12,16,32,1) 100%, rgba(44,44,48,1) 100%,
     width: fit-content;padding: 4px 18px;font-weight: 900;background-color: #e2d7d7;color: black;
     border-radius: 120px;
 }
+.main .con_btns {
+    position: absolute;top: 20px;right: 30px;
+}
+.connect {
+    color: rgb(25, 26, 25);background-color: #ffffff;border-radius: 120px;padding: 3px 16px;font-size: 14px;
+    font-weight: 800;display: none;
+}
+.connected {
+    position: relative;background-color: transparent;border-radius: 120px;border: 1px solid #26b826;
+    color: #26b826;font-size: 14px;padding: 3px 16px;
+}
+.connected span {
+    position: absolute;font-size: 10px;top: -15px;background-color: #ffffff;width: fit-content;
+    border-radius: 20px;padding: 1px 4px;color: #26b826;right: 20%;
+}
 
+  
 @media (max-width: 991px) {
+    .main_c .sidebar_toggle_btn {
+        position: absolute;top: 0;
+    }
     .main .stake {
         width: 90%;margin: 5rem 1rem;
+    }
+    .connect {
+        display: block;
     }
 }
 
@@ -147,6 +169,9 @@ background: linear-gradient(90deg, rgba(12,16,32,1) 100%, rgba(44,44,48,1) 100%,
     .main_c .main {
         width: 70%;height: 100%;
     }
+    .connect {
+        display: block;
+    }
 }
 
 @media (max-width: 567px) {
@@ -155,5 +180,8 @@ background: linear-gradient(90deg, rgba(12,16,32,1) 100%, rgba(44,44,48,1) 100%,
     }
     .main_c .main {
         width: 65%;height: 100%;
+    }
+    .connect {
+        display: block;
     }
 }

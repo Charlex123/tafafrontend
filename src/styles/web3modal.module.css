@@ -29,3 +29,17 @@
 .modalbody .selectdrpdwn .wtext {
     width: 100%;word-wrap: initial;word-break: initial;
 }
+
+@media (max-width: 991px) {
+    .modalcontent{
+        width: 70%;
+    }
+    .modalcontent .modalbody .selectdrpdwn .wcbtn {
+        width: 45%;
+    }
+}
+@media (max-width: 767px) {
+    .modalcontent{
+        width: 90%;
+    }
+}

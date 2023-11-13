@@ -1,27 +1,28 @@
 import { useEffect, useState, useContext } from 'react';
 import { useRouter } from 'next/router';
-import axios from 'axios';
+import  { Web3ModalContext } from '../contexts/web3modal-context';
+// import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faEye, faEyeSlash, faXmarkCircle } from "@fortawesome/free-regular-svg-icons";
 // import DappSideBar from './Dappsidebar';
 // material
 
-import Loading from "./Loading";
-import AlertMessage from "./AlertMessage";
+// import Loading from "./Loading";
+// import AlertMessage from "./AlertMessage";
 import dappstyles from "../styles/dapp.module.css";
 import dappsidebarstyles from '../styles/dappsidebar.module.css';
 // component
-import Iconify from './Iconify';
-import WalletConnectProvider from "@walletconnect/web3-provider";
+import SelectWalletModal from "./web3-Modal";
+import { useWeb3React } from "@web3-react/core";
+import { networkParams } from "./web3-networks";
+import { toHex, truncateAddress } from "../utils/web3react-utils";
 // import { providers } from "ethers";
 import Web3 from "web3";
 import { ThemeContext } from '../contexts/theme-context';
-import { functions } from 'lodash';
-import { faLock, faWarning, faXmark } from '@fortawesome/free-solid-svg-icons';
 import DappNav from './Dappnav';
-import { fas, faCheck, faCheckCircle, faChevronDown,faAlignJustify, faUserCircle, faCircleDollarToSlot, faGift, faHandHoldingDollar, faPeopleGroup, faChevronUp, faAngleDoubleRight, faAngleRight } from '@fortawesome/free-solid-svg-icons'
-import { faTwitter, faFontAwesome, faGoogle, faFacebook,faDiscord, faTelegram, faMedium, faYoutube } from '@fortawesome/free-brands-svg-icons'
+import { fas, faCheck, faCheckCircle, faChevronDown,faAlignJustify, faCircleDollarToSlot, faGift, faHandHoldingDollar, faPeopleGroup, faChevronUp, faAngleDoubleRight, faAngleRight } from '@fortawesome/free-solid-svg-icons'
+import { faTwitter, faFontAwesome, faFacebook,faDiscord, faTelegram, faMedium, faYoutube } from '@fortawesome/free-brands-svg-icons'
 import { faQuestionCircle } from '@fortawesome/free-regular-svg-icons';
 
 
@@ -39,12 +40,95 @@ const Dapp = () =>  {
   const [dropdwnIcon1, setDropdownIcon1] = useState(<FontAwesomeIcon icon={faChevronDown} size='lg' className={dappsidebarstyles.sidebarlisttoggle}/>);
   const [dropdwnIcon2, setDropdownIcon2] = useState(<FontAwesomeIcon icon={faChevronDown} size='lg' className={dappsidebarstyles.sidebarlisttoggle}/>);
   const [dropdwnIcon3, setDropdownIcon3] = useState(<FontAwesomeIcon icon={faChevronDown} size='lg' className={dappsidebarstyles.sidebarlisttoggle}/>);
-  const {router} = useRouter();
-  const [username, setUsername] = useState("");
-  const [userEmail, setUserEmail] = useState("");  
+  const [username, setUsername] = useState("");  
+  
+  const { isOpen, onOpen, onClose, closeWeb3Modal,openWeb3Modal } = useContext(Web3ModalContext);
+  
+  const {
+    library,
+    chainId,
+    account,
+    activate,
+    deactivate,
+    active
+  } = useWeb3React();
+  const [signature, setSignature] = useState("");
+  const [error, setError] = useState("");
+  const [network, setNetwork] = useState(undefined);
+  const [message, setMessage] = useState("");
+  const [signedMessage, setSignedMessage] = useState("");
+  const [verified, setVerified] = useState();
 
-  
-  
+  const handleNetwork = (e) => {
+    const id = e.target.value;
+    setNetwork(Number(id));
+  };
+
+  const handleInput = (e) => {
+    const msg = e.target.value;
+    setMessage(msg);
+  };
+
+  const switchNetwork = async () => {
+    try {
+      await library.provider.request({
+        method: "wallet_switchEthereumChain",
+        params: [{ chainId: toHex(network) }]
+      });
+    } catch (switchError) {
+      if (switchError.code === 4902) {
+        try {
+          await library.provider.request({
+            method: "wallet_addEthereumChain",
+            params: [networkParams[toHex(network)]]
+          });
+        } catch (error) {
+          setError(error);
+        }
+      }
+    }
+  };
+
+  const signMessage = async () => {
+    if (!library) return;
+    try {
+      const signature = await library.provider.request({
+        method: "personal_sign",
+        params: [message, account]
+      });
+      setSignedMessage(message);
+      setSignature(signature);
+    } catch (error) {
+      setError(error);
+    }
+  };
+
+  const verifyMessage = async () => {
+    if (!library) return;
+    try {
+      const verify = await library.provider.request({
+        method: "personal_ecRecover",
+        params: [signedMessage, signature]
+      });
+      setVerified(verify === account.toLowerCase());
+    } catch (error) {
+      setError(error);
+    }
+  };
+
+  const refreshState = () => {
+    window.localStorage.setItem("provider", undefined);
+    setNetwork("");
+    setMessage("");
+    setSignature("");
+    setVerified(undefined);
+  };
+
+  const disconnect = () => {
+    refreshState();
+    deactivate();
+  };    
+
   useEffect(() => {
 
     const udetails = JSON.parse(localStorage.getItem("userInfo"));
@@ -190,6 +274,13 @@ const sideBarToggleCheck = dappsidebartoggle ? dappstyles.sidebartoggled : '';
                 </nav>
               </div>
               <div className={`${dappstyles.main} ${sideBarToggleCheck}`}>
+              <div className={dappstyles.con_btns}>
+              {!active ? (
+                <button onClick={openWeb3Modal} className={dappstyles.connect}>Connect Wallet</button>
+                ) : (
+                <button onClick={disconnect} className={dappstyles.connected}><span>connected</span>Disconnect</button>
+                )}
+              </div>
               <button title='togglebtn' className={dappstyles.sidebar_toggle_btn} type='button' onClick={toggleSideBar}>
                 {isSideBarToggled ? (
                   <FontAwesomeIcon icon={faAlignJustify} size='lg' className={dappstyles.navlisttoggle}/> // Change this to the appropriate icon component or element
@@ -279,6 +370,7 @@ const sideBarToggleCheck = dappsidebartoggle ? dappstyles.sidebartoggled : '';
               </div>
             </div>
         </div>
+        {isOpen && (<SelectWalletModal isOpen={isOpen} closeWeb3Modal={closeWeb3Modal} />)}
     </>
   );
 }

@@ -24,7 +24,7 @@ export default function SelectWalletModal({ isOpen, closeWeb3Modal }) {
         <div className={styles.closemodal}>
           <button className={styles.closebtn} onClick={closeWeb3Modal}><FontAwesomeIcon icon={faXmark} /></button>
         </div>
-        <div className={styles.modalbody} paddingBottom="1.5rem">
+        <div className={styles.modalbody}>
           <div>
 
             <div className={styles.selectdrpdwn}>
@@ -43,7 +43,6 @@ export default function SelectWalletModal({ isOpen, closeWeb3Modal }) {
                     alt="Coinbase Wallet Logo"
                     width={25}
                     height={25}
-                    borderRadius="3px"
                     className={styles.wlogo}
                   />
                   <div className={styles.wtext}>Coinbase Wallet</div>
@@ -67,7 +66,6 @@ export default function SelectWalletModal({ isOpen, closeWeb3Modal }) {
                     alt="Wallet Connect Logo"
                     width={26}
                     height={26}
-                    borderRadius="3px"
                     className={styles.wlogo}
                   />
                   <div className={styles.wtext}>Wallet Connect</div>
@@ -91,7 +89,6 @@ export default function SelectWalletModal({ isOpen, closeWeb3Modal }) {
                     alt="Metamask Logo"
                     width={25}
                     height={25}
-                    borderRadius="3px"
                     className={styles.wlogo}
                   />
                   <div className={styles.wtext}>Metamask</div>

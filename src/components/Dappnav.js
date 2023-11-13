@@ -257,7 +257,7 @@ function Navbar() {
                         {!active ? (
                         <button onClick={openWeb3Modal}>Connect Wallet</button>
                         ) : (
-                        <button onClick={disconnect}>Disconnect</button>
+                        <button onClick={disconnect} className={styles.connected}><span>connected</span>Disconnect</button>
                         )}</li>
                     <li className={styles.si}><a href='/signin' rel='noopener noreferrer'>Logout</a></li>
                 </ul>
