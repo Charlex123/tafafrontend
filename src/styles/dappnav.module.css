@@ -13,7 +13,7 @@ background: linear-gradient(to bottom,  rgba(0,0,0,0.65) 0%,rgba(0,0,0,0.65) 99%
 
 }
 .logoni {
-  width: 40px;
+  width: 140px;
 }
 .nav .nav_toggle_btn {
     position: fixed;right: 15px;top: 25px;background-color: transparent !important;border: none;
@@ -120,6 +120,9 @@ background-color: #f0eded49;border: 1px dashed #08d34f;
 
 
 @media (max-width: 990px) {
+  .logoni {
+    width: 120px;
+  }
   .nav {
     display: none;
     padding: 0;

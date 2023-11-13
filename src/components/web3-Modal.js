@@ -1,105 +1,107 @@
-import {
-    VStack,
-    HStack,
-    Modal,
-    ModalOverlay,
-    ModalContent,
-    ModalHeader,
-    ModalBody,
-    ModalCloseButton,
-    Button,
-    Text
-  } from "@chakra-ui/react";
-  import Image from "next/image";
-  import mmlogo from '../assets/images/mm.png'
-  import wclogo from '../assets/images/wc.png'
-  import cblogo from '../assets/images/cb.png'
-  import { useWeb3React } from "@web3-react/core";
-  import { connectors } from "./web3-connectors";
-  
-  export default function SelectWalletModal({ isOpen, closeModal }) {
-    const { activate } = useWeb3React();
-  
-    const setProvider = (type) => {
-      window.localStorage.setItem("provider", type);
-    };
-  
-    return (
-      <Modal isOpen={isOpen} onClose={closeModal} isCentered>
-        <ModalOverlay />
-        <ModalContent w="300px">
-          <ModalHeader>Select Wallet</ModalHeader>
-          <ModalCloseButton
-            _focus={{
-              boxShadow: "none"
-            }}
-          />
-          <ModalBody paddingBottom="1.5rem">
-            <VStack>
-              <Button
+import Image from "next/image";
+import mmlogo from '../assets/images/mm.png'
+import wclogo from '../assets/images/wc.png'
+import cblogo from '../assets/images/cb.png'
+import { useWeb3React } from "@web3-react/core";
+import { connectors } from "./web3-connectors";
+import styles from "../styles/web3modal.module.css"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
+
+export default function SelectWalletModal({ isOpen, closeWeb3Modal }) {
+  const { activate } = useWeb3React();
+  console.log('activate lout', activate)
+  const setProvider = (type) => {
+    window.localStorage.setItem("provider", type);
+  };
+
+  return (
+    <>
+    <div className={styles.modal}>
+      <div className={styles.modaloverlay} onClick={closeWeb3Modal} />
+      <div className={styles.modalcontent}>
+        <h1>Select Wallet</h1>
+        <div className={styles.closemodal}>
+          <button className={styles.closebtn} onClick={closeWeb3Modal}><FontAwesomeIcon icon={faXmark} /></button>
+        </div>
+        <div className={styles.modalbody} paddingBottom="1.5rem">
+          <div>
+
+            <div className={styles.selectdrpdwn}>
+              <button
                 variant="outline"
                 onClick={() => {
                   activate(connectors.coinbaseWallet);
                   setProvider("coinbaseWallet");
-                  closeModal();
+                  closeWeb3Modal();
                 }}
-                w="100%"
+                className={styles.wcbtn}
               >
-                <HStack w="100%" justifyContent="center">
+                <div>
                   <Image
                     src={cblogo}
                     alt="Coinbase Wallet Logo"
                     width={25}
                     height={25}
                     borderRadius="3px"
+                    className={styles.wlogo}
                   />
-                  <Text>Coinbase Wallet</Text>
-                </HStack>
-              </Button>
-              <Button
+                  <div className={styles.wtext}>Coinbase Wallet</div>
+                </div>
+              </button>
+            </div>
+            
+            <div className={styles.selectdrpdwn}>
+              <button
                 variant="outline"
                 onClick={() => {
                   activate(connectors.walletConnect);
                   setProvider("walletConnect");
-                  closeModal();
+                  closeWeb3Modal();
                 }}
-                w="100%"
+                className={styles.wcbtn}
               >
-                <HStack w="100%" justifyContent="center">
+                <div>
                   <Image
                     src={wclogo}
                     alt="Wallet Connect Logo"
                     width={26}
                     height={26}
                     borderRadius="3px"
+                    className={styles.wlogo}
                   />
-                  <Text>Wallet Connect</Text>
-                </HStack>
-              </Button>
-              <Button
+                  <div className={styles.wtext}>Wallet Connect</div>
+                </div>
+              </button>
+            </div>
+
+            <div className={styles.selectdrpdwn}>
+              <button
                 variant="outline"
                 onClick={() => {
                   activate(connectors.injected);
                   setProvider("injected");
-                  closeModal();
+                  closeWeb3Modal();
                 }}
-                w="100%"
+                className={styles.wcbtn}
               >
-                <HStack w="100%" justifyContent="center">
+                <div>
                   <Image
                     src={mmlogo}
                     alt="Metamask Logo"
                     width={25}
                     height={25}
                     borderRadius="3px"
+                    className={styles.wlogo}
                   />
-                  <Text>Metamask</Text>
-                </HStack>
-              </Button>
-            </VStack>
-          </ModalBody>
-        </ModalContent>
-      </Modal>
-    );
-  }
-  
+                  <div className={styles.wtext}>Metamask</div>
+                </div>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </>
+  );
+}
