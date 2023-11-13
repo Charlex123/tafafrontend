@@ -28,7 +28,7 @@ body {
   background: rgb(14,17,13);
   background: linear-gradient(90deg, rgba(14,17,13,1) 0%, rgba(14,17,13,1) 100%, rgba(0,212,255,1) 100%);
   background-repeat: none;
-  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif !important;
+  font-family: "Poppins",sans-serif !important;
 }
 a {
   text-decoration: none;

@@ -356,10 +356,10 @@ background: linear-gradient(333deg, rgba(13,20,24,1) 0%, rgba(9,22,29,1) 0%, rgb
   margin: 5px auto;text-align: center;width: 60px;
 }
 .stkb .gov .gov_in .gov_c h2 {
-  font-family: Verdana, Geneva, Tahoma, sans-serif;color: #ffffff;font-size: 24px;margin: .5rem auto 1rem auto;padding-top: 1rem;
+  font-family: "Poppins", sans-serif;color: #ffffff;font-size: 24px;margin: .5rem auto 1rem auto;padding-top: 1rem;
 }
 .stkb .gov .gov_in .gov_c p {
-  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;color: #f1f1f1;font-size: 14px;
+  font-family: "Montserrat", sans-serif;color: #f1f1f1;font-size: 14px;
 }
 .tkl {
   width: 100%;margin: auto 0;padding: 0;
@@ -381,7 +381,7 @@ background: linear-gradient(333deg, rgba(13,20,24,1) 0%, rgba(9,22,29,1) 0%, rgb
   padding-top: 5px;font-weight: 600;
 }
 .tkl .tkl_in .tkl_head p {
-  font-size: 14px;font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;color: #f1f1f1;margin: 0 auto 0 auto;
+  font-size: 14px;font-family: "Montserrat", sans-serif;color: #f1f1f1;margin: 0 auto 0 auto;
   padding-top: 0;font-weight: 500;
 }
 .tkl .tkl_in .tkl_head .dexlinks {
@@ -415,10 +415,10 @@ background: linear-gradient(333deg, rgba(13,20,24,1) 0%, rgba(9,22,29,1) 0%, rgb
   font-weight: 600;
 }
 .tkl .tkl_in .tkl_body p {
-  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;color: #f1f1f1;text-align: left;padding: 0 15px;
+  font-family: "Montserrat", sans-serif;color: #f1f1f1;text-align: left;padding: 0 15px;
 }
 .tkl .tkl_in .tkl_body .button {
-  font-family: Verdana, Geneva, Tahoma, sans-serif;font-size: 16px;font-weight: 900;margin: 35px auto;text-align: center;
+  font-family: "Poppins", sans-serif;font-size: 16px;font-weight: 900;margin: 35px auto;text-align: center;
   border-radius: 120px;border: 2px solid #08d34f;width: fit-content;padding: 6px 32px;color: #08d34f;
 }
 .tkl .tkl_in .tkl_body .btn {
@@ -434,7 +434,7 @@ background: linear-gradient(333deg, rgba(13,20,24,1) 0%, rgba(9,22,29,1) 0%, rgb
   font-weight: 800;
 }
 .roadmap .rdm h4 {
-  font-size: 14px;font-family: "Mntserrat", sans-serif;margin: 1px auto 60px auto;text-align: center;color: #08d34f;
+  font-size: 14px;font-family: "Montserrat", sans-serif;margin: 1px auto 60px auto;text-align: center;color: #08d34f;
   font-weight: 600;
 }
 .roadmap .rdm .tmlc {

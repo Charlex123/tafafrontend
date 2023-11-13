@@ -54,7 +54,7 @@ export default function LoginForm() {
       setLoading(true)
       console.log(email)
       console.log(password)
-      const {data} = await axios.post("https://betbackend.onrender.com/api/users/signin", {
+      const {data} = await axios.post("http://localhost:7000/api/users/signin", {
         email,
         password
       }, config);
