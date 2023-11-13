@@ -89,7 +89,7 @@ const RegisterForm = () =>  {
         "Content-type": "application/json"
       }
     }
-    const {data} = await axios.post("https://tafabackend.onrender.com/api/users/checkusername", {
+    const {data} = await axios.post("http://localhost:7000/api/users/checkusername", {
           username,
     }, config);
     if(data) {
@@ -106,7 +106,7 @@ const RegisterForm = () =>  {
         "Content-type": "application/json"
       }
     }
-    const {data} = await axios.post("https://tafabackend.onrender.com/api/users/checkemail", {
+    const {data} = await axios.post("http://localhost:7000/api/users/checkemail", {
           email,
     }, config);
     if(data) {
@@ -136,7 +136,7 @@ const RegisterForm = () =>  {
         
         setLoading(true);
         setLevel("White Whale");
-        const {data} = await axios.post("https://tafabackend.onrender.com/api/users/register", {
+        const {data} = await axios.post("http://localhost:7000/api/users/register", {
           username,
           sponsor_,
           email,
@@ -217,7 +217,7 @@ const RegisterForm = () =>  {
         </div>
 
         <div className={regstyles.form_group}>
-            <label className={regstyles.formlabel} htmlFor="grid-password">Sponsor</label>
+            <label className={regstyles.formlabel} htmlFor="grid-password">SponsorID</label>
               <input className={regstyles.forminput} id="sponsor" type="text" placeholder="Sponsor"
               value={refsponsor}
               onChange={(e) => setRefSponsor(e.target.value.replace(' ', ''))}

@@ -6,7 +6,7 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { faEye, faEyeSlash, faXmarkCircle } from "@fortawesome/free-regular-svg-icons";
 // import DappSideBar from './Dappsidebar';
 // material
-import { Stack, TextField, IconButton, InputAdornment } from '@mui/material';
+
 import Loading from "./Loading";
 import AlertMessage from "./AlertMessage";
 import dappstyles from "../styles/dapp.module.css";
@@ -25,6 +25,7 @@ import { faTwitter, faFontAwesome, faGoogle, faFacebook,faDiscord, faTelegram, f
 import { faQuestionCircle } from '@fortawesome/free-regular-svg-icons';
 
 
+
 library.add(fas, faTwitter, faFontAwesome,faQuestionCircle, faCheck,faCheckCircle,faAlignJustify)
 // ----------------------------------------------------------------------
 library.add(faEye, faEyeSlash);
@@ -40,11 +41,12 @@ const Dapp = () =>  {
   const [dropdwnIcon3, setDropdownIcon3] = useState(<FontAwesomeIcon icon={faChevronDown} size='lg' className={dappsidebarstyles.sidebarlisttoggle}/>);
   const {router} = useRouter();
   const [username, setUsername] = useState("");
-  const [userEmail, setUserEmail] = useState("");
+  const [userEmail, setUserEmail] = useState("");  
 
   
   
   useEffect(() => {
+
     const udetails = JSON.parse(localStorage.getItem("userInfo"));
     const username = udetails.username;
     if(udetails && udetails !== null && udetails !== "") {
@@ -139,7 +141,7 @@ const Dapp = () =>  {
 // }
 
 const sideBarToggleCheck = dappsidebartoggle ? dappstyles.sidebartoggled : '';
-console.log('side bar t chaek',sideBarToggleCheck)
+
   return (
     <>
         <DappNav/>
@@ -268,7 +270,7 @@ console.log('side bar t chaek',sideBarToggleCheck)
                               </div>
 
                               <div className={dappstyles.cw_btn_div}>
-                                <button className={dappstyles.cw_btn} >Connect Wallet</button>
+                                  
                               </div>
                           </div>
                         </div>

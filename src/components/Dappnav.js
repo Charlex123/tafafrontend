@@ -5,14 +5,34 @@ import styles from '../styles/dappnav.module.css';
 import logo from '../assets/images/logo.png';
 import Image from 'next/image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Stack, TextField, IconButton, InputAdornment } from '@mui/material';
+import {
+  VStack,
+  useDisclosure,
+  Button,
+  Text,
+  HStack,
+  Select,
+  Input,
+  Box
+} from "@chakra-ui/react";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 // import { providers } from "ethers";
 import Web3 from "web3";
+import { CheckCircleIcon, WarningIcon } from "@chakra-ui/icons";
+import { Tooltip } from "@chakra-ui/react";
+import SelectWalletModal from "./web3-Modal";
+import { useWeb3React } from "@web3-react/core";
+import { networkParams } from "./web3-networks";
+import { connectors } from "./web3-connectors";
+import { toHex, truncateAddress } from "../utils/web3react-utils";
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas, faCheck, faCheckCircle, faChevronDown,faAlignJustify, faUserCircle, faCircleDollarToSlot, faGift, faHandHoldingDollar, faPeopleGroup, faChevronUp, faAngleDoubleRight, faAngleRight } from '@fortawesome/free-solid-svg-icons'
 import { faTwitter, faFontAwesome, faGoogle, faFacebook,faDiscord, faTelegram, faMedium, faYoutube } from '@fortawesome/free-brands-svg-icons'
 import { faQuestionCircle } from '@fortawesome/free-regular-svg-icons';
 library.add(fas, faTwitter, faFontAwesome,faQuestionCircle, faCheck,faCheckCircle,faAlignJustify)
+
+
 
 function Navbar() {
     const { theme, setHandleDrawer, changeTheme, isDark } = useContext(ThemeContext);
@@ -22,39 +42,127 @@ function Navbar() {
     const [dropdwnIcon2, setDropdownIcon2] = useState(<FontAwesomeIcon icon={faChevronDown} size='lg' className={styles.navlisttoggle}/>);
     const [dropdwnIcon3, setDropdownIcon3] = useState(<FontAwesomeIcon icon={faChevronDown} size='lg' className={styles.navlisttoggle}/>);
 
-    
+    const { isOpen, onOpen, onClose } = useDisclosure();
+  const {
+    library,
+    chainId,
+    account,
+    activate,
+    deactivate,
+    active
+  } = useWeb3React();
+  const [signature, setSignature] = useState("");
+  const [error, setError] = useState("");
+  const [network, setNetwork] = useState(undefined);
+  const [message, setMessage] = useState("");
+  const [signedMessage, setSignedMessage] = useState("");
+  const [verified, setVerified] = useState();
+
+  const handleNetwork = (e) => {
+    const id = e.target.value;
+    setNetwork(Number(id));
+  };
+
+  const handleInput = (e) => {
+    const msg = e.target.value;
+    setMessage(msg);
+  };
+
+  const switchNetwork = async () => {
+    try {
+      await library.provider.request({
+        method: "wallet_switchEthereumChain",
+        params: [{ chainId: toHex(network) }]
+      });
+    } catch (switchError) {
+      if (switchError.code === 4902) {
+        try {
+          await library.provider.request({
+            method: "wallet_addEthereumChain",
+            params: [networkParams[toHex(network)]]
+          });
+        } catch (error) {
+          setError(error);
+        }
+      }
+    }
+  };
+
+  const signMessage = async () => {
+    if (!library) return;
+    try {
+      const signature = await library.provider.request({
+        method: "personal_sign",
+        params: [message, account]
+      });
+      setSignedMessage(message);
+      setSignature(signature);
+    } catch (error) {
+      setError(error);
+    }
+  };
+
+  const verifyMessage = async () => {
+    if (!library) return;
+    try {
+      const verify = await library.provider.request({
+        method: "personal_ecRecover",
+        params: [signedMessage, signature]
+      });
+      setVerified(verify === account.toLowerCase());
+    } catch (error) {
+      setError(error);
+    }
+  };
+
+  const refreshState = () => {
+    window.localStorage.setItem("provider", undefined);
+    setNetwork("");
+    setMessage("");
+    setSignature("");
+    setVerified(undefined);
+  };
+
+  const disconnect = () => {
+    refreshState();
+    deactivate();
+  };    
     useEffect(() => {
-    // Function to handle window resize
-    const handleResize = () => {
-        // Check the device width and update isNavOpen accordingly
-        if (window.innerWidth <= 990) {
-        setNavOpen(false);
-        } else {
-        setNavOpen(true);
-        }
-    };
 
-    // Initial check when the component mounts
-    handleResize();
+        const provider = window.localStorage.getItem("provider");
+        if (provider) activate(connectors[provider]);
 
-    // Add a resize event listener to update isNavOpen when the window is resized
-    window.addEventListener('resize', handleResize);
+        // Function to handle window resize
+        const handleResize = () => {
+            // Check the device width and update isNavOpen accordingly
+            if (window.innerWidth <= 990) {
+            setNavOpen(false);
+            } else {
+            setNavOpen(true);
+            }
+        };
 
-    // Clean up the event listener when the component unmounts
+        // Initial check when the component mounts
+        handleResize();
 
-    const handleScroll = () => {
-        if (window.scrollY > 50) {
-          setScrolling(true);
-        } else {
-          setScrolling(false);
-        }
-    };
+        // Add a resize event listener to update isNavOpen when the window is resized
+        window.addEventListener('resize', handleResize);
 
-    window.addEventListener('scroll', handleScroll);
-    return () => {
-        window.removeEventListener('scroll', handleScroll);
-        window.removeEventListener('resize', handleResize);
-    };
+        // Clean up the event listener when the component unmounts
+
+        const handleScroll = () => {
+            if (window.scrollY > 50) {
+            setScrolling(true);
+            } else {
+            setScrolling(false);
+            }
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+            window.removeEventListener('resize', handleResize);
+        };
     }, []);
 
     // async function connectAccount() {
@@ -157,12 +265,95 @@ function Navbar() {
                     </li>
                 </ul>
                 <ul className={styles.upa}>
-                    <li className={styles.ld}><button>Connect Wallet</button></li>
+                    <li className={styles.ld}>
+                        {!active ? (
+                        <button onClick={onOpen}>Connect Wallet</button>
+                        ) : (
+                        <button onClick={disconnect}>Disconnect</button>
+                        )}</li>
                     <li className={styles.si}><a href='/signin' rel='noopener noreferrer'>Logout</a></li>
                 </ul>
                 </div>)
                 }
             </div>
+            {/* <VStack justifyContent="center" alignItems="center" h="100vh">
+        {active && (
+          <HStack justifyContent="flex-start" alignItems="flex-start">
+            <Box
+              maxW="sm"
+              borderWidth="1px"
+              borderRadius="lg"
+              overflow="hidden"
+              padding="10px"
+            >
+              <VStack>
+                <Button onClick={switchNetwork} isDisabled={!network}>
+                  Switch Network
+                </Button>
+                <Select placeholder="Select network" onChange={handleNetwork}>
+                  <option value="3">Ropsten</option>
+                  <option value="4">Rinkeby</option>
+                  <option value="42">Kovan</option>
+                  <option value="1666600000">Harmony</option>
+                  <option value="42220">Celo</option>
+                </Select>
+              </VStack>
+            </Box>
+            <Box
+              maxW="sm"
+              borderWidth="1px"
+              borderRadius="lg"
+              overflow="hidden"
+              padding="10px"
+            >
+              <VStack>
+                <Button onClick={signMessage} isDisabled={!message}>
+                  Sign Message
+                </Button>
+                <Input
+                  placeholder="Set Message"
+                  maxLength={20}
+                  onChange={handleInput}
+                  w="140px"
+                />
+                {signature ? (
+                  <Tooltip label={signature} placement="bottom">
+                    <Text>{`Signature: ${truncateAddress(signature)}`}</Text>
+                  </Tooltip>
+                ) : null}
+              </VStack>
+            </Box>
+            <Box
+              maxW="sm"
+              borderWidth="1px"
+              borderRadius="lg"
+              overflow="hidden"
+              padding="10px"
+            >
+              <VStack>
+                <Button onClick={verifyMessage} isDisabled={!signature}>
+                  Verify Message
+                </Button>
+                {verified !== undefined ? (
+                  verified === true ? (
+                    <VStack>
+                      <CheckCircleIcon color="green" />
+                      <Text>Signature Verified!</Text>
+                    </VStack>
+                  ) : (
+                    <VStack>
+                      <WarningIcon color="red" />
+                      <Text>Signature Denied!</Text>
+                    </VStack>
+                  )
+                ) : null}
+              </VStack>
+            </Box>
+          </HStack>
+        )}
+        <Text>{error ? error.message : null}</Text>
+      </VStack> */}
+            <SelectWalletModal isOpen={isOpen} closeModal={onClose} />
         </nav>
     );
 }
