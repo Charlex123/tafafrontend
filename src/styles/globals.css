@@ -25,10 +25,13 @@
 body {
   position: relative;
   box-sizing: border-box;
-  background: rgb(14,17,13);
-  background: linear-gradient(90deg, rgba(14,17,13,1) 0%, rgba(14,17,13,1) 100%, rgba(0,212,255,1) 100%);
+  /* background: rgb(14,17,13);
+  background: linear-gradient(90deg, rgba(14,17,13,1) 0%, rgba(14,17,13,1) 100%, rgba(0,212,255,1) 100%); */
+  background-image: url("../assets/images/bbg.jpg");
   background-repeat: none;
+  background-position: cover;
   font-family: "Poppins",sans-serif !important;
+  /* overflow-x: hidden; */
 }
 a {
   text-decoration: none;

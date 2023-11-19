@@ -1,26 +1,37 @@
-// components/PdfViewer.jsx
-"use client";
-import { Viewer, Worker } from "@react-pdf-viewer/core";
-import "@react-pdf-viewer/core/lib/styles/index.css";
-import { defaultLayoutPlugin } from "@react-pdf-viewer/default-layout";
-import "@react-pdf-viewer/default-layout/lib/styles/index.css";
-const Whitepaper = ({ url }) => {
-  const defaultLayoutPluginInstance = defaultLayoutPlugin();
+import { useState } from "react";
+// import default react-pdf entry
+import { Document, Page, pdfjs } from "react-pdf";
+// import pdf worker as a url, see `next.config.js` and `pdf-worker.js`
+import workerSrc from "../../pdf-worker";
+import styles from '../styles/whitepaper.module.css';
+
+pdfjs.GlobalWorkerOptions.workerSrc = workerSrc;
+
+export default function PDFViewer() {
+  const [file, setFile] = useState("./TAFA XTRA WHITEPAPER 1.0.0.pdf");
+  const [numPages, setNumPages] = useState(null);
+
+  function onDocumentLoadSuccess({ numPages: nextNumPages }) {
+    setNumPages(nextNumPages);
+  }
+
   return (
-    <div className="h-screen w-screen">
-      {/* <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.worker.min.js">
-        <Viewer
-          fileUrl={url}
-          plugins={[defaultLayoutPluginInstance]}
-        />
-      </Worker> */}
-      {/* <iframe
-      src="https://drive.google.com/file/d/11h3WlhD221wMuXyXWPsdmXb4UNM-qaot/preview"
-      title="Async & Performance"
-      width="800"
-      height="600"
-    /> */}
+    <div style={{margin: '2rem 0 0 0',width: '100%'}}>
+      <div>
+        <br></br><br></br>
+      </div>
+      <div>
+        <Document file={file} onLoadSuccess={onDocumentLoadSuccess}>
+          {Array.from({ length: numPages }, (_, index) => (
+            <Page
+              key={`page_${index + 1}`}
+              pageNumber={index + 1}
+              renderAnnotationLayer={false}
+              renderTextLayer={false}
+            />
+          ))}
+        </Document>
+      </div>
     </div>
   );
-};
-export default Whitepaper;
+}

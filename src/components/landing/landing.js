@@ -23,6 +23,8 @@ import bnblogo from '../../assets/images/blockchain-binance-white-71f5d555.png';
 import cronlogo from '../../assets/images/blockchain-cronos-light-78484d18.png';
 import ethlogo from '../../assets/images/blockchain-ethereum-white-c6bf63d1.png';
 import fantlogo from '../../assets/images/blockchain-fantom-white-0b93e569.png';
+import stakevest from '../../assets/images/stakevest.png'
+import teamwork from '../../assets/images/Teamwork.png'
 import polychlogo from '../../assets/images/blockchain-polygon-white-024b04f0.png';
 import { ThemeContext } from '../../contexts/theme-context';
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -97,8 +99,8 @@ const toggleNav = () => {
             </div>
             
             <div className={styles.get_sd_btns}>
-              <a title='get started' href='/' rel='noopener noreferrer' className={styles.getstarted}>Buy TAFAXtra</a>
-              <a href='/signin' rel='noopener noreferrer' className={styles.learnmore}>Launch Dapp</a>
+              <a title='get started' href='https://pancakeswap.finance/swap?outputCurrency=0x5ae155F89308CA9050f8Ce1C96741BaDd342C26B' rel='noopener noreferrer' className={styles.getstarted}>Buy TAFAXtra</a>
+              <a href='/signin' rel='noopener noreferrer' className={styles.learnmore}>Stake TAFA</a>
             </div>
           </div>
           <div className={styles.hero_image}>
@@ -152,6 +154,93 @@ const toggleNav = () => {
         </div>
       </div>
 
+      <div className={styles.tafastaking} id="tafastaking">
+          <h1>TAFAXTRA STAKING</h1>
+          <div className={styles.stakingmain}>
+              <div className={styles.stakevesttext}>
+                <p>
+                  The methods are new, but the concept is old. The difference is in the application and
+                  how TAFAXTRA has simplified staking in cryptocurrency. TAFAXTRA leverages several
+                  low-risk staking platforms and the expertise of a team of proven profitable traders to
+                  generate a yield of 15 to 16.5% returns monthly for her users. It's a hybrid system in
+                  which the team utilizes years of experience and a complex algorithm that factors in
+                  impactful financial news and technical analysis to arrive at profitable trading
+                  decisions. USDT is the base asset for staking. In the future, more will be added
+                </p>
+              </div>
+              <div className={styles.stakevestimg}>
+                <Image src={stakevest} alt='stake image' quality={90} className={styles.stakevest_img}/>
+              </div>
+          </div>
+      </div>
+
+      <div className={styles.abouttafa} id="abouttafa">
+          <h1>ABOUT TAFAXTRA</h1>
+          <p>
+            TAFAXTRA is a coinage from TA (Technical Analysis), FA (Fundamental Analysis), and
+            XTRA (Extra). TAFAXTRA aims at being the go-to source for reliable information in the
+            crypto, forex, and synthetics financial space. We take pride in our ability to provide
+            our users with the latest news in the financial markets, as well as premium technical
+            analysis on different financial assets. What more? TAFAXTRA team is working on a
+            trading bot that will give her users outstanding leverage in trading financial markets
+            via several exchanges and brokers.
+          </p>
+          <p>
+            Moreso, understanding and engaging productively in cryptography/cryptocurrency has
+            been quite a difficult venture for newbies despite several innovative ways to simplify
+            same by many developers.
+          </p>
+          <p>
+            The key problems are overt. Robots and several other methods invented have never
+            been all-inclusive, and have little or no bearing on core technical and fundamental
+            analysis. TAFAXTRA hence comes in as a multi-dimensional solution in delivering realtime relevant financial news and hybrid expert technical analysis as well as financial
+            market updates to its users. TAFAXTRA also provides its users with the best hybrid TAFA-based trading robot for trading several financial markets with several exchanges
+            and brokers.
+          </p>
+          
+          <ul>
+            <h4>Reasons To Buy And Stake TafaXtra</h4>
+            <li>
+              <FontAwesomeIcon icon={faCheckCircle}/> TAFAXTRA staking with fair monthly yield
+            </li>
+            <li>
+              <FontAwesomeIcon icon={faCheckCircle}/> Real-time Crypto, Forex, and Synthetics Trade signal alerts via SMS, emails, and telegram
+            </li>
+            <li>
+              <FontAwesomeIcon icon={faCheckCircle}/> TAFAXTRA token ($TAFA) with several utilities in the TAFAXTRA platform
+            </li>
+            <li>
+              <FontAwesomeIcon icon={faCheckCircle}/> Node as a Service (NaaS) system for TAFAXTRA token
+            </li>
+            <li>
+              <FontAwesomeIcon icon={faCheckCircle}/> TAFAXTRA token launchpads for several blockchains
+            </li>
+            <li>
+              <FontAwesomeIcon icon={faCheckCircle}/> The TafaTaxi Project
+            </li>
+          </ul>
+      </div>
+
+      <div className={styles.tafareferrals} id="referrals">
+          <h1>TAFAXTRA REFERRAL SYSTEM</h1>
+          <div className={styles.referralsmain}>
+              <div className={styles.referralstext}>
+                <p>
+                  The methods are new, but the concept is old. The difference is in the application and
+                  how TAFAXTRA has simplified staking in cryptocurrency. TAFAXTRA leverages several
+                  low-risk staking platforms and the expertise of a team of proven profitable traders to
+                  generate a yield of 15 to 16.5% returns monthly for her users. It's a hybrid system in
+                  which the team utilizes years of experience and a complex algorithm that factors in
+                  impactful financial news and technical analysis to arrive at profitable trading
+                  decisions. USDT is the base asset for staking. In the future, more will be added
+                </p>
+              </div>
+              <div className={styles.referralsimg}>
+                <Image src={teamwork} alt='team image' quality={90} className={styles.referrals_img}/>
+              </div>
+          </div>
+      </div>
+
       <div className={styles.tkl}>
         <div className={styles.tkl_in}>
             <div className={styles.tkl_head}>
@@ -172,19 +261,19 @@ const toggleNav = () => {
               <div className={`${styles.tkl_bc} ${styles.skew1_}`}>
                 <h3>STAGE 1</h3>
                 <h2>FREE CLAIM</h2>
-                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. </p>
+                <p>Tafa free token claiming program completed and tokens already distributed to qualified addresses. </p>
                 <div className={styles.button}>COMPLETED <FontAwesomeIcon icon={faCheck} size='lg' className={styles.navdrbdwnbrandicon}/> <span className={styles.brnd}></span></div>
               </div>
               <div className={`${styles.tkl_bc} ${styles.skew2_}`}>
                 <h3>STAGE 1</h3>
                 <h2>MAINNET LAUNCH</h2>
-                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. </p>
+                <p>Tafa token is live on mainnet. Buy, sell, Trade, transfer, stake , network, earn rewards and enjoy better life with tafa profits. </p>
                 <div className={`${styles.button} ${styles.btn}`}><button >LIVE NOW <FontAwesomeIcon icon={faCheckCircle} size='lg' className={styles.navdrbdwnbrandicon}/> <span className={styles.brnd}> </span></button></div>
               </div>
             </div>
         </div>
 
-        <div className={styles.roadmap}> 
+        <div className={styles.roadmap} id="roadmap"> 
             <div className={styles.rdm}>
                 <h1>TAFAXTRA ROADMAP</h1>
                 <h4>A Timely Events of TAFAXTRA</h4>
@@ -379,6 +468,22 @@ const toggleNav = () => {
                 </div>
              </div>   
         </div>
+      </div>
+
+      <div className={styles.freeclaim} id="freeclaim">
+          <h1>TAFAXTRA FREE CLAIM</h1>
+          <div className={styles.freeclaimmain}>
+            <p>
+              The methods are new, but the concept is old. The difference is in the application and
+              how TAFAXTRA has simplified staking in cryptocurrency. TAFAXTRA leverages several
+              low-risk staking platforms and the expertise of a team of proven profitable traders to
+              generate a yield of 15 to 16.5% returns monthly for her users. It's a hybrid system in
+              which the team utilizes years of experience and a complex algorithm that factors in
+              impactful financial news and technical analysis to arrive at profitable trading
+              decisions. USDT is the base asset for staking. In the future, more will be added
+            </p>
+            <button type='button' disabled>Completed <FontAwesomeIcon icon={faCheckCircle}/></button>
+          </div>
       </div>
 
     </div>

@@ -6,8 +6,8 @@ import { Web3ReactProvider } from "@web3-react/core";
 import { ethers } from 'ethers';
 const App = ({ Component, pageProps }) => {
 
-  const getLibrary = (provider) => {
-    const library = new ethers.providers.Web3Provider(provider);
+  const getLibrary = () => {
+    const library = new ethers.BrowserProvider(window.ethereum);
     library.pollingInterval = 8000;
     return library;
   }
