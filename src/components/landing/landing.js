@@ -39,7 +39,36 @@ const Home = () => {
 // Create a state variable to manage the visibility of the navigation menu
 const [isNavOpen, setNavOpen] = useState(false);
 const { theme, drawerOpen } = useContext(ThemeContext);
+const [contractAddress, setcontractAddress] = useState('0x5ae155F89308CA9050f8Ce1C96741BaDd342C26B');
+   const [buttonText, setButtonText] = useState("Copy");
 
+const handleCopyClick = () => {
+   // Create a temporary textarea element
+   const textArea = document.createElement('textarea');
+   
+   // Set the value of the textarea to the text you want to copy
+   textArea.value = contractAddress;
+
+   // Append the textarea to the document
+   document.body.appendChild(textArea);
+
+   // Select the text inside the textarea
+   textArea.select();
+
+   // Execute the copy command
+   document.execCommand('copy');
+
+   // Remove the temporary textarea
+   document.body.removeChild(textArea);
+
+   // Set the state to indicate that the text has been copied
+   setButtonText("Copied");
+
+   // Reset the state after a brief period (optional)
+   setTimeout(() => {
+      setButtonText("Copy");
+   }, 1500);
+ };
 
 useEffect(() => {
   // Function to handle window resize
@@ -102,6 +131,12 @@ const toggleNav = () => {
               <a title='get started' href='https://pancakeswap.finance/swap?outputCurrency=0x5ae155F89308CA9050f8Ce1C96741BaDd342C26B' rel='noopener noreferrer' className={styles.getstarted}>Buy TAFAXtra</a>
               <a href='/signin' rel='noopener noreferrer' className={styles.learnmore}>Stake TAFA</a>
             </div>
+            <div className={styles.ca}>
+              <span>Contract Address</span> 
+              <div className={styles.ca_in}>
+                <input type='text' value={contractAddress} onChange={(e) => setcontractAddress(e.target.value)}/> <button type='button' onClick={handleCopyClick}>{buttonText}</button>
+              </div>
+            </div>
           </div>
           <div className={styles.hero_image}>
             <Image src={Heroimg} alt='hero img' style={{objectFit: "contain",marginTop: '5rem'}} quality={90} />
@@ -114,7 +149,7 @@ const toggleNav = () => {
         <div className={styles.dexchanges}>
           <a href='https://coingecko.com' rel='noreferrer noopener'><Image src={cgk} className={styles.delginks} /></a>
           <a href='https://coinmarketcap.io' rel='noreferrer noopener'><Image src={cmc} className={styles.delginks} /></a>
-          <a href='https://dextools.io' rel='noreferrer noopener'><Image src={dextools} className={styles.delginks} /></a>
+          <a href='https://www.dextools.io/app/en/bnb/pair-explorer/0x7c0406a570ca1407c412238c173898cd145fd52e' rel='noreferrer noopener'><Image src={dextools} className={styles.delginks} /></a>
           <a href='https://quickswap.exchange' rel='noreferrer noopener'><Image src={quckswap} className={styles.delginks} /></a>
         </div>
       </div>

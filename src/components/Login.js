@@ -24,6 +24,7 @@ export default function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState(null);
+  const [errorMessage, seterrorMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
@@ -52,18 +53,26 @@ export default function LoginForm() {
         }
       }  
       setLoading(true)
-      console.log(email)
-      console.log(password)
-      const {data} = await axios.post("https://tafabackend.onrender.com/api/users/signin", {
+      const {data} = await axios.post("http://localhost:7000/api/users/signin", {
         email,
         password
       }, config);
-      localStorage.setItem("userInfo", JSON.stringify(data));
-      console.log('login res data',data)
-      console.log('login res username',data.username)
-      setLoading(false)
-      router.push(`/dapp/`)
+      
+      if(data.message === "Invalid Email or Password") {
+        setError(true)
+        seterrorMessage(data.message)
+        setLoading(false)
+      }else {
+        localStorage.setItem("userInfo", JSON.stringify(data));
+        console.log('login res data',data)
+        console.log('login res username',data.username)
+        setLoading(false)
+        router.push(`/dapp/`)
+      }
+      
     } catch (error) {
+      setError(true)
+      seterrorMessage(error.response.data)
       console.log(error.response.data)
     }
   }
@@ -73,7 +82,7 @@ export default function LoginForm() {
         <div>
           <a href='/' rel='noopener noreferrer' className={loginstyles.back}> <FontAwesomeIcon icon={faChevronLeft} />Back to home</a>
           <form className={loginstyles.formTag} onSubmit={submitHandler}>
-          {error && <AlertMessage variant="danger">{error}</AlertMessage>}
+          {error && <AlertMessage variant="danger">{errorMessage}</AlertMessage>}
           {loading && <Loading />}
           <div className={loginstyles.fhead}>
               <h3>Sign In <FontAwesomeIcon icon={faLockOpen} /></h3>

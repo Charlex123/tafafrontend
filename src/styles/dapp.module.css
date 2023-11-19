@@ -16,7 +16,7 @@
 }
 .main_c .sidebar_toggle_btn {
     margin-left: 15px;margin-top: 15px;background-color: transparent !important;border: none;
-    color: #ffffff !important;z-index: 9999999999999999999;position: relative;
+    color: #ffffff !important;z-index: 1;position: relative;
 }
 .main_c .sidebar_toggle_btn .toggle_icon {
     color: #f1f1f1;font-size: 28px;z-index: 99;
@@ -38,6 +38,20 @@
 }
 .main_c .sidebar.toggled {
     width: 0;
+}
+.main .reflink {
+    margin: 15px 30px 30px 30px;color: #e2d7d7;font-size: 14px;
+}
+.main .reflink input {
+    background-color: #c9c8c8;color: #2c2b2b;font-size: 12px;font-weight: 600;padding: 3px 16px 3px 12px;
+    border-radius: 60px;width: 50%;margin-left: 15px;
+}
+.main .reflink button {
+    background-color: orange;color: #2c2b2b;font-size: 12px;font-weight: 600;padding: 3px 12px;
+    border-radius: 60px;width: fit-content;margin-left: 8px;
+}
+.main .reflink small {
+    color: #26b826;
 }
 .main .uname {
     font-size: 16px;font-family: "Poppins";text-transform: capitalize;color: #e2d7d7;
@@ -159,6 +173,9 @@ background: linear-gradient(90deg, rgba(12,16,32,1) 100%, rgba(44,44,48,1) 100%,
     }
     .main .con_btns  {
         display: block;
+    }
+    .main .reflink input {
+        width: 60%;margin-left: 0;
     }
 }
 

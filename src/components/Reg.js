@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
 import { useRouter } from 'next/router';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -24,8 +23,14 @@ library.add(faEye, faEyeSlash);
 const RegisterForm = () =>  {
 
   const router = useRouter();
+  let upline;
 
-  
+  console.log('router', router.query.id)
+  if(router.query.id == undefined) {
+      upline = router.query.id;
+  }else {
+      upline = router.query.id;
+  }
   
   const [email, setEmail] = useState("");
   const [username, setUserame] = useState("");
@@ -34,11 +39,13 @@ const RegisterForm = () =>  {
   );
   const [password, setPassword] = useState("");
   const [confirmpassword, setConfirmPassword] = useState("");
-  const [message, setMessage] = useState(null);
+  const [message, setMessage] = useState(false);
   const [error, setError] = useState(false);
-  const [refsponsor, setRefSponsor] = useState("");
+  const [messageContent, setMessageContent] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [refsponsor, setRefSponsor] = useState(upline);
   const [sponsor_, setSponsor_] = useState("");
-  const [sponsor, setSponsor] = useState(router.query.name);
+  const [sponsor, setSponsor] = useState(upline);
   const [level, setLevel] = useState("White Label");
   const [tpin, setTPin] = useState(1234);
   const [loading, setLoading] = useState(false);
@@ -74,9 +81,10 @@ const RegisterForm = () =>  {
   
   const checkPass = (e) => {
     if (password !== confirmpassword) {
-      setError("Passwords do not match");
+      setError(true)
+      setErrorMessage("Passwords do not match");
     }else {
-      setError(null);
+      setError(false);
     }
   } 
 
@@ -89,12 +97,13 @@ const RegisterForm = () =>  {
         "Content-type": "application/json"
       }
     }
-    const {data} = await axios.post("https://tafabackend.onrender.com/api/users/checkusername", {
+    const {data} = await axios.post("http://localhost:7000/api/users/checkusername", {
           username,
     }, config);
     if(data) {
       setLoading(false);
-      setError(data.message)
+      setMessage(true)
+      setMessageContent(data.message)
     }
   }
 
@@ -106,12 +115,13 @@ const RegisterForm = () =>  {
         "Content-type": "application/json"
       }
     }
-    const {data} = await axios.post("https://tafabackend.onrender.com/api/users/checkemail", {
+    const {data} = await axios.post("http://localhost:7000/api/users/checkemail", {
           email,
     }, config);
     if(data) {
       setLoading(false);
-      setError(data.message)
+      setMessage(true)
+      setMessageContent(data.message)
     }
   }
 
@@ -136,7 +146,7 @@ const RegisterForm = () =>  {
         
         setLoading(true);
         setLevel("White Whale");
-        const {data} = await axios.post("https://tafabackend.onrender.com/api/users/register", {
+        const {data} = await axios.post("http://localhost:7000/api/users/register", {
           username,
           sponsor_,
           email,
@@ -169,8 +179,8 @@ const RegisterForm = () =>  {
         <a href='/' rel='noopener noreferrer' className={regstyles.back}> <FontAwesomeIcon icon={faChevronLeft} />Back to home</a>
         <form className={regstyles.formTag} onSubmit={submitHandler}>
         
-        {error && <AlertMessage variant="danger">{error}</AlertMessage>}
-        {message && <AlertMessage variant="danger">{message}</AlertMessage>}
+        {error && <AlertMessage variant="danger">{errorMessage}</AlertMessage>}
+        {message && <AlertMessage variant="danger">{messageContent}</AlertMessage>}
         {loading && <Loading />}
         
         <div className={regstyles.fhead}>

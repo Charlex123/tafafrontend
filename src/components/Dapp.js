@@ -32,6 +32,8 @@ library.add(fas, faTwitter, faFontAwesome,faQuestionCircle, faCheck,faCheckCircl
 library.add(faEye, faEyeSlash);
 const Dapp = () =>  {
 
+  const router = useRouter();
+
   const { theme, setHandleDrawer, changeTheme, isDark } = useContext(ThemeContext);
   const [isNavOpen, setNavOpen] = useState(false);
   const [scrolling, setScrolling] = useState(false);
@@ -44,6 +46,37 @@ const Dapp = () =>  {
   
   const { isOpen, onOpen, onClose, closeWeb3Modal,openWeb3Modal } = useContext(Web3ModalContext);
   
+  const [referralLink, setreferralLink] = useState('');
+   const [buttonText, setButtonText] = useState("Copy");
+
+const handleCopyClick = () => {
+   // Create a temporary textarea element
+   const textArea = document.createElement('textarea');
+   
+   // Set the value of the textarea to the text you want to copy
+   textArea.value = referralLink;
+
+   // Append the textarea to the document
+   document.body.appendChild(textArea);
+
+   // Select the text inside the textarea
+   textArea.select();
+
+   // Execute the copy command
+   document.execCommand('copy');
+
+   // Remove the temporary textarea
+   document.body.removeChild(textArea);
+
+   // Set the state to indicate that the text has been copied
+   setButtonText("Copied");
+
+   // Reset the state after a brief period (optional)
+   setTimeout(() => {
+      setButtonText("Copy");
+   }, 1500);
+ };
+
   const {
     library,
     chainId,
@@ -132,11 +165,12 @@ const Dapp = () =>  {
   useEffect(() => {
 
     const udetails = JSON.parse(localStorage.getItem("userInfo"));
-    const username = udetails.username;
+    const username_ = udetails.username;
     if(udetails && udetails !== null && udetails !== "") {
-      console.log('username',username)
-      if(username) {
-        setUsername(username);
+      
+      if(username_) {
+        setUsername(username_);
+        setreferralLink(`https://tafaextra.io/register/${udetails.userId}`);
       }
     }
 
@@ -182,27 +216,32 @@ const Dapp = () =>  {
     setIsSideBarToggled(!isSideBarToggled)
   };
 
-  const toggleIconUp1 = () => {
-      setDropdownIcon1(<FontAwesomeIcon icon={faChevronUp} size='lg' className={dappsidebarstyles.sidebarlisttoggle}/>)
-  }
-  const toggleIconUp2 = () => {
-      setDropdownIcon2(<FontAwesomeIcon icon={faChevronUp} size='lg' className={dappsidebarstyles.sidebarlisttoggle}/>)
-  }
+  // const toggleIconUp1 = () => {
+  //     setDropdownIcon1(<FontAwesomeIcon icon={faChevronUp} size='lg' className={dappsidebarstyles.sidebarlisttoggle}/>)
+  // }
+  // const toggleIconUp2 = () => {
+  //     setDropdownIcon2(<FontAwesomeIcon icon={faChevronUp} size='lg' className={dappsidebarstyles.sidebarlisttoggle}/>)
+  // }
   const toggleIconUp3 = () => {
       setDropdownIcon3(<FontAwesomeIcon icon={faChevronUp} size='lg' className={dappsidebarstyles.sidebarlisttoggle}/>)
   }
 
-  const toggleIconDown1 = () => {
-      setDropdownIcon1(<FontAwesomeIcon icon={faChevronDown} size='lg' className={dappsidebarstyles.sidebarlisttoggle}/>)
-  }
-  const toggleIconDown2 = () => {
-      setDropdownIcon2(<FontAwesomeIcon icon={faChevronDown} size='lg' className={dappsidebarstyles.sidebarlisttoggle}/>)
-  }
+  // const toggleIconDown1 = () => {
+  //     setDropdownIcon1(<FontAwesomeIcon icon={faChevronDown} size='lg' className={dappsidebarstyles.sidebarlisttoggle}/>)
+  // }
+  // const toggleIconDown2 = () => {
+  //     setDropdownIcon2(<FontAwesomeIcon icon={faChevronDown} size='lg' className={dappsidebarstyles.sidebarlisttoggle}/>)
+  // }
 
   const toggleIconDown3 = () => {
       setDropdownIcon3(<FontAwesomeIcon icon={faChevronDown} size='lg' className={dappsidebarstyles.sidebarlisttoggle}/>)
   }
 
+  const logout = () => {
+    // Simulate a logout action
+    localStorage.removeItem('userInfo');
+    router.push(`/signin`);
+  };
 //  async function connectAccount() {
 //     if(window.ethereum)  {
 //         // window.web3 = new Web3(web3.currentProvider);
@@ -236,39 +275,28 @@ const sideBarToggleCheck = dappsidebartoggle ? dappstyles.sidebartoggled : '';
                       <div className={dappsidebarstyles.sidebar_container}>
                         <div className={dappsidebarstyles.sidebar_container_p}>
                         <ul className={dappsidebarstyles.upa}>
-                            <li className={dappsidebarstyles.drpdwnlist} onMouseEnter={toggleIconUp1} onMouseOut={toggleIconDown1}>
-                                Dapp {dropdwnIcon1}
-                                <ul>
-                                    <li className={dappsidebarstyles.lista}><a href='/' rel='noopener noreferrer' > <FontAwesomeIcon icon={faAngleRight} size='lg' className={dappsidebarstyles.sidebardrbdwnbrandicon}/> <span className={dappsidebarstyles.brnd}>About TafaXtra</span></a></li>
-                                    <li className={dappsidebarstyles.lista}><a href='/' rel='noopener noreferrer' > <FontAwesomeIcon icon={faAngleRight} size='lg' className={dappsidebarstyles.sidebardrbdwnbrandicon}/> <span className={dappsidebarstyles.brnd}>RoadMap</span></a></li>
-                                    <li className={dappsidebarstyles.lista}><a href='/whitepaper' rel='noopener noreferrer' > <FontAwesomeIcon icon={faAngleRight} size='lg' className={dappsidebarstyles.sidebardrbdwnbrandicon}/> <span className={dappsidebarstyles.brnd}>White Paper</span></a></li>
-                                </ul>
+                            <li><a href='/whitepaper' rel='noopener noreferrer' className={dappsidebarstyles.linka}>White Paper</a></li>
+                            <li>
+                              <a href='https://pancakeswap.finance/swap?outputCurrency=0x5ae155F89308CA9050f8Ce1C96741BaDd342C26B' rel='noopener noreferrer' className={dappsidebarstyles.buytafa}>BUY TAFA</a>
                             </li>
-                            <li className={dappsidebarstyles.drpdwnlist}><a href='/whitepaper' rel='noopener noreferrer'>White Paper</a></li>
-                            <li className={dappsidebarstyles.drpdwnlist} onMouseEnter={toggleIconUp2} onMouseOut={toggleIconDown2}>
-                                Buy TafaXtra {dropdwnIcon2}
-                                <ul>
-                                    <li className={dappsidebarstyles.lista}><a href='/' rel='noopener noreferrer' ><FontAwesomeIcon icon={faCircleDollarToSlot} size='lg' className={dappsidebarstyles.sidebardrbdwnbrandicon}/> <span className={dappsidebarstyles.brnd}>Staking Rewards</span></a></li>
-                                    <li className={dappsidebarstyles.lista}><a href='/' rel='noopener noreferrer' ><FontAwesomeIcon icon={faGift} size='lg' className={dappsidebarstyles.sidebardrbdwnbrandicon}/> <span className={dappsidebarstyles.brnd}>TafaXtra Free Claim</span></a></li>
-                                    <li className={dappsidebarstyles.lista}><a href='/' rel='noopener noreferrer' ><FontAwesomeIcon icon={faHandHoldingDollar} size='lg' className={dappsidebarstyles.sidebardrbdwnbrandicon}/> <span className={dappsidebarstyles.brnd}>AirDrop Winner</span></a></li>
-                                    <li className={dappsidebarstyles.lista}><a href='/' rel='noopener noreferrer' ><FontAwesomeIcon icon={faPeopleGroup} size='lg' className={dappsidebarstyles.sidebardrbdwnbrandicon}/> <span className={dappsidebarstyles.brnd}>Referral</span></a></li>
-                                </ul>
-                            </li>
+                            <li><a href='/dapp/#mystakes' rel='noopener noreferrer' className={dappsidebarstyles.linka}>My Stakes</a></li>
                             <li className={dappsidebarstyles.drpdwnlist} onMouseEnter={toggleIconUp3} onMouseOut={toggleIconDown3}>
                                 Community {dropdwnIcon3}
                                 <ul>
-                                    <li className={dappsidebarstyles.lista}><a href='/' rel='noopener noreferrer' ><FontAwesomeIcon icon={faTwitter} size='lg' className={dappsidebarstyles.sidebardrbdwnbrandicon}/> <span className={dappsidebarstyles.brnd}>Twitter</span></a></li>
-                                    <li className={dappsidebarstyles.lista}><a href='/' rel='noopener noreferrer' ><FontAwesomeIcon icon={faFacebook} size='lg' className={dappsidebarstyles.sidebardrbdwnbrandicon}/> <span className={dappsidebarstyles.brnd}>Facebook</span></a></li>
-                                    <li className={dappsidebarstyles.lista}><a href='/' rel='noopener noreferrer' ><FontAwesomeIcon icon={faTelegram} size='lg' className={dappsidebarstyles.sidebardrbdwnbrandicon}/> <span className={dappsidebarstyles.brnd}>Telegram</span></a></li>
-                                    <li className={dappsidebarstyles.lista}><a href='/' rel='noopener noreferrer' ><FontAwesomeIcon icon={faDiscord} size='lg' className={dappsidebarstyles.sidebardrbdwnbrandicon}/> <span className={dappsidebarstyles.brnd}>Discord</span></a></li>
-                                    <li className={dappsidebarstyles.lista}><a href='/' rel='noopener noreferrer' ><FontAwesomeIcon icon={faMedium} size='lg' className={dappsidebarstyles.sidebardrbdwnbrandicon}/> <span className={dappsidebarstyles.brnd}>Medium</span></a></li>
-                                    <li className={dappsidebarstyles.lista}><a href='/' rel='noopener noreferrer' ><FontAwesomeIcon icon={faYoutube} size='lg' className={dappsidebarstyles.sidebardrbdwnbrandicon}/> <span className={dappsidebarstyles.brnd}>YouTube</span></a></li>
+                                    {/* <li className={dappsidebarstyles.lista}><a href='/' rel='noopener noreferrer' className={dappsidebarstyles.linka}><FontAwesomeIcon icon={faTwitter} size='lg' className={dappsidebarstyles.sidebardrbdwnbrandicon}/> <span className={dappsidebarstyles.brnd}>Twitter</span></a></li> */}
+                                    {/* <li className={dappsidebarstyles.lista}><a href='/' rel='noopener noreferrer' className={dappsidebarstyles.linka}><FontAwesomeIcon icon={faFacebook} size='lg' className={dappsidebarstyles.sidebardrbdwnbrandicon}/> <span className={dappsidebarstyles.brnd}>Facebook</span></a></li> */}
+                                    <li className={dappsidebarstyles.lista}><a href='https://t.me/tafaxtraweb' rel='noopener noreferrer' className={dappsidebarstyles.linka}><FontAwesomeIcon icon={faTelegram} size='lg' className={dappsidebarstyles.sidebardrbdwnbrandicon}/> <span className={dappsidebarstyles.brnd}>Telegram</span></a></li>
+                                    {/* <li className={dappsidebarstyles.lista}><a href='/' rel='noopener noreferrer' className={dappsidebarstyles.linka}><FontAwesomeIcon icon={faDiscord} size='lg' className={dappsidebarstyles.sidebardrbdwnbrandicon}/> <span className={dappsidebarstyles.brnd}>Discord</span></a></li> */}
+                                    {/* <li className={dappsidebarstyles.lista}><a href='/' rel='noopener noreferrer' className={dappsidebarstyles.linka}><FontAwesomeIcon icon={faMedium} size='lg' className={dappsidebarstyles.sidebardrbdwnbrandicon}/> <span className={dappsidebarstyles.brnd}>Medium</span></a></li> */}
+                                    {/* <li className={dappsidebarstyles.lista}><a href='/' rel='noopener noreferrer' className={dappsidebarstyles.linka}><FontAwesomeIcon icon={faYoutube} size='lg' className={dappsidebarstyles.sidebardrbdwnbrandicon}/> <span className={dappsidebarstyles.brnd}>YouTube</span></a></li> */}
                                 </ul>
                             </li>
                         </ul>
                         <ul className={dappsidebarstyles.upa}>
                             <li className={dappsidebarstyles.ld}><a href='/dapp#staketafa' rel='noopener noreferrer'>Stake TafaXtra</a></li>
+                            <li><button type='button' onClick={logout} className={dappsidebarstyles.linka}>Logout</button></li>
                         </ul>
+                        
                         </div>
                     </div>
                 </nav>
@@ -288,16 +316,21 @@ const sideBarToggleCheck = dappsidebartoggle ? dappstyles.sidebartoggled : '';
                   <FontAwesomeIcon icon={faXmarkCircle} size='lg' className={dappstyles.navlisttoggle}/> // Change this to the appropriate icon component or element
                 )}
               </button>
+              <div className={dappstyles.reflink}>
+                  <div className={dappstyles.reflinkdex}>Ref Link: <input value={referralLink} onChange={(e) => setreferralLink(e.target.value)} /><button type='button' onClick={handleCopyClick}>{buttonText}</button> </div>
+                  <div><small>Share referral link to increase your profits</small></div>
+              </div>
+              
                 <div className={dappstyles.head}>
                     <div className={dappstyles.uname}><span>Hi, {username}</span></div>
                     <h1>
                         WELCOME TO TAFAXTRA 
                     </h1>
-                    <p>TAFAXtra is a smart contract platform that replicates the traditional Certificate of Deposit but on the blockchain. It allows users to stake their MAXX tokens to earn fixed interest, up to 80% APY. It also has NFT functionality, and is backed by ownership of Validator Nodes.</p>
-                    <p>A community DAO manages the MAXXVault, which collects fees from trade tax and early unstakes. The usage of these funds will be voted on by the community, to use on things such as purchasing additional Validator Nodes, Marketing, Conferences, Token Burns etc.</p>
+                    <p>TAFAXtra is a smart contract platform that replicates the traditional Certificate of Deposit but on the blockchain. It allows users to stake their TAFA tokens to earn fixed interest, up to 80% APY. It also has NFT functionality, and is backed by ownership of Validator Nodes.</p>
+                    <p>A community DAO manages the TAFA Vault, which collects fees from trade tax and early unstakes. The usage of these funds will be voted on by the community, to use on things such as purchasing additional Validator Nodes, Marketing, Conferences, Token Burns etc.</p>
                     <div className={dappstyles.get_sd_btns}>
                       <a title='get started' href='/dapp/#stake' rel='noopener noreferrer' className={dappstyles.getstarted}>Stake TaFaXtra</a>
-                      <a href='/dapp' rel='noopener noreferrer' className={dappstyles.learnmore}>Buy TafaXtra</a>
+                      <a href='https://pancakeswap.finance/swap?outputCurrency=0x5ae155F89308CA9050f8Ce1C96741BaDd342C26B' rel='noopener noreferrer' className={dappstyles.learnmore}>Buy TafaXtra</a>
                     </div>
                 </div>
 

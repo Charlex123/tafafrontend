@@ -1,4 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
 import  { Web3ModalContext } from '../contexts/web3modal-context';
 import { ThemeContext } from '../contexts/theme-context';
 import styles from '../styles/dappnav.module.css';
@@ -31,6 +32,8 @@ function Navbar() {
 
     const { isOpen, onOpen, onClose, closeWeb3Modal,openWeb3Modal } = useContext(Web3ModalContext);
     
+    const router = useRouter();
+
   const {
     library,
     chainId,
@@ -200,14 +203,19 @@ function Navbar() {
         setDropdownIcon3(<FontAwesomeIcon icon={faChevronDown} size='lg' className={styles.navlisttoggle}/>)
     }
 
-
-    const shortname = (name) => {
-        if (name.length > 12) {
-            return name.split(' ')[0];
-        } else {
-            return name;
-        }
+    const logout = () => {
+      // Simulate a logout action
+      localStorage.removeItem('userInfo');
+      router.push(`/signin`);
     };
+
+    // const shortname = (name) => {
+    //     if (name.length > 12) {
+    //         return name.split(' ')[0];
+    //     } else {
+    //         return name;
+    //     }
+    // };
 
     const navClass = scrolling ? styles.scrolled : '';
 
@@ -222,33 +230,19 @@ function Navbar() {
                 {isNavOpen && (
                 <div className={styles.nav_container_p}>
                 <ul className={styles.upa}>
-                    <li className={styles.drpdwnlist} onMouseEnter={toggleIconUp1} onMouseOut={toggleIconDown1}>
-                        Dapp {dropdwnIcon1}
-                        <ul>
-                            <li><a href='/' rel='noopener noreferrer' > <FontAwesomeIcon icon={faAngleRight} size='lg' className={styles.navdrbdwnbrandicon}/> <span className={styles.brnd}>About TafaXtra</span></a></li>
-                            <li><a href='/' rel='noopener noreferrer' > <FontAwesomeIcon icon={faAngleRight} size='lg' className={styles.navdrbdwnbrandicon}/> <span className={styles.brnd}>RoadMap</span></a></li>
-                            <li><a href='/whitepaper' rel='noopener noreferrer' > <FontAwesomeIcon icon={faAngleRight} size='lg' className={styles.navdrbdwnbrandicon}/> <span className={styles.brnd}>White Paper</span></a></li>
-                        </ul>
-                    </li>
-                    <li><a href='/whitepaper' rel='noopener noreferrer'>White Paper</a></li>
-                    <li className={styles.drpdwnlist} onMouseEnter={toggleIconUp2} onMouseOut={toggleIconDown2}>
-                        Buy TafaXtra {dropdwnIcon2}
-                        <ul>
-                            <li><a href='/' rel='noopener noreferrer' ><FontAwesomeIcon icon={faCircleDollarToSlot} size='lg' className={styles.navdrbdwnbrandicon}/> <span className={styles.brnd}>Staking Rewards</span></a></li>
-                            <li><a href='/' rel='noopener noreferrer' ><FontAwesomeIcon icon={faGift} size='lg' className={styles.navdrbdwnbrandicon}/> <span className={styles.brnd}>TafaXtra Free Claim</span></a></li>
-                            <li><a href='/' rel='noopener noreferrer' ><FontAwesomeIcon icon={faHandHoldingDollar} size='lg' className={styles.navdrbdwnbrandicon}/> <span className={styles.brnd}>AirDrop Winner</span></a></li>
-                            <li><a href='/' rel='noopener noreferrer' ><FontAwesomeIcon icon={faPeopleGroup} size='lg' className={styles.navdrbdwnbrandicon}/> <span className={styles.brnd}>Referral</span></a></li>
-                        </ul>
+                    <li><a href='/whitepaper' rel='noopener noreferrer' className={styles.linka}>White Paper</a></li>
+                    <li>
+                      <a href='https://pancakeswap.finance/swap?outputCurrency=0x5ae155F89308CA9050f8Ce1C96741BaDd342C26B' rel='noopener noreferrer' className={styles.buytafa}>BUY TAFAXTRA</a>
                     </li>
                     <li className={styles.drpdwnlist} onMouseEnter={toggleIconUp3} onMouseOut={toggleIconDown3}>
                         Community {dropdwnIcon3}
                         <ul>
-                            <li><a href='/' rel='noopener noreferrer' ><FontAwesomeIcon icon={faTwitter} size='lg' className={styles.navdrbdwnbrandicon}/> <span className={styles.brnd}>Twitter</span></a></li>
-                            <li><a href='/' rel='noopener noreferrer' ><FontAwesomeIcon icon={faFacebook} size='lg' className={styles.navdrbdwnbrandicon}/> <span className={styles.brnd}>Facebook</span></a></li>
-                            <li><a href='/' rel='noopener noreferrer' ><FontAwesomeIcon icon={faTelegram} size='lg' className={styles.navdrbdwnbrandicon}/> <span className={styles.brnd}>Telegram</span></a></li>
-                            <li><a href='/' rel='noopener noreferrer' ><FontAwesomeIcon icon={faDiscord} size='lg' className={styles.navdrbdwnbrandicon}/> <span className={styles.brnd}>Discord</span></a></li>
-                            <li><a href='/' rel='noopener noreferrer' ><FontAwesomeIcon icon={faMedium} size='lg' className={styles.navdrbdwnbrandicon}/> <span className={styles.brnd}>Medium</span></a></li>
-                            <li><a href='/' rel='noopener noreferrer' ><FontAwesomeIcon icon={faYoutube} size='lg' className={styles.navdrbdwnbrandicon}/> <span className={styles.brnd}>YouTube</span></a></li>
+                            {/* <li><a href='/' rel='noopener noreferrer' className={styles.linka}><FontAwesomeIcon icon={faTwitter} size='lg' className={styles.navdrbdwnbrandicon}/> <span className={styles.brnd}>Twitter</span></a></li> */}
+                            {/* <li><a href='/' rel='noopener noreferrer' className={styles.linka}><FontAwesomeIcon icon={faFacebook} size='lg' className={styles.navdrbdwnbrandicon}/> <span className={styles.brnd}>Facebook</span></a></li> */}
+                            <li><a href='https://t.me/tafaxtraweb' rel='noopener noreferrer' className={styles.linka}><FontAwesomeIcon icon={faTelegram} size='lg' className={styles.navdrbdwnbrandicon}/> <span className={styles.brnd}>Telegram</span></a></li>
+                            {/* <li><a href='/' rel='noopener noreferrer' className={styles.linka}><FontAwesomeIcon icon={faDiscord} size='lg' className={styles.navdrbdwnbrandicon}/> <span className={styles.brnd}>Discord</span></a></li> */}
+                            {/* <li><a href='/' rel='noopener noreferrer' className={styles.linka}><FontAwesomeIcon icon={faMedium} size='lg' className={styles.navdrbdwnbrandicon}/> <span className={styles.brnd}>Medium</span></a></li> */}
+                            {/* <li><a href='/' rel='noopener noreferrer' className={styles.linka}><FontAwesomeIcon icon={faYoutube} size='lg' className={styles.navdrbdwnbrandicon}/> <span className={styles.brnd}>YouTube</span></a></li> */}
                         </ul>
                     </li>
                 </ul>
@@ -259,7 +253,7 @@ function Navbar() {
                         ) : (
                         <button onClick={disconnect} className={styles.connected}><span>connected</span>Disconnect</button>
                         )}</li>
-                    <li className={styles.si}><a href='/signin' rel='noopener noreferrer'>Logout</a></li>
+                    <li className={styles.si}><button onClick={logout} type='button'>Logout</button></li>
                 </ul>
                 </div>)
                 }

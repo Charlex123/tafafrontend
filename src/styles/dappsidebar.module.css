@@ -33,11 +33,8 @@ overflow: scroll;padding-bottom: 2rem;
     margin-bottom: 1rem;
 }
 .sidebar .sidebar_container .sidebar_container_p ul.upa li {
-    list-style: none;vertical-align: auto;margin: 5px 20px;cursor: pointer;position: relative;
+    list-style: none;vertical-align: auto;margin: 35px 20px;cursor: pointer;position: relative;
     font-size: 15px;
-}
-.sidebar .sidebar_container .sidebar_container_p ul.upa li:hover {
-  border-top: 2px solid #08d34f;
 }
 .sidebar .sidebar_container .sidebar_container_p ul.upa li.drpdwnlist:hover > ul {
   display: block;
@@ -45,12 +42,19 @@ overflow: scroll;padding-bottom: 2rem;
 .sidebar .sidebar_container .sidebar_container_p ul.upa li .sidebarlisttoggle {
     color: #e6e3e3;font-size: 9px;margin-bottom: 2px;
 }
+.sidebar .sidebar_container .sidebar_container_p ul.upa li a.toplink {
+    background-color: #c2c5c3;color: #0a0a0a;padding: 4px 20px;border-radius: 60px;
+}
 .sidebar .sidebar_container .sidebar_container_p ul.upa li.ld {
     list-style: none;vertical-align: auto;border: 1px solid #08d34f;height: fit-content;border-radius: 120px;
-    padding: 3px 18px 3px 18px;color: #08d34f;margin-top: 0;
+    padding: 3px 18px 3px 18px;color: #08d34f;margin-top: 0;width: fit-content;
 }
 .sidebar .sidebar_container .sidebar_container_p ul.upa li.ld a {
-  color: #08d34f;
+  color: #08d34f;width: fit-content;
+}
+.sidebar .sidebar_container .sidebar_container_p ul.upa li a.buytafa {
+  background-color: #08d34f;color: #0a0a0a;padding: 6px 20px 6px 20px;border-radius: 60px;
+  font-weight: 900;font-size: 14px;
 }
 .sidebar .sidebar_container .sidebar_container_p ul.upa li.ld:hover {
   background-color: #f0eded49;border: 1px dashed #08d34f;color: #08d34f;
@@ -89,6 +93,9 @@ background-color: #f0eded49;border: 1px dashed #08d34f;
 }
 .sidebar .sidebar_container .sidebar_container_p ul.upa li ul li:hover {
   border-top: none;
+}
+.sidebar .sidebar_container .sidebar_container_p ul.upa li a.linka:hover,.sidebar .sidebar_container .sidebar_container_p ul.upa li.drpdwnlist:hover,.sidebar .sidebar_container .sidebar_container_p ul.upa li button:hover {
+  border-top: 2px solid #08d34f;
 }
 .sidebar .sidebar_container .sidebar_container_p ul.upa li ul li a {
   cursor: pointer;text-align: left;

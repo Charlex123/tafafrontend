@@ -49,7 +49,7 @@ background: linear-gradient(to bottom,  rgba(0,0,0,0.65) 0%,rgba(0,0,0,0.65) 99%
 .nav .nav_container .nav_container_p ul.upa li {
     list-style: none;vertical-align: auto;margin: 5px 20px;cursor: pointer;position: relative;
 }
-.nav .nav_container .nav_container_p ul.upa li:hover {
+.nav .nav_container .nav_container_p ul.upa li a.linka:hover,.nav .nav_container .nav_container_p ul.upa li.drpdwnlist:hover {
   border-top: 2px solid #08d34f;
 }
 .nav .nav_container .nav_container_p ul.upa li.drpdwnlist:hover > ul {
@@ -65,6 +65,10 @@ background: linear-gradient(to bottom,  rgba(0,0,0,0.65) 0%,rgba(0,0,0,0.65) 99%
 .nav .nav_container .nav_container_p ul.upa li.ld a {
   color: #08d34f;
 }
+.nav .nav_container .nav_container_p ul.upa li a.buytafa {
+  background-color: #08d34f;color: #0a0a0a;padding: 6px 20px 6px 20px;border-radius: 60px;
+  font-weight: 900;font-size: 14px;
+}
 .nav .nav_container .nav_container_p ul.upa li.ld:hover {
   background-color: #f0eded49;border: 1px dashed #08d34f;color: #08d34f;
 }
@@ -73,6 +77,9 @@ background: linear-gradient(to bottom,  rgba(0,0,0,0.65) 0%,rgba(0,0,0,0.65) 99%
 }
 .nav .nav_container .nav_container_p ul.upa li.ld:active {
   background-color: #f0eded49;border: 1px dashed #08d34f;
+}
+.nav .nav_container .nav_container_p ul.upa li a.buytafa:hover {
+  color: #444141;border-top: none;
 }
 .nav .nav_container .nav_container_p ul.upa li.si {
   list-style: none;vertical-align: auto;border: 1px solid #e0f7e8;height: fit-content;border-radius: 120px;
@@ -95,7 +102,7 @@ background-color: #f0eded49;border: 1px dashed #08d34f;
 }
 .nav .nav_container .nav_container_p ul.upa li ul {
   position: absolute;z-index: 9;top: 45px;width: 220px;max-width: 250px;
-  padding: 10px 40px 20px 0;border-radius: 8px;text-align: left;height: 250px;
+  padding: 10px 40px 20px 0;border-radius: 8px;text-align: left;height: inherit;
   background: rgb(13,20,24);display: none;z-index: 9;
   background: linear-gradient(333deg, rgba(13,20,24,1) 0%, rgba(19,28,28,1) 0%, rgba(13,20,24,1) 0%, rgba(58,58,66,1) 0%, rgba(24,28,45,1) 100%, rgba(18,27,43,1) 100%, rgba(19,28,28,1) 100%, rgba(13,20,24,1) 100%, rgba(5,4,36,1) 100%, rgba(13,20,24,1) 100%, rgba(9,9,121,0.8757878151260504) 100%, rgba(0,212,255,1) 100%);
 }
