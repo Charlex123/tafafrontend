@@ -104,7 +104,7 @@ const toggleNav = () => {
             </div>
           </div>
           <div className={styles.hero_image}>
-            <Image src={Heroimg} alt='hero img' className={styles.hero_image_} quality={90} />
+            <Image src={Heroimg} alt='hero img' style={{objectFit: "contain",marginTop: '5rem'}} quality={90} />
           </div>
       </div>
       
