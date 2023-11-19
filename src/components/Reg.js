@@ -23,15 +23,7 @@ library.add(faEye, faEyeSlash);
 const RegisterForm = () =>  {
 
   const router = useRouter();
-  let upline;
 
-  console.log('router', router.query.id)
-  if(router.query.id == undefined) {
-      upline = router.query.id;
-  }else {
-      upline = router.query.id;
-  }
-  
   const [email, setEmail] = useState("");
   const [username, setUserame] = useState("");
   const [pic, setPic] = useState(
@@ -43,9 +35,9 @@ const RegisterForm = () =>  {
   const [error, setError] = useState(false);
   const [messageContent, setMessageContent] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  const [refsponsor, setRefSponsor] = useState(upline);
+  const [refsponsor, setRefSponsor] = useState("");
   const [sponsor_, setSponsor_] = useState("");
-  const [sponsor, setSponsor] = useState(upline);
+  const [sponsor, setSponsor] = useState("");
   const [level, setLevel] = useState("White Label");
   const [tpin, setTPin] = useState(1234);
   const [loading, setLoading] = useState(false);
@@ -59,6 +51,15 @@ const RegisterForm = () =>  {
 
 //   const isConnected = Boolean(accounts[0]);
 
+    const {id} = router.query
+
+    useEffect(() => {
+      if(!id) {
+        return;
+      }
+      setSponsor(id);
+      setRefSponsor(id);
+    },[id])
 
     // mainnet 
     // const web3 = new Web3('https://bsc-dataseed1.binance.org:443');
@@ -97,7 +98,7 @@ const RegisterForm = () =>  {
         "Content-type": "application/json"
       }
     }
-    const {data} = await axios.post("http://localhost:7000/api/users/checkusername", {
+    const {data} = await axios.post("https://tafabackend.onrender.com/api/users/checkusername", {
           username,
     }, config);
     if(data) {
@@ -115,7 +116,7 @@ const RegisterForm = () =>  {
         "Content-type": "application/json"
       }
     }
-    const {data} = await axios.post("http://localhost:7000/api/users/checkemail", {
+    const {data} = await axios.post("https://tafabackend.onrender.com/api/users/checkemail", {
           email,
     }, config);
     if(data) {
@@ -146,7 +147,7 @@ const RegisterForm = () =>  {
         
         setLoading(true);
         setLevel("White Whale");
-        const {data} = await axios.post("http://localhost:7000/api/users/register", {
+        const {data} = await axios.post("https://tafabackend.onrender.com/api/users/register", {
           username,
           sponsor_,
           email,
