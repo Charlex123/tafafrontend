@@ -101,7 +101,7 @@ background: linear-gradient(333deg, rgba(13,20,24,1) 0%, rgba(9,22,29,1) 0%, rgb
   font-weight: 800;padding-top: .4rem;
 }
 .exchmain .dexchanges {
-  display: flex;justify-content: space-around;padding: 15px 5px;margin: 0;flex-wrap: wrap;
+  display: flex;justify-content: space-around;padding: 15px 5px;margin: 0;flex-wrap: nowrap;
 }
 .exchmain .dexchanges .dexlinks {
   width: 150px;margin: 30px 20px;
@@ -357,7 +357,7 @@ background: linear-gradient(333deg, rgba(13,20,24,1) 0%, rgba(9,22,29,1) 0%, rgb
 @media (max-width: 990px) {
     
     .c_content {    
-        padding: 5px;display: block;
+        padding: 5px;display: block;margin-top: 5rem;
     }
     .c_content .hero_image {
         width: 100%;margin: 0;text-align: center;

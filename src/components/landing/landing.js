@@ -215,7 +215,7 @@ const toggleNav = () => {
                 width: '150px',
                 height: '40px',
                 margin: 'auto 0 auto 0',
-                transform: `translateX(${index * 100 - currentSliderIndex * 100}%)`,
+                transform: `translateX(${index * 30 - currentSliderIndex * 50}%)`,
                 transition: 'transform 0.5s ease-in-out',
               }}
             />
