@@ -25,10 +25,10 @@
     color: #ffffff;font-size: 14px !important;
 }
 .main_c .sidebar {
-    width: 25%;padding-top: 0;position: relative;
+    width: 25%;padding-top: 0;position: fixed;height: 100%;
 }
 .main_c .main {
-    width: 75%;height: 100%;
+    width: 100%;height: 100%;margin-left: 25%;
 }
 .main_c .sidebar.sidebartoggled {
     width: 0;
@@ -179,7 +179,7 @@ background: linear-gradient(90deg, rgba(12,16,32,1) 100%, rgba(44,44,48,1) 100%,
         width: 100%;
     }
     .main_c .main {
-        width: 100%;height: 100%;
+        width: 100%;height: 100%;margin-left: 0;
     }
     .main_c .sidebar {
         width: 50%;padding-top: 0;position: fixed;z-index: 99;
@@ -204,7 +204,7 @@ background: linear-gradient(90deg, rgba(12,16,32,1) 100%, rgba(44,44,48,1) 100%,
         width: 90%;height: 100%;
     }
     .main_c .main {
-        width: 100%;height: 100%;
+        width: 100%;height: 100%;margin-left: 0;
     }
     .main_c .sidebar {
         width: 60%;padding-top: 0;position: fixed;z-index: 99;
@@ -219,7 +219,7 @@ background: linear-gradient(90deg, rgba(12,16,32,1) 100%, rgba(44,44,48,1) 100%,
         width: 60%;padding-top: 0;position: fixed;z-index: 99;
     }
     .main_c .main {
-        width: 100%;height: 100%;
+        width: 100%;height: 100%;margin-left: 0;
     }
     .main .con_btns  {
         display: block;
