@@ -41,11 +41,11 @@
   color: #f1f1f1;text-align: left;font-size: 14px;margin-left: 0;
 }
 .c_content .ca input {
-  background-color: #c9c8c8;color: #2c2b2b;font-size: 12px;font-weight: 600;padding: 3px 6px;
+  background-color: #08d34f;color: #000000;font-size: 14px;font-weight: 600;padding: 3px 6px;
   border-radius: 60px;width: 80%;
 }
 .c_content .ca button {
-  background-color: orange;color: #2c2b2b;font-size: 12px;font-weight: 600;padding: 3px 12px;
+  background-color: orange;color: #2c2b2b;font-size: 14px;font-weight: 600;padding: 3px 12px;
   border-radius: 60px;width: 15%;
 }
 .c_content .hero_image .hero_image_{
@@ -83,6 +83,10 @@ background: linear-gradient(333deg, rgba(13,20,24,1) 0%, rgba(9,22,29,1) 0%, rgb
     color: #08d34f94;border: none;font-family: "Poppins";font-size: 20px;border: 2px solid #08d34f94;border-radius: 120px;
     font-weight: 600;padding: 2px 28px 2px 28px;border-radius: 60px;margin-top: 0;
 }
+.readmorebtn {
+  background-color: #f1f1f1;border-radius: 120px;padding: 5px 16px;color: #1f1d1d;font-size: 13px;
+  font-weight: 600;
+}
 .exchmain {
   width: 100%;margin: 115px 0;padding: 0;
   background: rgb(13,20,24);
@@ -97,13 +101,13 @@ background: linear-gradient(333deg, rgba(13,20,24,1) 0%, rgba(9,22,29,1) 0%, rgb
   font-weight: 800;padding-top: .4rem;
 }
 .exchmain .dexchanges {
-  display: flex;justify-content: space-evenly;padding: 15px 10px;margin: 0;flex-wrap: wrap;
+  display: flex;justify-content: space-around;padding: 15px 5px;margin: 0;flex-wrap: wrap;
 }
 .exchmain .dexchanges .dexlinks {
   width: 150px;margin: 30px 20px;
 }
 .exchmain .dexchanges .delginks {
-  width: 150px;margin: 20px 20px;
+  width: 150px;margin: 20px 0;
 }
 .stkb {
   width: 100%;margin: 4rem 0;text-align: center;padding: 0;

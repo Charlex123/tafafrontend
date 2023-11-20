@@ -36,6 +36,7 @@ import polychlogo from '../../assets/images/blockchain-polygon-white-024b04f0.pn
 import { ThemeContext } from '../../contexts/theme-context';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { Chrono } from "react-chrono";
+import TouchCarousel from 'react-touch-carousel'
 import 'react-vertical-timeline-component/style.min.css';
 import { fas, faCheck, faCheckCircle,faAlignJustify, faCircleChevronRight, faCheckSquare, faChevronRight } from '@fortawesome/free-solid-svg-icons'
 import { faTwitter, faFontAwesome } from '@fortawesome/free-brands-svg-icons'
@@ -45,9 +46,40 @@ library.add(fas, faTwitter, faFontAwesome,faQuestionCircle, faCheck,faCheckCircl
 const Home = () => {
 // Create a state variable to manage the visibility of the navigation menu
 const [isNavOpen, setNavOpen] = useState(false);
+const [readMore, setReadMore] = useState(false);
+// Array of text values to toggle between
+const textValues = ["Read More ...", "Read Less ..."];
+// State to track the current index in the array
+const [currentRMTextIndex, setCurrentRMTextIndex] = useState(0);
+const [currentSliderIndex, setCurrentSliderIndex] = useState(0);
 const { theme, drawerOpen } = useContext(ThemeContext);
 const [contractAddress, setcontractAddress] = useState('0x5ae155F89308CA9050f8Ce1C96741BaDd342C26B');
-   const [buttonText, setButtonText] = useState("Copy");
+const [buttonText, setButtonText] = useState("Copy");
+
+const images = [
+  cgk,
+  cmc,
+  quckswap,
+  binancelogo,
+  mexclogo,
+  kucoinlogo,
+  huobilogo,
+  okxlogo
+];
+
+console.log('slider images', images)
+console.log('images length', images.length)
+// Function to go to the next image
+const goToNextImage = () => {
+  setCurrentSliderIndex((prevIndex) => (prevIndex + 1) % images.length);
+};
+
+const showReadMore =  () => {
+  setReadMore(!readMore);
+  setCurrentRMTextIndex((prevIndex) => (prevIndex + 1) % textValues.length);
+}
+
+
 
 const handleCopyClick = () => {
    // Create a temporary textarea element
@@ -78,6 +110,10 @@ const handleCopyClick = () => {
  };
 
 useEffect(() => {
+
+  // Auto-play functionality
+  const intervalId = setInterval(goToNextImage, 3000); // Change image every 3 seconds
+
   // Function to handle window resize
   const handleResize = () => {
     // Check the device width and update isNavOpen accordingly
@@ -95,8 +131,10 @@ useEffect(() => {
   window.addEventListener('resize', handleResize);
 
   // Clean up the event listener when the component unmounts
+  
   return () => {
     window.removeEventListener('resize', handleResize);
+    clearInterval(intervalId);
   };
 }, []);
 
@@ -119,9 +157,12 @@ const toggleNav = () => {
             </div>
             <Typed
                     strings={[
-                        'Newly Launched',
+                        'Launched',
                         'Reliable',
                         'Sustainable',
+                        'Buy TAFA',
+                        'STAKE TAFA',
+                        'EARN REWARDS',
                         'Trusted']}
                     typeSpeed={40}
                     backSpeed={50}
@@ -166,7 +207,22 @@ const toggleNav = () => {
             Coming Soon Partnerships
           </h4>
           <div className={styles.dexchanges}>
-            <a href='https://coingecko.com' rel='noreferrer noopener'><Image src={cgk} className={styles.delginks} width={150} height={40} style={{maxHeight: '40px'}}/></a>
+            {images.map((image, index) => (
+            <Image
+              key={index}
+              src={image}
+              alt={`slide-${index}`}
+              className={styles.delginks}
+              style={{
+                width: '150px',
+                height: '40px',
+                margin: 'auto 0 auto 0',
+                transform: `translateX(${index * 100 - currentSliderIndex * 100}%)`,
+                transition: 'transform 0.5s ease-in-out',
+              }}
+            />
+          ))}
+            {/* <a href='https://coingecko.com' rel='noreferrer noopener'><Image src={cgk} className={styles.delginks} width={150} height={40} style={{maxHeight: '40px'}}/></a>
             <a href='https://coinmarketcap.io' rel='noreferrer noopener'><Image src={cmc} className={styles.delginks} width={150} height={40} style={{maxHeight: '40px'}}/></a>
             <a href='https://quickswap.exchange' rel='noreferrer noopener'><Image src={quckswap} className={styles.delginks} width={150} height={40} style={{maxHeight: '40px'}}/></a>
             <a href='https://binance.com' rel='noreferrer noopener'><Image src={binancelogo} className={styles.delginks} width={150} height={40} style={{maxHeight: '40px'}}/></a>
@@ -174,7 +230,7 @@ const toggleNav = () => {
             <a href='https://kucoin.com' rel='noreferrer noopener'><Image src={kucoinlogo} className={styles.delginks} width={150} height={40} style={{maxHeight: '40px'}}/></a>
             <a href='https://huobi.com' rel='noreferrer noopener'><Image src={huobilogo} className={styles.delginks} width={150} height={40} style={{maxHeight: '40px'}}/></a>
             <a href='https://okx.com' rel='noreferrer noopener'><Image src={okxlogo} className={styles.delginks} width={150} height={40} style={{maxHeight: '40px'}}/></a>
-            <a href='https://gate.io' rel='noreferrer noopener'><Image src={gateiologo} className={styles.delginks} width={150} height={40} style={{maxHeight: '40px'}}/></a>
+            <a href='https://gate.io' rel='noreferrer noopener'><Image src={gateiologo} className={styles.delginks} width={150} height={40} style={{maxHeight: '40px'}}/></a> */}
           </div>
         </div>
       </div>
@@ -234,11 +290,19 @@ const toggleNav = () => {
                   </li>
                 </ul>
                 <p>
-                Welcome to the world of crypto staking - a revolutionary way to maximize your crypto investments! Whether you're an experienced investor or new to the crypto scene, staking offers unparalleled benefits and an avenue for growing your digital assets exponentially. So why settle for stagnant coins when you can start staking and earn continuous daily rewards! Join the millions of crypto enthusiasts who are already embracing this game-changing opportunity.
+                    Welcome to the world of crypto staking - a revolutionary way to maximize your crypto investments! Whether you're an experienced investor or new to the crypto scene, staking offers unparalleled benefits and an avenue for growing your digital assets exponentially.
                 </p>
-                <p>
-                TafaXtra staking presents an irresistible opportunity to maximize your investment potential, earn passive income, referral income, and actively contribute to the growth of blockchain networks. By staking your coins, you unlock a world of benefits: secure returns, reduced risks, community participation, and efficient asset allocation. Don't let your crypto assets remain idle any longer! Take control, stake your coins, and start reaping the rewards today - it's time to witness the true power of staking!
-                </p>
+                
+                {readMore && (
+                  <>
+                    <p>
+                    So why settle for stagnant coins when you can start staking and earn continuous daily rewards! Join the millions of crypto enthusiasts who are already embracing this game-changing opportunity.
+                    </p>
+                    <p>
+                    TafaXtra staking presents an irresistible opportunity to maximize your investment potential, earn passive income, referral income, and actively contribute to the growth of blockchain networks. By staking your coins, you unlock a world of benefits: secure returns, reduced risks, community participation, and efficient asset allocation. Don't let your crypto assets remain idle any longer! Take control, stake your coins, and start reaping the rewards today - it's time to witness the true power of staking!
+                    </p>
+                  </>)}  
+                  <button type='button' className={styles.readmorebtn} onClick={showReadMore}>{textValues[currentRMTextIndex]}</button>
               </div>
               <div className={styles.stakevestimg}>
                 <Image src={stakevest} alt='stake image' quality={90} className={styles.stakevest_img}/>
@@ -257,19 +321,24 @@ const toggleNav = () => {
             trading bot that will give her users outstanding leverage in trading financial markets
             via several exchanges and brokers.
           </p>
-          <p>
-            Moreso, understanding and engaging productively in cryptography/cryptocurrency has
-            been quite a difficult venture for newbies despite several innovative ways to simplify
-            same by many developers.
-          </p>
-          <p>
-            The key problems are overt. Robots and several other methods invented have never
-            been all-inclusive, and have little or no bearing on core technical and fundamental
-            analysis. TAFAXTRA hence comes in as a multi-dimensional solution in delivering realtime relevant financial news and hybrid expert technical analysis as well as financial
-            market updates to its users. TAFAXTRA also provides its users with the best hybrid TAFA-based trading robot for trading several financial markets with several exchanges
-            and brokers.
-          </p>
           
+          {readMore && (
+            <>
+              <p>
+                Moreso, understanding and engaging productively in cryptography/cryptocurrency has
+                been quite a difficult venture for newbies despite several innovative ways to simplify
+                same by many developers.
+              </p>
+              <p>
+                The key problems are overt. Robots and several other methods invented have never
+                been all-inclusive, and have little or no bearing on core technical and fundamental
+                analysis. TAFAXTRA hence comes in as a multi-dimensional solution in delivering realtime relevant financial news and hybrid expert technical analysis as well as financial
+                market updates to its users. TAFAXTRA also provides its users with the best hybrid TAFA-based trading robot for trading several financial markets with several exchanges
+                and brokers.
+              </p>
+            </>
+          )}
+          <button type='button' className={styles.readmorebtn} onClick={showReadMore}>{textValues[currentRMTextIndex]}</button>
           <ul>
             <h4>Reasons To Buy And Stake TafaXtra</h4>
             <li>
@@ -326,14 +395,22 @@ const toggleNav = () => {
                 </ul>
 
                 <p>
-                Welcome to the world of Community referral income, where spreading the word about amazing crypto investment opportunities and services can generate lucrative daily returns for you! If you're looking for a reliable avenue to increase your TAFA portfolio and earn passive income, referral programs offer a compelling opportunity. Join the ranks of TAFA Staking successful referrers and tap into the network effects to accumulate unlimited TafaXtra units. Get ready to watch your assets soar as you leverage the power of referrals!
+                Welcome to the world of Community referral income, where spreading the word about amazing crypto investment opportunities and services can generate lucrative daily returns for you! If you're looking for a reliable avenue to increase your TAFA portfolio and earn passive income, referral programs offer a compelling opportunity. 
                 </p>
-                <p>
-                Referral income is a dynamic and rewarding way to earn passive income by sharing information that benefits your community
-                </p>
-                <p>
-                By harnessing the power of community effects and leveraging your relationships, you position yourself as a trusted influencer, earning commission for every successful referral. Make the most of your connections, share the TAFA Staking Protocol , and unlock unlimited referral income. Start referring now to watch your earnings soar and empower others to discover life-changing solutions!
-                </p>
+                {readMore && (
+                  <>
+                    <p>
+                    Join the ranks of TAFA Staking successful referrers and tap into the network effects to accumulate unlimited TafaXtra units. Get ready to watch your assets soar as you leverage the power of referrals!
+                    </p>
+                    <p>
+                    Referral income is a dynamic and rewarding way to earn passive income by sharing information that benefits your community
+                    </p>
+                    <p>
+                    By harnessing the power of community effects and leveraging your relationships, you position yourself as a trusted influencer, earning commission for every successful referral. Make the most of your connections, share the TAFA Staking Protocol , and unlock unlimited referral income. Start referring now to watch your earnings soar and empower others to discover life-changing solutions!
+                    </p>
+                  </>
+                )}
+                <button type='button' className={styles.readmorebtn} onClick={showReadMore}>{textValues[currentRMTextIndex]}</button>
               </div>
               <div className={styles.referralsimg}>
                 <Image src={teamwork} alt='team image' quality={90} className={styles.referrals_img}/>

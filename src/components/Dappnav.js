@@ -230,7 +230,6 @@ function Navbar() {
                 {isNavOpen && (
                 <div className={styles.nav_container_p}>
                 <ul className={styles.upa}>
-                    <li><a href='/whitepaper' rel='noopener noreferrer' className={styles.linka}>White Paper</a></li>
                     <li>
                       <a href='https://pancakeswap.finance/swap?outputCurrency=0x5ae155F89308CA9050f8Ce1C96741BaDd342C26B' rel='noopener noreferrer' className={styles.buytafa}>BUY TAFAXTRA</a>
                     </li>

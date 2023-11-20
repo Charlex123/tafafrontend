@@ -172,6 +172,8 @@ const handleCopyClick = () => {
         setUsername(username_);
         setreferralLink(`https://tafaextra.io/register/${udetails.userId}`);
       }
+    }else {
+      router.push(`/signin`);
     }
 
     // Function to handle window resize
@@ -275,7 +277,6 @@ const sideBarToggleCheck = dappsidebartoggle ? dappstyles.sidebartoggled : '';
                       <div className={dappsidebarstyles.sidebar_container}>
                         <div className={dappsidebarstyles.sidebar_container_p}>
                         <ul className={dappsidebarstyles.upa}>
-                            <li><a href='/whitepaper' rel='noopener noreferrer' className={dappsidebarstyles.linka}>White Paper</a></li>
                             <li>
                               <a href='https://pancakeswap.finance/swap?outputCurrency=0x5ae155F89308CA9050f8Ce1C96741BaDd342C26B' rel='noopener noreferrer' className={dappsidebarstyles.buytafa}>BUY TAFA</a>
                             </li>
