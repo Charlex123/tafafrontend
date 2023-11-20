@@ -171,7 +171,7 @@ const toggleNav = () => {
                         'Reliable',
                         'Sustainable',
                         'Buy TAFA',
-                        'STake TAFA',
+                        'Stake TAFA',
                         'Earn Rewards',
                         'Trusted']}
                     typeSpeed={40}
