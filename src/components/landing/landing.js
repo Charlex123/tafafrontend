@@ -27,7 +27,6 @@ import binancelogo from '../../assets/images/binance.png';
 import mexclogo from '../../assets/images/mexc.png';
 import okxlogo from '../../assets/images/okx.png';
 import pcslogo from '../../assets/images/pcs.png';
-import gateiologo from '../../assets/images/gateio-logo.png';
 import huobilogo from '../../assets/images/huobi.png';
 import kucoinlogo from '../../assets/images/kucoin.png';
 import stakevest from '../../assets/images/stakevest.png'
@@ -36,7 +35,6 @@ import polychlogo from '../../assets/images/blockchain-polygon-white-024b04f0.pn
 import { ThemeContext } from '../../contexts/theme-context';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { Chrono } from "react-chrono";
-import TouchCarousel from 'react-touch-carousel'
 import 'react-vertical-timeline-component/style.min.css';
 import { fas, faCheck, faCheckCircle,faAlignJustify, faCircleChevronRight, faCheckSquare, faChevronRight } from '@fortawesome/free-solid-svg-icons'
 import { faTwitter, faFontAwesome } from '@fortawesome/free-brands-svg-icons'
