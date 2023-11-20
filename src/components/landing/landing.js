@@ -69,8 +69,6 @@ const images = [
   okxlogo
 ];
 
-console.log('slider images', images)
-console.log('images length', images.length)
 // Function to go to the next image
 const goToNextImage = () => {
   setCurrentSliderIndex((prevIndex) => (prevIndex + 1) % images.length);
@@ -487,25 +485,25 @@ const toggleNav = () => {
                   
                   items={[
                     {
-                      title: <FontAwesomeIcon icon={faCheckCircle} size='3x' className={styles.chronotitleicon}/>,
+                      title: <FontAwesomeIcon icon={faCheckCircle} size='2x' className={styles.chronotitleicon}/>,
                      },
                     {
-                      title: <FontAwesomeIcon icon={faCheckCircle} size='3x' className={styles.chronotitleicon}/>,
+                      title: <FontAwesomeIcon icon={faCheckCircle} size='2x' className={styles.chronotitleicon}/>,
                      },{
-                      title: <FontAwesomeIcon icon={faCheckCircle} size='3x' className={styles.chronotitleicon}/>,
+                      title: <FontAwesomeIcon icon={faCheckCircle} size='2x' className={styles.chronotitleicon}/>,
                      },{
-                      title: <FontAwesomeIcon icon={faCheckCircle} size='3x' className={styles.chronotitleicon}/>,
+                      title: <FontAwesomeIcon icon={faCheckCircle} size='2x' className={styles.chronotitleicon}/>,
                     },{
-                      title: <FontAwesomeIcon icon={faCheckCircle} size='3x' className={styles.chronotitleicon}/>,
+                      title: <FontAwesomeIcon icon={faCheckCircle} size='2x' className={styles.chronotitleicon}/>,
                      }
                     ,{
-                      title: <FontAwesomeIcon icon={faCheckCircle} size='3x' className={styles.chronotitleicon}/>,
+                      title: <FontAwesomeIcon icon={faCheckCircle} size='2x' className={styles.chronotitleicon}/>,
                     }
                     ,{
-                      title: <FontAwesomeIcon icon={faCheckCircle} size='3x' className={styles.chronotitleicon}/>,
+                      title: <FontAwesomeIcon icon={faCheckCircle} size='2x' className={styles.chronotitleicon}/>,
                     },
                     {
-                      title: <FontAwesomeIcon icon={faCheckCircle} size='3x' className={styles.chronotitleicon}/>,
+                      title: <FontAwesomeIcon icon={faCheckCircle} size='2x' className={styles.chronotitleicon}/>,
                      },
                      {
                       title: "Coming Soon",

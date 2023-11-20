@@ -274,6 +274,13 @@ const sideBarToggleCheck = dappsidebartoggle ? dappstyles.sidebartoggled : '';
             <div className={dappstyles.main_c}>
               <div className={`${dappstyles.sidebar} ${sideBarToggleCheck}`}>
                   <nav className={dappsidebarstyles.sidebar}>
+                    <button title='togglebtn' className={dappsidebarstyles.sidebar_toggle_btn} type='button' onClick={toggleSideBar}>
+                      {isSideBarToggled ? (
+                        <FontAwesomeIcon icon={faAlignJustify} size='lg' className={dappsidebarstyles.navlisttoggle}/> // Change this to the appropriate icon component or element
+                      ) : (
+                        <FontAwesomeIcon icon={faXmarkCircle} size='lg' className={dappsidebarstyles.navlisttoggle}/> // Change this to the appropriate icon component or element
+                      )}
+                    </button>
                       <div className={dappsidebarstyles.sidebar_container}>
                         <div className={dappsidebarstyles.sidebar_container_p}>
                         <ul className={dappsidebarstyles.upa}>
