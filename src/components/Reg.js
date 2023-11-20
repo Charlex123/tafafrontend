@@ -35,9 +35,7 @@ const RegisterForm = () =>  {
   const [error, setError] = useState(false);
   const [messageContent, setMessageContent] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  const [refsponsor, setRefSponsor] = useState("");
-  const [sponsor_, setSponsor_] = useState("");
-  const [sponsor, setSponsor] = useState("");
+  const [sponsorId, setSponsorId] = useState("");
   const [level, setLevel] = useState("White Label");
   const [tpin, setTPin] = useState(1234);
   const [loading, setLoading] = useState(false);
@@ -57,8 +55,7 @@ const RegisterForm = () =>  {
       if(!id) {
         return;
       }
-      setSponsor(id);
-      setRefSponsor(id);
+      setSponsorId(id);
     },[id])
 
     // mainnet 
@@ -139,17 +136,12 @@ const RegisterForm = () =>  {
             "Content-type": "application/json"
           }
         }  
-        if(sponsor) {
-          setSponsor_(sponsor);
-        }else if(refsponsor){
-          setSponsor_(refsponsor);
-        }
         
         setLoading(true);
         setLevel("White Whale");
         const {data} = await axios.post("https://tafabackend.onrender.com/api/users/register", {
           username,
-          sponsor_,
+          sponsorId,
           email,
           level,
           tpin,
@@ -230,8 +222,8 @@ const RegisterForm = () =>  {
         <div className={regstyles.form_group}>
             <label className={regstyles.formlabel} htmlFor="grid-password">SponsorID</label>
               <input className={regstyles.forminput} id="sponsor" type="text" placeholder="Sponsor"
-              value={refsponsor}
-              onChange={(e) => setRefSponsor(e.target.value.replace(' ', ''))}
+              value={sponsorId}
+              onChange={(e) => setSponsorId(e.target.value)}
               />
         </div>
         
