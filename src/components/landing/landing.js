@@ -167,12 +167,12 @@ const toggleNav = () => {
             </div>
             <Typed
                     strings={[
-                        'Launched',
+                        'Relaunched',
                         'Reliable',
                         'Sustainable',
                         'Buy TAFA',
-                        'STAKE TAFA',
-                        'EARN REWARDS',
+                        'STake TAFA',
+                        'Earn Rewards',
                         'Trusted']}
                     typeSpeed={40}
                     backSpeed={50}
@@ -232,15 +232,6 @@ const toggleNav = () => {
               }}
             />
           ))}
-            {/* <a href='https://coingecko.com' rel='noreferrer noopener'><Image src={cgk} className={styles.delginks} width={150} height={40} style={{maxHeight: '40px'}}/></a>
-            <a href='https://coinmarketcap.io' rel='noreferrer noopener'><Image src={cmc} className={styles.delginks} width={150} height={40} style={{maxHeight: '40px'}}/></a>
-            <a href='https://quickswap.exchange' rel='noreferrer noopener'><Image src={quckswap} className={styles.delginks} width={150} height={40} style={{maxHeight: '40px'}}/></a>
-            <a href='https://binance.com' rel='noreferrer noopener'><Image src={binancelogo} className={styles.delginks} width={150} height={40} style={{maxHeight: '40px'}}/></a>
-            <a href='https://mexc.com' rel='noreferrer noopener'><Image src={mexclogo} className={styles.delginks} width={150} height={40} style={{maxHeight: '40px'}}/></a>
-            <a href='https://kucoin.com' rel='noreferrer noopener'><Image src={kucoinlogo} className={styles.delginks} width={150} height={40} style={{maxHeight: '40px'}}/></a>
-            <a href='https://huobi.com' rel='noreferrer noopener'><Image src={huobilogo} className={styles.delginks} width={150} height={40} style={{maxHeight: '40px'}}/></a>
-            <a href='https://okx.com' rel='noreferrer noopener'><Image src={okxlogo} className={styles.delginks} width={150} height={40} style={{maxHeight: '40px'}}/></a>
-            <a href='https://gate.io' rel='noreferrer noopener'><Image src={gateiologo} className={styles.delginks} width={150} height={40} style={{maxHeight: '40px'}}/></a> */}
           </div>
         </div>
       </div>
