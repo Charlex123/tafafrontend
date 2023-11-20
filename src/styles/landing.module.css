@@ -10,7 +10,7 @@
   font-size: 16px !important;font-family: "Poppins";text-transform: capitalize;font-weight: 900;padding: 0;
 }
 .chronop {
-  font-size: 15px !important;font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;text-transform: capitalize;color: #18221b;font-weight: 700;
+  font-size: 13px !important;font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;text-transform: capitalize;color: #18221b;font-weight: 700;
   text-align: center;margin: 0 auto;
 }
 .chronoicon {
@@ -88,11 +88,22 @@ background: linear-gradient(333deg, rgba(13,20,24,1) 0%, rgba(9,22,29,1) 0%, rgb
   background: rgb(13,20,24);
   background: linear-gradient(333deg, rgba(13,20,24,1) 0%, rgba(9,22,29,1) 0%, rgba(58,58,66,0.7049194677871149) 0%, rgba(57,57,62,0.9262079831932774) 0%, rgba(38,38,92,1) 0%, rgba(17,17,25,0.9626225490196079) 0%, rgba(9,10,11,1) 0%, rgba(0,0,0,1) 0%, rgba(4,12,4,1) 0%, rgba(6,14,6,1) 0%, rgba(6,14,6,1) 100%, rgba(37,203,6,1) 100%, rgba(0,0,0,1) 100%, rgba(18,27,43,1) 100%, rgba(19,28,28,1) 100%, rgba(13,20,24,1) 100%, rgba(5,4,36,1) 100%, rgba(13,20,24,1) 100%, rgba(9,9,121,0.8757878151260504) 100%, rgba(0,212,255,1) 100%);
 }
+.exchmain h1 {
+  font-size: 36px;text-align: center;margin: 3rem auto 1rem auto;color: #f1f1f1;
+  font-weight: 800;padding-top: 3rem;
+}
+.exchmain h4 {
+  font-size: 22px;text-align: center;margin: 1rem auto 1rem auto;color: #08d34f;
+  font-weight: 800;padding-top: .4rem;
+}
 .exchmain .dexchanges {
   display: flex;justify-content: space-evenly;padding: 15px 10px;margin: 0;flex-wrap: wrap;
 }
 .exchmain .dexchanges .dexlinks {
-  width: 150px;margin: 10px 10px;
+  width: 150px;margin: 30px 20px;
+}
+.exchmain .dexchanges .delginks {
+  width: 150px;margin: 20px 20px;
 }
 .stkb {
   width: 100%;margin: 4rem 0;text-align: center;padding: 0;
@@ -145,6 +156,12 @@ background: linear-gradient(333deg, rgba(13,20,24,1) 0%, rgba(9,22,29,1) 0%, rgb
 .tafastaking .stakingmain .stakevesttext {
   width: 56%;margin: 1rem auto;
 }
+.tafastaking .stakingmain .stakevesttext h4 {
+  font-size: 18px;font-weight: 800;
+}
+.tafastaking .stakingmain .stakevesttext ul li {
+  margin: 20px 0 10px 0;font-size: 16px;
+}
 .tafastaking .stakingmain .stakevestimg {
   width: 40%;margin: 1rem auto;
 }
@@ -169,6 +186,12 @@ background: linear-gradient(333deg, rgba(13,20,24,1) 0%, rgba(9,22,29,1) 0%, rgb
 }
 .tafareferrals .referralsmain .referralstext {
   width: 56%;margin: 1rem auto;
+}
+.tafareferrals .referralsmain .referralstext h4, .tafareferrals .referralsmain .referralstext h5 {
+  font-size: 18px;font-weight: 800;margin-bottom: 15px;
+}
+.tafareferrals .referralsmain .referralstext ul li {
+  margin: 20px 0 10px 0;font-size: 16px;
 }
 .tafareferrals .referralsmain .referralsimg {
   width: 40%;margin: 1rem auto;

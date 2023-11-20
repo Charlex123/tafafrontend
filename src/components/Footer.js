@@ -5,7 +5,7 @@ import footerstyles from '../styles/footer.module.css'
 // import cgk from '../assets/images/coingecko-aace8f3c.png';
 // import cmc from '../assets/images/coinmarketcap-a91aaec1.png';
 import { fas, faCheck, faCheckCircle, faCircleDollarToSlot, faGift, faPeopleGroup} from '@fortawesome/free-solid-svg-icons';
-import { faTwitter, faFontAwesome, faGoogle,faDiscord, faFacebook, faTelegram, faMedium, faYoutube } from '@fortawesome/free-brands-svg-icons'
+import { faTwitter, faFontAwesome, faGoogle,faDiscord, faFacebook, faTelegram, faMedium, faYoutube, faBandcamp } from '@fortawesome/free-brands-svg-icons'
 library.add(fas, faTwitter, faFontAwesome, faGoogle, faCheck,faCheckCircle, faCircleDollarToSlot, faGift, faPeopleGroup)
 
 const Footer = () => {
@@ -46,9 +46,10 @@ const handleCopyClick = () => {
             <div className={footerstyles.footer_c}>
                <h3>Social</h3>
                <div className={footerstyles.f_c}>
-               {/* <a href='/' rel='noopener noreferrer' ><FontAwesomeIcon icon={faTwitter} size='lg' className={footerstyles.navdrbdwnbrandicon}/> <span className={footerstyles.brnd}>Twitter</span></a> */}
+               <a href='https://twitter.com' rel='noopener noreferrer' ><FontAwesomeIcon icon={faTwitter} size='lg' className={footerstyles.navdrbdwnbrandicon}/> <span className={footerstyles.brnd}>Twitter</span></a>
                {/* <a href='/' rel='noopener noreferrer' ><FontAwesomeIcon icon={faFacebook} size='lg' className={footerstyles.navdrbdwnbrandicon}/> <span className={footerstyles.brnd}>Facebook</span></a> */}
                <a href='https://t.me/tafaxtraweb' rel='noopener noreferrer' ><FontAwesomeIcon icon={faTelegram} size='lg' className={footerstyles.navdrbdwnbrandicon}/> <span className={footerstyles.brnd}>Telegram</span></a>
+               <a href='https://www.dextools.io/app/en/bnb/pair-explorer/0x7c0406a570ca1407c412238c173898cd145fd52e' rel='noopener noreferrer' ><FontAwesomeIcon icon={faBandcamp} size='lg' className={footerstyles.navdrbdwnbrandicon}/> <span className={footerstyles.brnd}>Telegram</span></a>
                {/* <a href='/' rel='noopener noreferrer' ><FontAwesomeIcon icon={faDiscord} size='lg' className={footerstyles.navdrbdwnbrandicon}/> <span className={footerstyles.brnd}>Discord</span></a> */}
                {/* <a href='/' rel='noopener noreferrer' ><FontAwesomeIcon icon={faMedium} size='lg' className={footerstyles.navdrbdwnbrandicon}/> <span className={footerstyles.brnd}>Medium</span></a> */}
                {/* <a href='/' rel='noopener noreferrer' ><FontAwesomeIcon icon={faYoutube} size='lg' className={footerstyles.navdrbdwnbrandicon}/> <span className={footerstyles.brnd}>YouTube</span></a> */}

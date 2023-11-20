@@ -19,6 +19,7 @@ export default function PDFViewer() {
     <div style={{margin: '2rem 0 0 0',width: '100%'}}>
       <div>
         <br></br><br></br>
+        <a href={file} download rel="noopener noreferrer" style={{color:'black',backgroundColor: 'white', borderRadius: '60px',padding: '3px 8px'}}>Download WhitePaper</a>
       </div>
       <div>
         <Document file={file} onLoadSuccess={onDocumentLoadSuccess}>

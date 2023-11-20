@@ -23,6 +23,13 @@ import bnblogo from '../../assets/images/blockchain-binance-white-71f5d555.png';
 import cronlogo from '../../assets/images/blockchain-cronos-light-78484d18.png';
 import ethlogo from '../../assets/images/blockchain-ethereum-white-c6bf63d1.png';
 import fantlogo from '../../assets/images/blockchain-fantom-white-0b93e569.png';
+import binancelogo from '../../assets/images/binance.png';
+import mexclogo from '../../assets/images/mexc.png';
+import okxlogo from '../../assets/images/okx.png';
+import pcslogo from '../../assets/images/pcs.png';
+import gateiologo from '../../assets/images/gateio-logo.png';
+import huobilogo from '../../assets/images/huobi.png';
+import kucoinlogo from '../../assets/images/kucoin.png';
 import stakevest from '../../assets/images/stakevest.png'
 import teamwork from '../../assets/images/Teamwork.png'
 import polychlogo from '../../assets/images/blockchain-polygon-white-024b04f0.png';
@@ -30,7 +37,7 @@ import { ThemeContext } from '../../contexts/theme-context';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { Chrono } from "react-chrono";
 import 'react-vertical-timeline-component/style.min.css';
-import { fas, faCheck, faCheckCircle,faAlignJustify, faCircleChevronRight } from '@fortawesome/free-solid-svg-icons'
+import { fas, faCheck, faCheckCircle,faAlignJustify, faCircleChevronRight, faCheckSquare, faChevronRight } from '@fortawesome/free-solid-svg-icons'
 import { faTwitter, faFontAwesome } from '@fortawesome/free-brands-svg-icons'
 import { faQuestionCircle } from '@fortawesome/free-regular-svg-icons';
 library.add(fas, faTwitter, faFontAwesome,faQuestionCircle, faCheck,faCheckCircle,faAlignJustify)
@@ -144,13 +151,31 @@ const toggleNav = () => {
       </div>
       
       {/* dex tools */}
-
       <div className={styles.exchmain}>
-        <div className={styles.dexchanges}>
-          <a href='https://coingecko.com' rel='noreferrer noopener'><Image src={cgk} className={styles.delginks} /></a>
-          <a href='https://coinmarketcap.io' rel='noreferrer noopener'><Image src={cmc} className={styles.delginks} /></a>
-          <a href='https://www.dextools.io/app/en/bnb/pair-explorer/0x7c0406a570ca1407c412238c173898cd145fd52e' rel='noreferrer noopener'><Image src={dextools} className={styles.delginks} /></a>
-          <a href='https://quickswap.exchange' rel='noreferrer noopener'><Image src={quckswap} className={styles.delginks} /></a>
+        <h1>TAFAXTRA PARTNERSHIPS</h1>
+        <div>
+          <h4>Buy TAFA from these listed exchanges</h4>
+          <div className={styles.dexchanges}>
+            <a href='https://pancakeswap.finance/swap?outputCurrency=0x5ae155F89308CA9050f8Ce1C96741BaDd342C26B' rel='noreferrer noopener'><Image src={pcslogo} className={styles.delginks} width={150} height={40} /></a>
+            <a href='https://www.dextools.io/app/en/bnb/pair-explorer/0x7c0406a570ca1407c412238c173898cd145fd52e' rel='noreferrer noopener'><Image src={dextools} className={styles.delginks} width={150} height={40} /></a>
+          </div>
+        </div>
+
+        <div>
+          <h4>
+            Coming Soon Partnerships
+          </h4>
+          <div className={styles.dexchanges}>
+            <a href='https://coingecko.com' rel='noreferrer noopener'><Image src={cgk} className={styles.delginks} width={150} height={40} style={{maxHeight: '40px'}}/></a>
+            <a href='https://coinmarketcap.io' rel='noreferrer noopener'><Image src={cmc} className={styles.delginks} width={150} height={40} style={{maxHeight: '40px'}}/></a>
+            <a href='https://quickswap.exchange' rel='noreferrer noopener'><Image src={quckswap} className={styles.delginks} width={150} height={40} style={{maxHeight: '40px'}}/></a>
+            <a href='https://binance.com' rel='noreferrer noopener'><Image src={binancelogo} className={styles.delginks} width={150} height={40} style={{maxHeight: '40px'}}/></a>
+            <a href='https://mexc.com' rel='noreferrer noopener'><Image src={mexclogo} className={styles.delginks} width={150} height={40} style={{maxHeight: '40px'}}/></a>
+            <a href='https://kucoin.com' rel='noreferrer noopener'><Image src={kucoinlogo} className={styles.delginks} width={150} height={40} style={{maxHeight: '40px'}}/></a>
+            <a href='https://huobi.com' rel='noreferrer noopener'><Image src={huobilogo} className={styles.delginks} width={150} height={40} style={{maxHeight: '40px'}}/></a>
+            <a href='https://okx.com' rel='noreferrer noopener'><Image src={okxlogo} className={styles.delginks} width={150} height={40} style={{maxHeight: '40px'}}/></a>
+            <a href='https://gate.io' rel='noreferrer noopener'><Image src={gateiologo} className={styles.delginks} width={150} height={40} style={{maxHeight: '40px'}}/></a>
+          </div>
         </div>
       </div>
 
@@ -193,14 +218,26 @@ const toggleNav = () => {
           <h1>TAFAXTRA STAKING</h1>
           <div className={styles.stakingmain}>
               <div className={styles.stakevesttext}>
+                <h4>WHY STAKE TAFA?</h4>
+                <ul>
+                  <li>
+                    <FontAwesomeIcon icon={faCheckSquare} size='lg' className={styles.chronotitleicon}/> You earn 2% daily return on investment on one of the most growing crypto token.
+                  </li>
+                  <li>
+                    <FontAwesomeIcon icon={faCheckSquare} size='lg' className={styles.chronotitleicon}/> You can withdraw anytime you want
+                  </li>
+                  <li>
+                    <FontAwesomeIcon icon={faCheckSquare} size='lg' className={styles.chronotitleicon}/> Your withdraw is paid in BNB
+                  </li>
+                  <li>
+                    <FontAwesomeIcon icon={faCheckSquare} size='lg' className={styles.chronotitleicon}/> TAFAXTRA is a DOA token governed by the community of validators and stakers 
+                  </li>
+                </ul>
                 <p>
-                  The methods are new, but the concept is old. The difference is in the application and
-                  how TAFAXTRA has simplified staking in cryptocurrency. TAFAXTRA leverages several
-                  low-risk staking platforms and the expertise of a team of proven profitable traders to
-                  generate a yield of 15 to 16.5% returns monthly for her users. It's a hybrid system in
-                  which the team utilizes years of experience and a complex algorithm that factors in
-                  impactful financial news and technical analysis to arrive at profitable trading
-                  decisions. USDT is the base asset for staking. In the future, more will be added
+                Welcome to the world of crypto staking - a revolutionary way to maximize your crypto investments! Whether you're an experienced investor or new to the crypto scene, staking offers unparalleled benefits and an avenue for growing your digital assets exponentially. So why settle for stagnant coins when you can start staking and earn continuous daily rewards! Join the millions of crypto enthusiasts who are already embracing this game-changing opportunity.
+                </p>
+                <p>
+                TafaXtra staking presents an irresistible opportunity to maximize your investment potential, earn passive income, referral income, and actively contribute to the growth of blockchain networks. By staking your coins, you unlock a world of benefits: secure returns, reduced risks, community participation, and efficient asset allocation. Don't let your crypto assets remain idle any longer! Take control, stake your coins, and start reaping the rewards today - it's time to witness the true power of staking!
                 </p>
               </div>
               <div className={styles.stakevestimg}>
@@ -260,14 +297,42 @@ const toggleNav = () => {
           <h1>TAFAXTRA REFERRAL SYSTEM</h1>
           <div className={styles.referralsmain}>
               <div className={styles.referralstext}>
+                <h4>
+                  Unlock Unlimited Referral Income: Harness the Power of Community Effects!
+                </h4>
+                <h5>
+                  TafaXtra referral system has 3 generations
+                </h5>
+                <ul>
+                  <li>
+                    <FontAwesomeIcon icon={faChevronRight} size='lg' className={styles.chronotitleicon}/> First Generation.
+                  </li>
+                  <li>
+                    <FontAwesomeIcon icon={faChevronRight} size='lg' className={styles.chronotitleicon}/> Second Generation
+                  </li>
+                  <li>
+                    <FontAwesomeIcon icon={faChevronRight} size='lg' className={styles.chronotitleicon}/> Third Generation
+                  </li>
+                </ul>
+                <ul>
+                  <li>
+                    <FontAwesomeIcon icon={faCheckSquare} size='lg' className={styles.chronotitleicon}/> You earn 0.5% daily return on investment from all your direct referrals (first genration referrals).
+                  </li>
+                  <li>
+                    <FontAwesomeIcon icon={faCheckSquare} size='lg' className={styles.chronotitleicon}/> You can 0.3% daily ROI from all your second genration referrals                 </li>
+                  <li>
+                    <FontAwesomeIcon icon={faCheckSquare} size='lg' className={styles.chronotitleicon}/> YYou can 0.2% daily ROI from all your second genration referrals
+                  </li>
+                </ul>
+
                 <p>
-                  The methods are new, but the concept is old. The difference is in the application and
-                  how TAFAXTRA has simplified staking in cryptocurrency. TAFAXTRA leverages several
-                  low-risk staking platforms and the expertise of a team of proven profitable traders to
-                  generate a yield of 15 to 16.5% returns monthly for her users. It's a hybrid system in
-                  which the team utilizes years of experience and a complex algorithm that factors in
-                  impactful financial news and technical analysis to arrive at profitable trading
-                  decisions. USDT is the base asset for staking. In the future, more will be added
+                Welcome to the world of Community referral income, where spreading the word about amazing crypto investment opportunities and services can generate lucrative daily returns for you! If you're looking for a reliable avenue to increase your TAFA portfolio and earn passive income, referral programs offer a compelling opportunity. Join the ranks of TAFA Staking successful referrers and tap into the network effects to accumulate unlimited TafaXtra units. Get ready to watch your assets soar as you leverage the power of referrals!
+                </p>
+                <p>
+                Referral income is a dynamic and rewarding way to earn passive income by sharing information that benefits your community
+                </p>
+                <p>
+                By harnessing the power of community effects and leveraging your relationships, you position yourself as a trusted influencer, earning commission for every successful referral. Make the most of your connections, share the TAFA Staking Protocol , and unlock unlimited referral income. Start referring now to watch your earnings soar and empower others to discover life-changing solutions!
                 </p>
               </div>
               <div className={styles.referralsimg}>
@@ -333,40 +398,25 @@ const toggleNav = () => {
                   
                   items={[
                     {
-                      title: "22-09-2023",
+                      title: <FontAwesomeIcon icon={faCheckCircle} size='4xl' className={styles.chronotitleicon}/>,
                      },
                     {
-                      title: "22-09-2023",
+                      title: <FontAwesomeIcon icon={faCheckCircle} size='4xl' className={styles.chronotitleicon}/>,
                      },{
-                      title: "22-09-2023",
+                      title: <FontAwesomeIcon icon={faCheckCircle} size='4xl' className={styles.chronotitleicon}/>,
                      },{
-                      title: "22-09-2023",
+                      title: <FontAwesomeIcon icon={faCheckCircle} size='4xl' className={styles.chronotitleicon}/>,
                     },{
-                      title: "22-09-2023",
+                      title: <FontAwesomeIcon icon={faCheckCircle} size='4xl' className={styles.chronotitleicon}/>,
                      }
                     ,{
-                      title: "22-09-2023",
+                      title: <FontAwesomeIcon icon={faCheckCircle} size='4xl' className={styles.chronotitleicon}/>,
                     }
                     ,{
-                      title: "22-09-2023",
+                      title: <FontAwesomeIcon icon={faCheckCircle} size='4xl' className={styles.chronotitleicon}/>,
                     },
                     {
-                      title: "22-09-2023",
-                     },
-                     {
-                      title: "Coming Soon",
-                     },
-                     {
-                      title: "Coming Soon",
-                    },
-                    {
-                      title: "Coming Soon",
-                     },
-                     {
-                      title: "Coming Soon",
-                    },
-                    {
-                      title: "22-09-2023",
+                      title: <FontAwesomeIcon icon={faCheckCircle} size='4xl' className={styles.chronotitleicon}/>,
                      },
                      {
                       title: "Coming Soon",
@@ -381,7 +431,22 @@ const toggleNav = () => {
                       title: "Coming Soon",
                     },
                     {
-                      title: "22-09-2023",
+                      title: <FontAwesomeIcon icon={faCheckCircle} size='4xl' className={styles.chronotitleicon}/>,
+                     },
+                     {
+                      title: "Coming Soon",
+                     },
+                     {
+                      title: "Coming Soon",
+                    },
+                    {
+                      title: "Coming Soon",
+                     },
+                     {
+                      title: "Coming Soon",
+                    },
+                    {
+                      title: <FontAwesomeIcon icon={faCheckCircle} size='4xl' className={styles.chronotitleicon}/>,
                      },
                      {
                       title: "Coming Soon",
