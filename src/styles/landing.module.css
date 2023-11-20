@@ -42,11 +42,11 @@
 }
 .c_content .ca input {
   background-color: #08d34f;color: #000000;font-size: 14px;font-weight: 600;padding: 3px 6px;
-  border-radius: 60px;width: 80%;
+  border-radius: 60px;width: 75%;
 }
 .c_content .ca button {
   background-color: orange;color: #2c2b2b;font-size: 14px;font-weight: 600;padding: 3px 12px;
-  border-radius: 60px;width: 15%;
+  border-radius: 60px;width: 20%;
 }
 .c_content .hero_image .hero_image_{
   width: 90%;margin: 80px 0 20px 60px;

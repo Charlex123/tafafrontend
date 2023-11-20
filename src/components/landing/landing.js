@@ -293,7 +293,7 @@ const toggleNav = () => {
                     <FontAwesomeIcon icon={faCheckSquare} size='lg' className={styles.chronotitleicon}/> You can withdraw anytime you want
                   </li>
                   <li>
-                    <FontAwesomeIcon icon={faCheckSquare} size='lg' className={styles.chronotitleicon}/> Your withdraw is paid in BNB
+                    <FontAwesomeIcon icon={faCheckSquare} size='lg' className={styles.chronotitleicon}/> Withdraw and convert to any cryptocurrency of your choice in any exchange of your choice
                   </li>
                   <li>
                     <FontAwesomeIcon icon={faCheckSquare} size='lg' className={styles.chronotitleicon}/> TAFAXTRA is a DOA token governed by the community of validators and stakers 
