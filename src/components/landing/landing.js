@@ -398,40 +398,25 @@ const toggleNav = () => {
                   
                   items={[
                     {
-                      title: <FontAwesomeIcon icon={faCheckCircle} size='4xl' className={styles.chronotitleicon}/>,
+                      title: <FontAwesomeIcon icon={faCheckCircle} size='4x' className={styles.chronotitleicon}/>,
                      },
                     {
-                      title: <FontAwesomeIcon icon={faCheckCircle} size='4xl' className={styles.chronotitleicon}/>,
+                      title: <FontAwesomeIcon icon={faCheckCircle} size='4x' className={styles.chronotitleicon}/>,
                      },{
-                      title: <FontAwesomeIcon icon={faCheckCircle} size='4xl' className={styles.chronotitleicon}/>,
+                      title: <FontAwesomeIcon icon={faCheckCircle} size='4x' className={styles.chronotitleicon}/>,
                      },{
-                      title: <FontAwesomeIcon icon={faCheckCircle} size='4xl' className={styles.chronotitleicon}/>,
+                      title: <FontAwesomeIcon icon={faCheckCircle} size='4x' className={styles.chronotitleicon}/>,
                     },{
-                      title: <FontAwesomeIcon icon={faCheckCircle} size='4xl' className={styles.chronotitleicon}/>,
+                      title: <FontAwesomeIcon icon={faCheckCircle} size='4x' className={styles.chronotitleicon}/>,
                      }
                     ,{
-                      title: <FontAwesomeIcon icon={faCheckCircle} size='4xl' className={styles.chronotitleicon}/>,
+                      title: <FontAwesomeIcon icon={faCheckCircle} size='4x' className={styles.chronotitleicon}/>,
                     }
                     ,{
-                      title: <FontAwesomeIcon icon={faCheckCircle} size='4xl' className={styles.chronotitleicon}/>,
+                      title: <FontAwesomeIcon icon={faCheckCircle} size='4x' className={styles.chronotitleicon}/>,
                     },
                     {
-                      title: <FontAwesomeIcon icon={faCheckCircle} size='4xl' className={styles.chronotitleicon}/>,
-                     },
-                     {
-                      title: "Coming Soon",
-                     },
-                     {
-                      title: "Coming Soon",
-                    },
-                    {
-                      title: "Coming Soon",
-                     },
-                     {
-                      title: "Coming Soon",
-                    },
-                    {
-                      title: <FontAwesomeIcon icon={faCheckCircle} size='4xl' className={styles.chronotitleicon}/>,
+                      title: <FontAwesomeIcon icon={faCheckCircle} size='4x' className={styles.chronotitleicon}/>,
                      },
                      {
                       title: "Coming Soon",
@@ -446,7 +431,22 @@ const toggleNav = () => {
                       title: "Coming Soon",
                     },
                     {
-                      title: <FontAwesomeIcon icon={faCheckCircle} size='4xl' className={styles.chronotitleicon}/>,
+                      title: "Coming Soon",
+                     },
+                     {
+                      title: "Coming Soon",
+                     },
+                     {
+                      title: "Coming Soon",
+                    },
+                    {
+                      title: "Coming Soon",
+                     },
+                     {
+                      title: "Coming Soon",
+                    },
+                    {
+                      title: "Coming Soon",
                      },
                      {
                       title: "Coming Soon",
