@@ -80,7 +80,7 @@
 background: linear-gradient(333deg, rgba(13,20,24,1) 0%, rgba(9,22,29,1) 0%, rgba(58,58,66,0.7049194677871149) 0%, rgba(57,57,62,0.9262079831932774) 0%, rgba(38,38,92,1) 0%, rgba(4,4,14,0.9626225490196079) 0%, rgba(36,168,19,0.9192051820728291) 0%, rgba(37,203,6,1) 100%, rgba(0,0,0,1) 100%, rgba(18,27,43,1) 100%, rgba(19,28,28,1) 100%, rgba(13,20,24,1) 100%, rgba(5,4,36,1) 100%, rgba(13,20,24,1) 100%, rgba(9,9,121,0.8757878151260504) 100%, rgba(0,212,255,1) 100%);
 }
 .c_content .hero_h1 div a.learnmore {
-    color: #08d34f94;border: none;font-family: "Poppins";font-size: 20px;border: 2px solid #08d34f94;border-radius: 120px;
+    color: #e2e2e2;border: none;font-family: "Poppins";font-size: 20px;border: 2px solid #08d34f94;border-radius: 120px;
     font-weight: 600;padding: 2px 28px 2px 28px;border-radius: 60px;margin-top: 0;
 }
 .readmorebtn {

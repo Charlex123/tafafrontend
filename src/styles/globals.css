@@ -31,7 +31,7 @@ body {
   background-repeat: none;
   background-position: cover;
   font-family: "Poppins",sans-serif !important;
-  /* overflow-x: hidden; */
+  overflow-x: hidden;
 }
 a {
   text-decoration: none;

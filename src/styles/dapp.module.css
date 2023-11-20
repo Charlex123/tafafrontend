@@ -7,16 +7,16 @@
 @import url("https://fonts.googleapis.com/css?family=Caveat");
 
 .main_w {
-    width: 100vw;height: 100%;padding-top: 4.8rem;
-    background: rgb(13,20,24);
-    background: linear-gradient(333deg, rgba(13,20,24,1) 0%, rgba(13,20,24,1) 14%, rgba(19,28,28,1) 29%, rgba(28,28,46,1) 44%, rgba(24,28,45,1) 49%, rgba(18,27,43,1) 54%, rgba(19,28,28,1) 64%, rgba(13,20,24,1) 100%, rgba(5,4,36,1) 100%, rgba(13,20,24,1) 100%, rgba(9,9,121,0.8757878151260504) 100%, rgba(0,212,255,1) 100%);
+    width: 100%;height: 100%;padding-top: 4.8rem;
+    /* background: rgb(13,20,24);
+    background: linear-gradient(333deg, rgba(13,20,24,1) 0%, rgba(13,20,24,1) 14%, rgba(19,28,28,1) 29%, rgba(28,28,46,1) 44%, rgba(24,28,45,1) 49%, rgba(18,27,43,1) 54%, rgba(19,28,28,1) 64%, rgba(13,20,24,1) 100%, rgba(5,4,36,1) 100%, rgba(13,20,24,1) 100%, rgba(9,9,121,0.8757878151260504) 100%, rgba(0,212,255,1) 100%); */
 }
 .main_c {
     width: 100%;display: flex;flex-direction: row;justify-content: space-between;
 }
 .main_c .sidebar_toggle_btn {
     margin-left: 15px;margin-top: 15px;background-color: transparent !important;border: none;
-    color: #ffffff !important;z-index: 1;position: relative;
+    color: #ffffff !important;z-index: 1;position: relative;display: none;
 }
 .main_c .sidebar_toggle_btn .toggle_icon {
     color: #f1f1f1;font-size: 28px;z-index: 99;
@@ -25,7 +25,7 @@
     color: #ffffff;font-size: 14px !important;
 }
 .main_c .sidebar {
-    width: 25%;padding-top: 0;
+    width: 25%;padding-top: 0;position: relative;
 }
 .main_c .main {
     width: 75%;height: 100%;
@@ -41,6 +41,9 @@
 }
 .main .reflink {
     margin: 15px 30px 30px 30px;color: #e2d7d7;font-size: 14px;
+    margin: 2rem 1rem;text-align: left;border-radius: 20px;padding: 2rem 1rem 2rem 1rem;
+    background: rgb(13,20,24);
+    background: linear-gradient(333deg, rgba(13,20,24,1) 0%, rgba(19,28,28,1) 0%, rgba(9,22,29,1) 0%, rgba(58,58,66,0.7049194677871149) 0%, rgba(57,57,62,0.9262079831932774) 0%, rgba(38,38,92,1) 0%, rgba(4,4,14,0.9626225490196079) 0%, rgba(0,0,0,1) 100%, rgba(18,27,43,1) 100%, rgba(19,28,28,1) 100%, rgba(13,20,24,1) 100%, rgba(5,4,36,1) 100%, rgba(13,20,24,1) 100%, rgba(9,9,121,0.8757878151260504) 100%, rgba(0,212,255,1) 100%);
 }
 .main .reflink input {
     background-color: #26b826;color: #000000;font-size: 13px;font-weight: 600;padding: 3px 16px 3px 12px;
@@ -57,7 +60,9 @@
     font-size: 16px;font-family: "Poppins";text-transform: capitalize;color: #e2d7d7;
 }
 .main .head {
-    margin: 2rem auto;text-align: center;
+    margin: 2rem 1rem;text-align: center;border-radius: 20px;padding: 2rem 1rem 2rem 1rem;
+    background: rgb(13,20,24);
+    background: linear-gradient(333deg, rgba(13,20,24,1) 0%, rgba(19,28,28,1) 0%, rgba(9,22,29,1) 0%, rgba(58,58,66,0.7049194677871149) 0%, rgba(57,57,62,0.9262079831932774) 0%, rgba(38,38,92,1) 0%, rgba(4,4,14,0.9626225490196079) 0%, rgba(0,0,0,1) 100%, rgba(18,27,43,1) 100%, rgba(19,28,28,1) 100%, rgba(13,20,24,1) 100%, rgba(5,4,36,1) 100%, rgba(13,20,24,1) 100%, rgba(9,9,121,0.8757878151260504) 100%, rgba(0,212,255,1) 100%);
 }
 .main .head h1 {
     font-family: "Poppins", sans-serif;font-size: 32px;font-weight: 900;color: #e2d7d7;
@@ -71,18 +76,20 @@
 }
 .main .head div a.getstarted {
     background-color: #08d34f94;width: fit-content;padding: 5px 12px;border-radius: 60px;height: fit-content;
-    font-family: "Poppins",sans-serif;font-size: 22px;font-weight: 600;box-shadow: 1px 1px 2px 2px #08d34f94;
+    font-family: "Poppins",sans-serif;font-size: 18px;font-weight: 600;box-shadow: 1px 1px 2px 2px #08d34f94;
     background: rgb(13,20,24);
 background: linear-gradient(333deg, rgba(13,20,24,1) 0%, rgba(9,22,29,1) 0%, rgba(58,58,66,0.7049194677871149) 0%, rgba(57,57,62,0.9262079831932774) 0%, rgba(38,38,92,1) 0%, rgba(4,4,14,0.9626225490196079) 0%, rgba(36,168,19,0.9192051820728291) 0%, rgba(37,203,6,1) 100%, rgba(0,0,0,1) 100%, rgba(18,27,43,1) 100%, rgba(19,28,28,1) 100%, rgba(13,20,24,1) 100%, rgba(5,4,36,1) 100%, rgba(13,20,24,1) 100%, rgba(9,9,121,0.8757878151260504) 100%, rgba(0,212,255,1) 100%);
 }
 .main .head div a.learnmore {
-    color: #08d34f94;border: none;font-family: "Poppins";font-size: 22px;border: 2px solid #08d34f94;border-radius: 120px;
+    color: #e2d7d7;border: none;font-family: "Poppins";font-size: 18px;border: 2px solid #08d34f94;border-radius: 120px;
     font-weight: 600;padding: 2px 28px 2px 28px;border-radius: 60px;margin-top: 0;
 }
 .main .stake {
     width: 45%;margin: 5rem 1rem;border-radius: 16px;
-    background: rgb(12,16,32);
-background: linear-gradient(90deg, rgba(12,16,32,1) 100%, rgba(44,44,48,1) 100%, rgba(50,52,59,1) 100%, rgba(6,29,39,1) 100%);
+    background: rgb(13,20,24);
+    background: linear-gradient(333deg, rgba(13,20,24,1) 0%, rgba(19,28,28,1) 0%, rgba(9,22,29,1) 0%, rgba(58,58,66,0.7049194677871149) 0%, rgba(57,57,62,0.9262079831932774) 0%, rgba(38,38,92,1) 0%, rgba(4,4,14,0.9626225490196079) 0%, rgba(0,0,0,1) 100%, rgba(18,27,43,1) 100%, rgba(19,28,28,1) 100%, rgba(13,20,24,1) 100%, rgba(5,4,36,1) 100%, rgba(13,20,24,1) 100%, rgba(9,9,121,0.8757878151260504) 100%, rgba(0,212,255,1) 100%);
+    /* background: rgb(12,16,32);
+background: linear-gradient(90deg, rgba(12,16,32,1) 100%, rgba(44,44,48,1) 100%, rgba(50,52,59,1) 100%, rgba(6,29,39,1) 100%); */
 }
 .main .stake .stake_mod {
     margin: 0;width: 100%;
@@ -165,11 +172,20 @@ background: linear-gradient(90deg, rgba(12,16,32,1) 100%, rgba(44,44,48,1) 100%,
 
   
 @media (max-width: 991px) {
+    .main_w {
+        width: 100%;
+    }
+    .main_c {
+        width: 100%;
+    }
+    .main_c .main {
+        width: 100%;height: 100%;
+    }
     .main_c .sidebar {
-        width: 80%;padding-top: 0;position: absolute;
+        width: 50%;padding-top: 0;position: fixed;z-index: 99;
     }
     .main_c .sidebar_toggle_btn {
-        position: absolute;top: 0;
+        position: absolute;top: 0;z-index: 0;display: block;
     }
     .main .stake {
         width: 90%;margin: 5rem 1rem;
@@ -183,11 +199,15 @@ background: linear-gradient(90deg, rgba(12,16,32,1) 100%, rgba(44,44,48,1) 100%,
 }
 
 @media (max-width: 767px) {
-    .main_c .sidebar {
-        width: 80%;padding-top: 0;position: absolute;
-    }
+    
     .main_c .main {
         width: 90%;height: 100%;
+    }
+    .main_c .main {
+        width: 100%;height: 100%;
+    }
+    .main_c .sidebar {
+        width: 60%;padding-top: 0;position: fixed;z-index: 99;
     }
     .main .con_btns  {
         display: block;
@@ -196,10 +216,10 @@ background: linear-gradient(90deg, rgba(12,16,32,1) 100%, rgba(44,44,48,1) 100%,
 
 @media (max-width: 567px) {
     .main_c .sidebar {
-        width: 35%;padding-top: 0;
+        width: 60%;padding-top: 0;position: fixed;z-index: 99;
     }
     .main_c .main {
-        width: 65%;height: 100%;
+        width: 100%;height: 100%;
     }
     .main .con_btns  {
         display: block;

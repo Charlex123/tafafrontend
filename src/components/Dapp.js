@@ -183,6 +183,8 @@ const handleCopyClick = () => {
       setNavOpen(false);
       } else {
       setNavOpen(true);
+      setSideBarToggle(false);
+      setIsSideBarToggled(false);
       }
   };
 
@@ -215,7 +217,7 @@ const handleCopyClick = () => {
  // Function to toggle the navigation menu
  const toggleSideBar = () => {
     setSideBarToggle(!dappsidebartoggle);
-    setIsSideBarToggled(!isSideBarToggled)
+    setIsSideBarToggled(!isSideBarToggled);
   };
 
   // const toggleIconUp1 = () => {
@@ -274,12 +276,11 @@ const sideBarToggleCheck = dappsidebartoggle ? dappstyles.sidebartoggled : '';
             <div className={dappstyles.main_c}>
               <div className={`${dappstyles.sidebar} ${sideBarToggleCheck}`}>
                   <nav className={dappsidebarstyles.sidebar}>
+                    {!isSideBarToggled && (
+                      <div className={dappsidebarstyles.overlay_dapp}></div>
+                    )}
                     <button title='togglebtn' className={dappsidebarstyles.sidebar_toggle_btn} type='button' onClick={toggleSideBar}>
-                      {isSideBarToggled ? (
-                        <FontAwesomeIcon icon={faAlignJustify} size='lg' className={dappsidebarstyles.navlisttoggle}/> // Change this to the appropriate icon component or element
-                      ) : (
-                        <FontAwesomeIcon icon={faXmarkCircle} size='lg' className={dappsidebarstyles.navlisttoggle}/> // Change this to the appropriate icon component or element
-                      )}
+                      <FontAwesomeIcon icon={faXmarkCircle} size='lg' className={dappsidebarstyles.navlisttoggle}/> 
                     </button>
                       <div className={dappsidebarstyles.sidebar_container}>
                         <div className={dappsidebarstyles.sidebar_container_p}>
@@ -318,16 +319,12 @@ const sideBarToggleCheck = dappsidebartoggle ? dappstyles.sidebartoggled : '';
                 )}
               </div>
               <button title='togglebtn' className={dappstyles.sidebar_toggle_btn} type='button' onClick={toggleSideBar}>
-                {isSideBarToggled ? (
-                  <FontAwesomeIcon icon={faAlignJustify} size='lg' className={dappstyles.navlisttoggle}/> // Change this to the appropriate icon component or element
-                ) : (
-                  <FontAwesomeIcon icon={faXmarkCircle} size='lg' className={dappstyles.navlisttoggle}/> // Change this to the appropriate icon component or element
-                )}
+                <FontAwesomeIcon icon={faAlignJustify} size='lg' className={dappstyles.navlisttoggle}/> 
               </button>
-              <div className={dappstyles.reflink}>
-                  <div className={dappstyles.reflinkdex}>Ref Link: <input value={referralLink} onChange={(e) => setreferralLink(e.target.value)} /><button type='button' onClick={handleCopyClick}>{buttonText}</button> </div>
-                  <div><small>Share referral link to increase your profits</small></div>
-              </div>
+                <div className={dappstyles.reflink}>
+                    <div className={dappstyles.reflinkdex}>Ref Link: <input value={referralLink} onChange={(e) => setreferralLink(e.target.value)} /><button type='button' onClick={handleCopyClick}>{buttonText}</button> </div>
+                    <div><small>Share referral link to increase your profits</small></div>
+                </div>
               
                 <div className={dappstyles.head}>
                     <div className={dappstyles.uname}><span>Hi, {username}</span></div>
