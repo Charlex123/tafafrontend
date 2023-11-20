@@ -43,11 +43,11 @@
     margin: 15px 30px 30px 30px;color: #e2d7d7;font-size: 14px;
 }
 .main .reflink input {
-    background-color: #c9c8c8;color: #2c2b2b;font-size: 12px;font-weight: 600;padding: 3px 16px 3px 12px;
+    background-color: #26b826;color: #000000;font-size: 13px;font-weight: 600;padding: 3px 16px 3px 12px;
     border-radius: 60px;width: 50%;margin-left: 15px;
 }
 .main .reflink button {
-    background-color: orange;color: #2c2b2b;font-size: 12px;font-weight: 600;padding: 3px 12px;
+    background-color: orange;color: #2c2b2b;font-size: 13px;font-weight: 600;padding: 3px 12px;
     border-radius: 60px;width: fit-content;margin-left: 8px;
 }
 .main .reflink small {

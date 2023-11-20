@@ -44,11 +44,15 @@ library.add(fas, faTwitter, faFontAwesome,faQuestionCircle, faCheck,faCheckCircl
 const Home = () => {
 // Create a state variable to manage the visibility of the navigation menu
 const [isNavOpen, setNavOpen] = useState(false);
-const [readMore, setReadMore] = useState(false);
+const [stakeReadMore, setStakeReadMore] = useState(false);
+const [refReadMore, setRefReadMore] = useState(false);
+const [aboutReadMore, setAboutReadMore] = useState(false);
 // Array of text values to toggle between
 const textValues = ["Read More ...", "Read Less ..."];
 // State to track the current index in the array
-const [currentRMTextIndex, setCurrentRMTextIndex] = useState(0);
+const [currentStakeRMTextIndex, setCurrentStakeRMTextIndex] = useState(0);
+const [currentRefRMTextIndex, setCurrentRefRMTextIndex] = useState(0);
+const [currentAboutRMTextIndex, setCurrentAboutRMTextIndex] = useState(0);
 const [currentSliderIndex, setCurrentSliderIndex] = useState(0);
 const { theme, drawerOpen } = useContext(ThemeContext);
 const [contractAddress, setcontractAddress] = useState('0x5ae155F89308CA9050f8Ce1C96741BaDd342C26B');
@@ -72,9 +76,19 @@ const goToNextImage = () => {
   setCurrentSliderIndex((prevIndex) => (prevIndex + 1) % images.length);
 };
 
-const showReadMore =  () => {
-  setReadMore(!readMore);
-  setCurrentRMTextIndex((prevIndex) => (prevIndex + 1) % textValues.length);
+const showStakeReadMore =  () => {
+  setStakeReadMore(!stakeReadMore);
+  setCurrentStakeRMTextIndex((prevIndex) => (prevIndex + 1) % textValues.length);
+}
+
+const showRefReadMore =  () => {
+  setRefReadMore(!refReadMore);
+  setCurrentRefRMTextIndex((prevIndex) => (prevIndex + 1) % textValues.length);
+}
+
+const showAboutReadMore =  () => {
+  setAboutReadMore(!aboutReadMore);
+  setCurrentAboutRMTextIndex((prevIndex) => (prevIndex + 1) % textValues.length);
 }
 
 
@@ -291,7 +305,7 @@ const toggleNav = () => {
                     Welcome to the world of crypto staking - a revolutionary way to maximize your crypto investments! Whether you're an experienced investor or new to the crypto scene, staking offers unparalleled benefits and an avenue for growing your digital assets exponentially.
                 </p>
                 
-                {readMore && (
+                {stakeReadMore && (
                   <>
                     <p>
                     So why settle for stagnant coins when you can start staking and earn continuous daily rewards! Join the millions of crypto enthusiasts who are already embracing this game-changing opportunity.
@@ -300,7 +314,7 @@ const toggleNav = () => {
                     TafaXtra staking presents an irresistible opportunity to maximize your investment potential, earn passive income, referral income, and actively contribute to the growth of blockchain networks. By staking your coins, you unlock a world of benefits: secure returns, reduced risks, community participation, and efficient asset allocation. Don't let your crypto assets remain idle any longer! Take control, stake your coins, and start reaping the rewards today - it's time to witness the true power of staking!
                     </p>
                   </>)}  
-                  <button type='button' className={styles.readmorebtn} onClick={showReadMore}>{textValues[currentRMTextIndex]}</button>
+                  <button type='button' className={styles.readmorebtn} onClick={showStakeReadMore}>{textValues[currentStakeRMTextIndex]}</button>
               </div>
               <div className={styles.stakevestimg}>
                 <Image src={stakevest} alt='stake image' quality={90} className={styles.stakevest_img}/>
@@ -320,7 +334,7 @@ const toggleNav = () => {
             via several exchanges and brokers.
           </p>
           
-          {readMore && (
+          {aboutReadMore && (
             <>
               <p>
                 Moreso, understanding and engaging productively in cryptography/cryptocurrency has
@@ -336,7 +350,7 @@ const toggleNav = () => {
               </p>
             </>
           )}
-          <button type='button' className={styles.readmorebtn} onClick={showReadMore}>{textValues[currentRMTextIndex]}</button>
+          <button type='button' className={styles.readmorebtn} onClick={showAboutReadMore}>{textValues[currentAboutRMTextIndex]}</button>
           <ul>
             <h4>Reasons To Buy And Stake TafaXtra</h4>
             <li>
@@ -395,7 +409,7 @@ const toggleNav = () => {
                 <p>
                 Welcome to the world of Community referral income, where spreading the word about amazing crypto investment opportunities and services can generate lucrative daily returns for you! If you're looking for a reliable avenue to increase your TAFA portfolio and earn passive income, referral programs offer a compelling opportunity. 
                 </p>
-                {readMore && (
+                {refReadMore && (
                   <>
                     <p>
                     Join the ranks of TAFA Staking successful referrers and tap into the network effects to accumulate unlimited TafaXtra units. Get ready to watch your assets soar as you leverage the power of referrals!
@@ -408,7 +422,7 @@ const toggleNav = () => {
                     </p>
                   </>
                 )}
-                <button type='button' className={styles.readmorebtn} onClick={showReadMore}>{textValues[currentRMTextIndex]}</button>
+                <button type='button' className={styles.readmorebtn} onClick={showRefReadMore}>{textValues[currentRefRMTextIndex]}</button>
               </div>
               <div className={styles.referralsimg}>
                 <Image src={teamwork} alt='team image' quality={90} className={styles.referrals_img}/>
