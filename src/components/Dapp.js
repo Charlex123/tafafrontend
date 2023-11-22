@@ -179,6 +179,7 @@ const handleCopyClick = () => {
     if(udetails && udetails !== null && udetails !== "") {
       
       if(username_) {
+        console.log('u details',udetails)
         setUsername(username_);
         setUserId(udetails.userId)
         setreferralLink(`https://tafaextra.io/register/${udetails.userId}`);
@@ -194,7 +195,7 @@ const handleCopyClick = () => {
             "Content-type": "application/json"
          }
          }  
-         const {refdata} = await axios.get(`https://tafabackend.onrender.com/api/users/getreferrals/${userId}`, {
+         const {refdata} = await axios.get(`https://tafabackend.onrender.com/api/users/getreferrals/${udetails.userId}`, {
          }, config);
          console.log('ref data',refdata);
       } catch (error) {
