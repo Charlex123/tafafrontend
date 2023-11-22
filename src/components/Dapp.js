@@ -179,7 +179,6 @@ const handleCopyClick = () => {
     if(udetails && udetails !== null && udetails !== "") {
       
       if(username_) {
-        console.log('u details',udetails)
         setUsername(username_);
         setUserId(udetails.userId)
         setreferralLink(`https://tafaextra.io/register/${udetails.userId}`);
