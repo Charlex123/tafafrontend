@@ -208,6 +208,8 @@ const handleCopyClick = () => {
       // Check the device width and update isNavOpen accordingly
       if (window.innerWidth <= 990) {
       setNavOpen(false);
+      setSideBarToggle(true);
+      setIsSideBarToggled(true);
       } else {
       setNavOpen(true);
       setSideBarToggle(false);
