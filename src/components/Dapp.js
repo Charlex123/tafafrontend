@@ -194,7 +194,7 @@ const handleCopyClick = () => {
             "Content-type": "application/json"
          }
          }  
-         const {refdata} = await axios.get(`http://localhost:7000/api/users/getreferrals/${userId}`, {
+         const {refdata} = await axios.get(`https://tafabackend.onrender.com/api/users/getreferrals/${userId}`, {
          }, config);
          console.log('ref data',refdata);
       } catch (error) {
