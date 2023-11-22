@@ -92,7 +92,7 @@ const RegisterForm = () =>  {
         "Content-type": "application/json"
       }
     }
-    const {data} = await axios.post("https://tafabackend.onrender.com/api/users/checkusername", {
+    const {data} = await axios.post("https://tafabackend.vercel.app/api/users/checkusername", {
           username,
     }, config);
     if(data) {
@@ -110,7 +110,7 @@ const RegisterForm = () =>  {
         "Content-type": "application/json"
       }
     }
-    const {data} = await axios.post("https://tafabackend.onrender.com/api/users/checkemail", {
+    const {data} = await axios.post("https://tafabackend.vercel.app/api/users/checkemail", {
           email,
     }, config);
     if(data) {
@@ -136,7 +136,7 @@ const RegisterForm = () =>  {
         
         setLoading(true);
         setLevel("White Whale");
-        const {data} = await axios.post("https://tafabackend.onrender.com/api/users/register", {
+        const {data} = await axios.post("https://tafabackend.vercel.app/api/users/register", {
           username,
           sponsorId,
           email,
