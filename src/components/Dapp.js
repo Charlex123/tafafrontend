@@ -352,7 +352,7 @@ const sideBarToggleCheck = dappsidebartoggle ? dappstyles.sidebartoggled : '';
               </button>
                 <div className={dappstyles.reflink}>
                     <div className={dappstyles.reflinkdex}>Ref Link: <input value={referralLink} onChange={(e) => setreferralLink(e.target.value)} /><button type='button' onClick={handleCopyClick}>{buttonText}</button> </div>
-                    <div><small>Share referral link to increase your profits</small></div>
+                    <div><small>Share referral link to earn more tokens!</small></div>
                 </div>
               
                 <div className={dappstyles.head}>
@@ -384,7 +384,7 @@ const sideBarToggleCheck = dappsidebartoggle ? dappstyles.sidebartoggled : '';
                                     type="range"
                                     id="horizontalInput"
                                     min={0}
-                                    max={10000000}
+                                    max={50000}
                                     step={1}
                                     value={tafaStakeValue}
                                     onChange={handleChange}
