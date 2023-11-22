@@ -195,7 +195,7 @@ const handleCopyClick = () => {
             "Content-type": "application/json"
          }
          }  
-         const {refdata} = await axios.get(`https://tafabackend.vercel.app/api/users/getreferrals/${udetails.userId}`, {
+         const {refdata} = await axios.get(`https://tafabackend.onrender.com/api/users/getreferrals/${udetails.userId}`, {
          }, config);
          console.log('ref data',refdata);
       } catch (error) {
