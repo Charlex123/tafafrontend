@@ -254,7 +254,7 @@ const toggleNav = () => {
             </div>
             <div className={styles.gov_c}>
               <div className={styles.image_c}><Image src={peopl_} className={styles.gov_img}/></div>
-              <h2>DOA Governance </h2>
+              <h2>DAO Governance </h2>
               <p>Self-sustainable community driven TAFAVAULT with onchain voting</p>
             </div>
             <div className={styles.gov_c}>
@@ -287,7 +287,7 @@ const toggleNav = () => {
                     <FontAwesomeIcon icon={faCheckSquare} size='lg' className={styles.chronotitleicon}/> Withdraw and convert to any cryptocurrency of your choice in any exchange of your choice
                   </li>
                   <li>
-                    <FontAwesomeIcon icon={faCheckSquare} size='lg' className={styles.chronotitleicon}/> TAFAXTRA is a DOA token governed by the community of validators and stakers 
+                    <FontAwesomeIcon icon={faCheckSquare} size='lg' className={styles.chronotitleicon}/> TAFAXTRA is a DAO token governed by the community of validators and stakers 
                   </li>
                 </ul>
                 <p>
@@ -389,9 +389,9 @@ const toggleNav = () => {
                     <FontAwesomeIcon icon={faCheckSquare} size='lg' className={styles.chronotitleicon}/> You earn 0.5% daily return on investment from all your direct referrals (first genration referrals).
                   </li>
                   <li>
-                    <FontAwesomeIcon icon={faCheckSquare} size='lg' className={styles.chronotitleicon}/> You can 0.3% daily ROI from all your second genration referrals                 </li>
+                    <FontAwesomeIcon icon={faCheckSquare} size='lg' className={styles.chronotitleicon}/> You earn 0.3% daily ROI from all your second genration referrals                 </li>
                   <li>
-                    <FontAwesomeIcon icon={faCheckSquare} size='lg' className={styles.chronotitleicon}/> YYou can 0.2% daily ROI from all your second genration referrals
+                    <FontAwesomeIcon icon={faCheckSquare} size='lg' className={styles.chronotitleicon}/> You earn 0.2% daily ROI from all your second genration referrals
                   </li>
                 </ul>
 
@@ -445,7 +445,7 @@ const toggleNav = () => {
               <div className={`${styles.tkl_bc} ${styles.skew2_}`}>
                 <h3>STAGE 1</h3>
                 <h2>MAINNET LAUNCH</h2>
-                <p>Tafa token is live on mainnet. Buy, sell, Trade, transfer, stake , network, earn rewards and enjoy better life with tafa profits. </p>
+                <p>Tafa token is live on mainnet, buy, sell, trade, transfer, stake , network, earn rewards and enjoy better life with tafa profits. </p>
                 <div className={`${styles.button} ${styles.btn}`}><button >LIVE NOW <FontAwesomeIcon icon={faCheckCircle} size='lg' className={styles.navdrbdwnbrandicon}/> <span className={styles.brnd}> </span></button></div>
               </div>
             </div>

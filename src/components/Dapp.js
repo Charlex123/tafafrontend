@@ -18,6 +18,7 @@ import { useWeb3React } from "@web3-react/core";
 import { networkParams } from "./web3-networks";
 import { toHex, truncateAddress } from "../utils/web3react-utils";
 // import { providers } from "ethers";
+import axios from 'axios';
 import Web3 from "web3";
 import { ThemeContext } from '../contexts/theme-context';
 import DappNav from './Dappnav';
@@ -43,12 +44,20 @@ const Dapp = () =>  {
   const [dropdwnIcon1, setDropdownIcon1] = useState(<FontAwesomeIcon icon={faChevronDown} size='lg' className={dappsidebarstyles.sidebarlisttoggle}/>);
   const [dropdwnIcon2, setDropdownIcon2] = useState(<FontAwesomeIcon icon={faChevronDown} size='lg' className={dappsidebarstyles.sidebarlisttoggle}/>);
   const [dropdwnIcon3, setDropdownIcon3] = useState(<FontAwesomeIcon icon={faChevronDown} size='lg' className={dappsidebarstyles.sidebarlisttoggle}/>);
-  const [username, setUsername] = useState("");  
+  const [username, setUsername] = useState("");
+  const [userId, setUserId] = useState("");  
   
   const { isOpen, onOpen, onClose, closeWeb3Modal,openWeb3Modal } = useContext(Web3ModalContext);
   
   const [referralLink, setreferralLink] = useState('');
-   const [buttonText, setButtonText] = useState("Copy");
+  const [buttonText, setButtonText] = useState("Copy");
+
+  const [tafaStakeValue, settafaStakeValue] = useState(50); // Initial value
+
+  const handleChange = (event) => {
+    const newValue = event.target.value;
+    settafaStakeValue(newValue);
+};
 
 const handleCopyClick = () => {
    // Create a temporary textarea element
@@ -171,11 +180,28 @@ const handleCopyClick = () => {
       
       if(username_) {
         setUsername(username_);
+        setUserId(udetails.userId)
         setreferralLink(`https://tafaextra.io/register/${udetails.userId}`);
       }
     }else {
       router.push(`/signin`);
     }
+
+    async function getreferrals() {
+      try {
+         const config = {
+         headers: {
+            "Content-type": "application/json"
+         }
+         }  
+         const {refdata} = await axios.get(`http://localhost:7000/api/users/getreferrals/${userId}`, {
+         }, config);
+         console.log('ref data',refdata);
+      } catch (error) {
+         console.log(error)
+      }
+   }
+   getreferrals();
 
     // Function to handle window resize
     const handleResize = () => {
@@ -213,7 +239,7 @@ const handleCopyClick = () => {
   };
   
   
- }, [username])
+ }, [userId, router])
 
  // Function to toggle the navigation menu
  const toggleSideBar = () => {
@@ -332,7 +358,7 @@ const sideBarToggleCheck = dappsidebartoggle ? dappstyles.sidebartoggled : '';
                     <h1>
                         WELCOME TO TAFAXTRA 
                     </h1>
-                    <p>TAFAXtra is a smart contract platform that replicates the traditional Certificate of Deposit but on the blockchain. It allows users to stake their TAFA tokens to earn fixed interest, up to 80% APY. It also has NFT functionality, and is backed by ownership of Validator Nodes.</p>
+                    <p>TAFAXtra is a smart contract platform that replicates the traditional Certificate of Deposit but on the blockchain. It allows users to stake their TAFA tokens to earn fixed interest, 2% daily ROI. It also has NFT functionality, and is backed by ownership of Validator Nodes.</p>
                     <p>A community DAO manages the TAFA Vault, which collects fees from trade tax and early unstakes. The usage of these funds will be voted on by the community, to use on things such as purchasing additional Validator Nodes, Marketing, Conferences, Token Burns etc.</p>
                     <div className={dappstyles.get_sd_btns}>
                       <a title='get started' href='/dapp/#stake' rel='noopener noreferrer' className={dappstyles.getstarted}>Stake TaFaXtra</a>
@@ -344,29 +370,39 @@ const sideBarToggleCheck = dappsidebartoggle ? dappstyles.sidebartoggled : '';
                     <div className={dappstyles.stake_mod}>
                         <div className={dappstyles.top}><h1>Stake Your TafaXtra</h1></div>
                         <div className={dappstyles.s_m}>
-                          <h3>Stake TafaXtra to earn a guaranteed fixed interest rate</h3>
+                          <h3>Stake TafaXtra to earn 2% profit daily</h3>
                           <div className={dappstyles.s_m_in}>
                               <div className={dappstyles.s_m_inna}>
                                 <div className={dappstyles.s_m_in_c}>
-                                    <div className={dappstyles.s_a}>Stake Amount <div>122000000 TAFA</div></div>
-                                    <div className={dappstyles.s_b}>Bonus <div>0.56%</div></div>
+                                    <div className={dappstyles.s_a}>Stake Amount <div>{tafaStakeValue} TAFA</div></div>
+                                    <div className={dappstyles.s_b}>Bonus <div>2%</div></div>
                                 </div>
                                 <div className={dappstyles.amountprog}>
-                                    <progress></progress>
+                                  <input
+                                    type="range"
+                                    id="horizontalInput"
+                                    min={0}
+                                    max={10000000}
+                                    step={1}
+                                    value={tafaStakeValue}
+                                    onChange={handleChange}
+                                    style={{ width: '100%',height: '5px', cursor: 'pointer' }}
+                                  />
                                 </div>
                               </div>
                               <div className={dappstyles.s_m_inna}>
+                                <h3>Stake Duration</h3>
                                 <div className={dappstyles.s_m_in_c}>
-                                    <div className={dappstyles.s_a}>Duration  <div>227 Days</div></div>
-                                    <div className={dappstyles.s_b}>Bonus <div>200.56%</div></div>
+                                    <div className={dappstyles.s_a}>
+                                      <select>
+                                        <option value="">Select Duration</option>
+                                        <option value="30">30 Days</option>
+                                        <option value="90">90 Days</option>
+                                        <option value="365">365 Days</option>
+                                        <option value="1000">1000 Days</option>
+                                      </select>
+                                    </div>
                                 </div>
-                                <div className={dappstyles.amountprog}>
-                                    <progress></progress>
-                                </div>
-                              </div>
-
-                              <div className={dappstyles.apy}>
-                                <h2>56% APY</h2>
                               </div>
 
                               <div className={dappstyles.interest_returns}>
@@ -378,29 +414,34 @@ const sideBarToggleCheck = dappsidebartoggle ? dappstyles.sidebartoggled : '';
                                   </li>
                                   <li>
                                     <div className={dappstyles.ir_c}>
-                                      <div>Daily</div> <div>32</div>
+                                      <div>Daily</div> <div>2%</div>
                                     </div>
                                   </li>
                                   <li>
                                     <div className={dappstyles.ir_c}>
-                                      <div>Weekly</div><div>320</div>
+                                      <div>Weekly</div><div>14%</div>
                                     </div>
                                   </li>
                                   <li>
                                     <div className={dappstyles.ir_c}>
-                                      <div>Monthly</div> <div>3200</div>
+                                      <div>Monthly</div> <div>60%</div>
                                     </div>
                                   </li>
                                   <li>
                                     <div className={dappstyles.ir_c}>
-                                      <div>Yearly</div><div>32000</div>
+                                      <div>Yearly</div><div>730%</div>
                                     </div>
                                   </li>
                                 </ul>
                               </div>
 
                               <div className={dappstyles.cw_btn_div}>
-                                  
+                                  <div>
+                                      <button type='button' className={dappstyles.stakebtn}>Stake</button>
+                                  </div>
+                                  <div>
+                                      <button type='button' className={dappstyles.calcrwd}>Calc Reward</button>
+                                  </div>
                               </div>
                           </div>
                         </div>

@@ -1,42 +1,6 @@
 {
   "_format": "hh-sol-cache-2",
   "files": {
-    "C:\\xampp\\htdocs\\tafaextra\\tafafrontend\\contracts\\Lock.sol": {
-      "lastModificationDate": 1699988959466,
-      "contentHash": "ae66265769cc28ebdaa34881df95bc5e",
-      "sourceName": "contracts/Lock.sol",
-      "solcConfig": {
-        "version": "0.8.20",
-        "settings": {
-          "evmVersion": "paris",
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        "^0.8.9"
-      ],
-      "artifacts": [
-        "Lock"
-      ]
-    },
     "C:\\xampp\\htdocs\\tafaextra\\tafafrontend\\contracts\\Migrations.sol": {
       "lastModificationDate": 1699988953372,
       "contentHash": "227da3034c7888402d78bcf0df25a3ac",
@@ -110,8 +74,8 @@
       ]
     },
     "C:\\xampp\\htdocs\\tafaextra\\tafafrontend\\contracts\\Stake.sol": {
-      "lastModificationDate": 1700069271190,
-      "contentHash": "7cd622443152214c16f9076ac57c11cc",
+      "lastModificationDate": 1700332311865,
+      "contentHash": "14e8cd959da7e383a73734b75c422009",
       "sourceName": "contracts/Stake.sol",
       "solcConfig": {
         "version": "0.8.20",

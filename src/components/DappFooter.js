@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core';
-import footerstyles from '../styles/footer.module.css'
+import footerstyles from '../styles/dappfooter.module.css'
 // import cgk from '../assets/images/coingecko-aace8f3c.png';
 // import cmc from '../assets/images/coinmarketcap-a91aaec1.png';
 import { fas, faCheck, faCheckCircle, faCircleDollarToSlot, faGift, faPeopleGroup} from '@fortawesome/free-solid-svg-icons';

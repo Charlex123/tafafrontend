@@ -1,7 +1,5 @@
 require("@nomicfoundation/hardhat-toolbox");
 
-const { mnemonic } = require('./secrets.json');
-
 // This is a sample Hardhat task. To learn how to create your own go to
 // https://hardhat.org/guides/create-task.html
 // task("accounts", "Prints the list of accounts", async () => {

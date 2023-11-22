@@ -40,9 +40,6 @@ const RegisterForm = () =>  {
   const [tpin, setTPin] = useState(1234);
   const [loading, setLoading] = useState(false);
   const [status] = useState("Inactive");
-  const [refBonus] = useState(0);
-  const [totalrefBonus] = useState(0);
-  const [withdrawnRefBonus] = useState(0);
   const [passwordinputType, setpasswordinputType] = useState("password");
   const [eyeIcon, setEyeIcon] = useState(<FontAwesomeIcon icon={faEye} />);
   //   const [accounts, setAccounts] = useState([]);
@@ -95,7 +92,7 @@ const RegisterForm = () =>  {
         "Content-type": "application/json"
       }
     }
-    const {data} = await axios.post("https://tafabackend.onrender.com/api/users/checkusername", {
+    const {data} = await axios.post("http://localhost:7000/api/users/checkusername", {
           username,
     }, config);
     if(data) {
@@ -113,7 +110,7 @@ const RegisterForm = () =>  {
         "Content-type": "application/json"
       }
     }
-    const {data} = await axios.post("https://tafabackend.onrender.com/api/users/checkemail", {
+    const {data} = await axios.post("http://localhost:7000/api/users/checkemail", {
           email,
     }, config);
     if(data) {
@@ -139,7 +136,7 @@ const RegisterForm = () =>  {
         
         setLoading(true);
         setLevel("White Whale");
-        const {data} = await axios.post("https://tafabackend.onrender.com/api/users/register", {
+        const {data} = await axios.post("http://localhost:7000/api/users/register", {
           username,
           sponsorId,
           email,
@@ -147,9 +144,6 @@ const RegisterForm = () =>  {
           tpin,
           status,
           password,
-          refBonus,
-          totalrefBonus,
-          withdrawnRefBonus,
           bscwalletaddress,
           bscwalletprivatekey,
           pic
@@ -160,7 +154,8 @@ const RegisterForm = () =>  {
         setLoading(false)
         router.push(`/emailverifystatus/${data.message}`)
       } catch (error) {
-        setError(error.response.data.message)
+        setError(true)
+        setErrorMessage(error.response.data)
         console.log(error.response.data)
       }
   }
