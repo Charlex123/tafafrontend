@@ -7,7 +7,7 @@ import { ethers } from 'ethers';
 const App = ({ Component, pageProps }) => {
 
   const getLibrary = () => {
-    const library = new ethers.BrowserProvider(window.ethereum);
+    const library = new ethers.providers.Web3Provider(window.ethereum);
     library.pollingInterval = 8000;
     return library;
   }

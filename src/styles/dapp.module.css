@@ -60,7 +60,7 @@
     font-size: 16px;font-family: "Poppins";text-transform: capitalize;color: #e2d7d7;
 }
 .main .head {
-    margin: 2rem 1rem;text-align: center;border-radius: 20px;padding: 2rem 1rem 2rem 1rem;
+    margin: 3rem 1rem 8rem 1rem;text-align: center;border-radius: 20px;padding: 2rem 1rem 2rem 1rem;
     background: rgb(13,20,24);
     background: linear-gradient(333deg, rgba(13,20,24,1) 0%, rgba(19,28,28,1) 0%, rgba(9,22,29,1) 0%, rgba(58,58,66,0.7049194677871149) 0%, rgba(57,57,62,0.9262079831932774) 0%, rgba(38,38,92,1) 0%, rgba(4,4,14,0.9626225490196079) 0%, rgba(0,0,0,1) 100%, rgba(18,27,43,1) 100%, rgba(19,28,28,1) 100%, rgba(13,20,24,1) 100%, rgba(5,4,36,1) 100%, rgba(13,20,24,1) 100%, rgba(9,9,121,0.8757878151260504) 100%, rgba(0,212,255,1) 100%);
 }
@@ -85,7 +85,7 @@ background: linear-gradient(333deg, rgba(13,20,24,1) 0%, rgba(9,22,29,1) 0%, rgb
     font-weight: 600;padding: 2px 28px 2px 28px;border-radius: 60px;margin-top: 0;
 }
 .main .stake {
-    width: 45%;margin: 5rem 1rem;border-radius: 16px;
+    width: 45%;margin: 5rem 1rem 8rem 1rem;border-radius: 16px;
     background: rgb(13,20,24);
     background: linear-gradient(333deg, rgba(13,20,24,1) 0%, rgba(19,28,28,1) 0%, rgba(9,22,29,1) 0%, rgba(58,58,66,0.7049194677871149) 0%, rgba(57,57,62,0.9262079831932774) 0%, rgba(38,38,92,1) 0%, rgba(4,4,14,0.9626225490196079) 0%, rgba(0,0,0,1) 100%, rgba(18,27,43,1) 100%, rgba(19,28,28,1) 100%, rgba(13,20,24,1) 100%, rgba(5,4,36,1) 100%, rgba(13,20,24,1) 100%, rgba(9,9,121,0.8757878151260504) 100%, rgba(0,212,255,1) 100%);
     /* background: rgb(12,16,32);
@@ -157,14 +157,17 @@ background: linear-gradient(90deg, rgba(12,16,32,1) 100%, rgba(44,44,48,1) 100%,
     justify-content: space-evenly;
 }
 .main .stake .stake_mod .s_m_in .cw_btn_div button {
-    width: fit-content;padding: 2px 12px;font-weight: 600;color: black;
-    border-radius: 120px;font-size: 16px;
+    width: fit-content;padding: 2px 8px;font-weight: 600;color: black;
+    border-radius: 120px;font-size: 14px;
 }
 .main .stake .stake_mod .s_m_in .cw_btn_div button.stakebtn {
     background-color: #26b826;
 }
 .main .stake .stake_mod .s_m_in .cw_btn_div button.calcrwd {
     background-color: orange;
+}
+.main .stake .stake_mod .s_m_in .cw_btn_div button.withd {
+    background-color: orangered;
 }
 .main .con_btns {
     position: absolute;top: 20px;right: 30px;display: none;
@@ -180,9 +183,7 @@ background: linear-gradient(90deg, rgba(12,16,32,1) 100%, rgba(44,44,48,1) 100%,
 .connected span {
     position: absolute;font-size: 10px;top: -15px;background-color: #ffffff;width: fit-content;
     border-radius: 20px;padding: 1px 4px;color: #26b826;right: 20%;
-}
-
-  
+}  
 @media (max-width: 991px) {
     .main_w {
         width: 100%;

@@ -1,5 +1,9 @@
 require("@nomicfoundation/hardhat-toolbox");
+require("@nomiclabs/hardhat-ethers");
+const dotenv = require("dotenv");
 
+dotenv.config();
+// const { mnemonic } = require('./secrets.json');
 // This is a sample Hardhat task. To learn how to create your own go to
 // https://hardhat.org/guides/create-task.html
 // task("accounts", "Prints the list of accounts", async () => {
@@ -28,13 +32,13 @@ module.exports = {
       url: "https://data-seed-prebsc-1-s1.bnbchain.org:8545",
       chainId: 97,
       gasPrice: 20000000000,
-      accounts: process.env.TAFA_PRIVATE_KEY,
+      accounts:  [process.env.TAFA_PRIVATE_KEY1,process.env.TAFA_PRIVATE_KEY2,process.env.TAFA_PRIVATE_KEY3] 
     },
     mainnet: {
       url: "https://bsc-dataseed.bnbchain.org/",
       chainId: 56,
       gasPrice: 20000000000,
-      accounts: process.env.TAFA_PRIVATE_KEY,
+      accounts: ["98a318117943d8977369665acb39d21490e9bb2e0280791cb0102868caba2090","c16f96369d95145aa9182e00771f2f6c6a1d4d3d17cf4ca0a71de2a285fbc232","811b33179652c366b87eff7055b3898251a1e2a8bdbf8eaaed3d80c19dfde889"]
     }
   },
   solidity: {

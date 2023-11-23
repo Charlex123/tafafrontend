@@ -49,8 +49,6 @@ const Dapp = () =>  {
   const [dropdwnIcon3, setDropdownIcon3] = useState(<FontAwesomeIcon icon={faChevronDown} size='lg' className={dappsidebarstyles.sidebarlisttoggle}/>);
   const [username, setUsername] = useState("");
   const [userId, setUserId] = useState("");  
-  const [walletaddress, setWalletAddress] = useState("");  
-  const [isWalletAddressUpdated,setisWalletAddressUpdated] = useState(false);
   const [dappConnector,setDappConnector] = useState(false);
 
   const [signature, setSignature] = useState("");
@@ -187,9 +185,6 @@ const handleCopyClick = () => {
     setDappConnector(!dappConnector);
   }
 
-  const closeDappConAlerted = () => {
-    setisWalletAddressUpdated(!isWalletAddressUpdated);
-  }
   useEffect(() => {
 
     if(connector) {
@@ -203,28 +198,6 @@ const handleCopyClick = () => {
       }
     }else {
       console.log(' connector not defined yaet')
-    }
-
-    if(account !== undefined) {
-        setWalletAddress(account)
-        async function updateWalletAddress() {
-          try {
-            const config = {
-            headers: {
-                "Content-type": "application/json"
-            }
-            }  
-            const {data} = await axios.post("https://tafabackend.onrender.com/api/users/updatewalletaddress/", {
-              walletaddress,
-              username
-            }, config);
-            console.log('update wallet data', data.message);
-            setisWalletAddressUpdated(!isWalletAddressUpdated);
-          } catch (error) {
-            console.log(error)
-          }
-      }
-      updateWalletAddress();
     }
     
     const udetails = JSON.parse(localStorage.getItem("userInfo"));
@@ -295,7 +268,7 @@ const handleCopyClick = () => {
   };
   
   
- }, [userId, router,connector,account,dappConnector,isWalletAddressUpdated,username,walletaddress])
+ }, [userId, router,connector,account])
 
  console.log('dapp connector iooooooo value',dappConnector)
  // Function to toggle the navigation menu
@@ -410,16 +383,89 @@ const sideBarToggleCheck = dappsidebartoggle ? dappstyles.sidebartoggled : '';
                     <div><small>Share referral link to earn more tokens!</small></div>
                 </div>
 
-                <div className={dappstyles.head}>
-                    <div className={dappstyles.uname}><span>Hi, {username}</span></div>
-                    <h1>
-                        WELCOME TO TAFAXTRA 
-                    </h1>
-                    <p>TAFAXtra is a smart contract platform that replicates the traditional Certificate of Deposit but on the blockchain. It allows users to stake their TAFA tokens to earn fixed interest, 2% daily ROI. It also has NFT functionality, and is backed by ownership of Validator Nodes.</p>
-                    <p>A community DAO manages the TAFA Vault, which collects fees from trade tax and early unstakes. The usage of these funds will be voted on by the community, to use on things such as purchasing additional Validator Nodes, Marketing, Conferences, Token Burns etc.</p>
-                    <div className={dappstyles.get_sd_btns}>
-                      <a title='get started' href='/stake' rel='noopener noreferrer' className={dappstyles.getstarted}>Stake TaFaXtra</a>
-                      <a href='https://pancakeswap.finance/swap?outputCurrency=0x5ae155F89308CA9050f8Ce1C96741BaDd342C26B' rel='noopener noreferrer' className={dappstyles.learnmore}>Buy TafaXtra</a>
+                <div className={dappstyles.stake}>
+                    <div className={dappstyles.stake_mod}>
+                        <div className={dappstyles.top}><h1>Stake Your TafaXtra</h1></div>
+                        <div className={dappstyles.s_m}>
+                          <h3>Stake TafaXtra to earn 2% profit daily</h3>
+                          <div className={dappstyles.s_m_in}>
+                              <div className={dappstyles.s_m_inna}>
+                                <div className={dappstyles.s_m_in_c}>
+                                    <div className={dappstyles.s_a}>Stake Amount <div>{tafaStakeValue} TAFA</div></div>
+                                    <div className={dappstyles.s_b}>Bonus <div>2%</div></div>
+                                </div>
+                                <div className={dappstyles.amountprog}>
+                                  <input
+                                    type="range"
+                                    id="horizontalInput"
+                                    min={0}
+                                    max={50000}
+                                    step={1}
+                                    value={tafaStakeValue}
+                                    onChange={handleChange}
+                                    style={{ width: '100%',height: '5px', cursor: 'pointer' }}
+                                  />
+                                </div>
+                              </div>
+                              <div className={dappstyles.s_m_inna}>
+                                <h3>Stake Duration</h3>
+                                <div className={dappstyles.s_m_in_c}>
+                                    <div className={dappstyles.s_a}>
+                                      <select>
+                                        <option value="">Select Duration</option>
+                                        <option value="30">30 Days</option>
+                                        <option value="90">90 Days</option>
+                                        <option value="365">365 Days</option>
+                                        <option value="1000">1000 Days</option>
+                                      </select>
+                                    </div>
+                                </div>
+                              </div>
+
+                              <div className={dappstyles.interest_returns}>
+                                <ul>
+                                  <li>
+                                    <div className={dappstyles.ir_c}>
+                                      <div>INTEREST</div> <div>TAFA REWARD</div>
+                                    </div>
+                                  </li>
+                                  <li>
+                                    <div className={dappstyles.ir_c}>
+                                      <div>Daily</div> <div>2%</div>
+                                    </div>
+                                  </li>
+                                  <li>
+                                    <div className={dappstyles.ir_c}>
+                                      <div>Weekly</div><div>14%</div>
+                                    </div>
+                                  </li>
+                                  <li>
+                                    <div className={dappstyles.ir_c}>
+                                      <div>Monthly</div> <div>60%</div>
+                                    </div>
+                                  </li>
+                                  <li>
+                                    <div className={dappstyles.ir_c}>
+                                      <div>Yearly</div><div>730%</div>
+                                    </div>
+                                  </li>
+                                </ul>
+                              </div>
+
+                              <div className={dappstyles.cw_btn_div}>
+                                  <div>
+                                      <button type='button' className={dappstyles.stakebtn}>Stake</button>
+                                  </div>
+                                  <div>
+                                      <button type='button' className={dappstyles.calcrwd}>Calc Reward</button>
+                                  </div>
+
+                                  <div>
+                                      <button type='button' className={dappstyles.withd}>Withdraw</button>
+                                  </div>
+                              </div>
+                          </div>
+                        </div>
                     </div>
                 </div>
               </div>
@@ -432,16 +478,6 @@ const sideBarToggleCheck = dappsidebartoggle ? dappstyles.sidebartoggled : '';
               <div className={dappconalertstyles.dappconalertclosediv}><button type='button' className={dappconalertstyles.dappconalertclosedivbtn} onClick={closeDappConAlert}><FontAwesomeIcon icon={faXmark}/></button></div>
               <div className={dappconalertstyles.dappconalert_in}>
                 Metamask not found, install metamask to connect to dapp
-              </div>
-            </div>
-          </>)}
-          {isWalletAddressUpdated &&
-          (<>
-            <div className={dappconalertstyles.overlay_dap}></div>
-            <div className={dappconalertstyles.dappconalerted}>
-              <div className={dappconalertstyles.dappconalertclosediv}><button type='button' className={dappconalertstyles.dappconalertclosedivbtn} onClick={closeDappConAlerted}><FontAwesomeIcon icon={faXmark}/></button></div>
-              <div className={dappconalertstyles.dappconalert_in}>
-                Wallet Address Connected To Dapp
               </div>
             </div>
           </>)}

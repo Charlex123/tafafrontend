@@ -85,29 +85,36 @@ contract Stake{
     function addReferrer(address _sponsor) public {
         require(_sponsor != address(0), "Sponsor cannot be a zero address");
         require(_sponsor != msg.sender, "You cannot refer yourself");
-        // add referrer to sponsor first generation referrals
-        userDetails[_sponsor].userReferrals[_sponsor].referral = msg.sender;
-        userDetails[msg.sender].userReferrals[msg.sender].referredby = _sponsor;
-        userDetails[msg.sender].wasReferred = true;
-        userDetails[_sponsor].userReferrals[_sponsor].firstgenReferrals.push(msg.sender);
-        userAddresses.push(msg.sender);
-        userDetails[_sponsor].userReferrals[_sponsor].allreferrals.push(msg.sender);
-        // check if sponsor has upline
-        if(userDetails[_sponsor].wasReferred == true ) {
-            address sponsorupline = userDetails[_sponsor].userReferrals[_sponsor].referredby;
-            // add referral to sponsorupline second generation referrals
-            userDetails[sponsorupline].userReferrals[sponsorupline].secondgenReferrals.push(msg.sender);
-            if(userDetails[sponsorupline].wasReferred == true) {
-                address sponsorsponsorupline = userDetails[sponsorupline].userReferrals[sponsorupline].referredby;
-                // add sponsorupline third generation referrals
-                userDetails[sponsorsponsorupline].userReferrals[sponsorsponsorupline].thirdgenReferrals.push(msg.sender);
-            }else {
 
+        // check if referral already exists
+
+        if(userDetails[msg.sender].userReferrals[msg.sender].referredby == _sponsor) {
+            revert("Referral already exists");
+        }else {
+            // add referrer to sponsor first generation referrals
+            userDetails[_sponsor].userReferrals[_sponsor].referral = msg.sender;
+            userDetails[msg.sender].userReferrals[msg.sender].referredby = _sponsor;
+            userDetails[msg.sender].wasReferred = true;
+            userDetails[_sponsor].userReferrals[_sponsor].firstgenReferrals.push(msg.sender);
+            userAddresses.push(msg.sender);
+            userDetails[_sponsor].userReferrals[_sponsor].allreferrals.push(msg.sender);
+            // check if sponsor has upline
+            if(userDetails[_sponsor].wasReferred == true ) {
+                address sponsorupline = userDetails[_sponsor].userReferrals[_sponsor].referredby;
+                // add referral to sponsorupline second generation referrals
+                userDetails[sponsorupline].userReferrals[sponsorupline].secondgenReferrals.push(msg.sender);
+                if(userDetails[sponsorupline].wasReferred == true) {
+                    address sponsorsponsorupline = userDetails[sponsorupline].userReferrals[sponsorupline].referredby;
+                    // add sponsorupline third generation referrals
+                    userDetails[sponsorsponsorupline].userReferrals[sponsorsponsorupline].thirdgenReferrals.push(msg.sender);
+                }else {
+
+                }
             }
-        }
 
-        userDetails[_sponsor].refCount++;
-        emit AddReferral(msg.sender,_sponsor);
+            userDetails[_sponsor].refCount++;
+            emit AddReferral(msg.sender,_sponsor);
+        }
     }
 
     function getRefCount() public view returns (uint refcount) {

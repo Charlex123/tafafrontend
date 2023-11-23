@@ -10,7 +10,7 @@ import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
 export default function SelectWalletModal({ isOpen, closeWeb3Modal }) {
   const { activate } = useWeb3React();
-  console.log('activate lout', activate)
+  
   const setProvider = (type) => {
     window.localStorage.setItem("provider", type);
   };
