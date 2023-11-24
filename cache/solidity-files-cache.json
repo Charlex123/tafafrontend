@@ -117,7 +117,7 @@
       ]
     },
     "C:\\xampp\\htdocs\\tafaextra\\tafafrontend\\node_modules\\@openzeppelin\\contracts\\token\\ERC20\\ERC20.sol": {
-      "lastModificationDate": 1699956859488,
+      "lastModificationDate": 1700335093709,
       "contentHash": "c6375ef25e84c90b3d15f9ec4eef218f",
       "sourceName": "@openzeppelin/contracts/token/ERC20/ERC20.sol",
       "solcConfig": {
@@ -158,7 +158,7 @@
       ]
     },
     "C:\\xampp\\htdocs\\tafaextra\\tafafrontend\\node_modules\\@openzeppelin\\contracts\\utils\\Context.sol": {
-      "lastModificationDate": 1699956859040,
+      "lastModificationDate": 1700335093399,
       "contentHash": "01c847e2af51f468cb66d9ed83bc3cec",
       "sourceName": "@openzeppelin/contracts/utils/Context.sol",
       "solcConfig": {
@@ -194,7 +194,7 @@
       ]
     },
     "C:\\xampp\\htdocs\\tafaextra\\tafafrontend\\node_modules\\@openzeppelin\\contracts\\interfaces\\draft-IERC6093.sol": {
-      "lastModificationDate": 1699956859120,
+      "lastModificationDate": 1700335093450,
       "contentHash": "4aefc698f77ecbace7f401257dfe182d",
       "sourceName": "@openzeppelin/contracts/interfaces/draft-IERC6093.sol",
       "solcConfig": {
@@ -232,7 +232,7 @@
       ]
     },
     "C:\\xampp\\htdocs\\tafaextra\\tafafrontend\\node_modules\\@openzeppelin\\contracts\\token\\ERC20\\IERC20.sol": {
-      "lastModificationDate": 1699956860432,
+      "lastModificationDate": 1700335094816,
       "contentHash": "5517c8678c18eb1a8ba58810e7ca39ca",
       "sourceName": "@openzeppelin/contracts/token/ERC20/IERC20.sol",
       "solcConfig": {
@@ -268,7 +268,7 @@
       ]
     },
     "C:\\xampp\\htdocs\\tafaextra\\tafafrontend\\node_modules\\@openzeppelin\\contracts\\token\\ERC20\\extensions\\IERC20Metadata.sol": {
-      "lastModificationDate": 1699956860464,
+      "lastModificationDate": 1700335094825,
       "contentHash": "4c02fa6f7ae7b6c289cef80424f0c875",
       "sourceName": "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol",
       "solcConfig": {
@@ -306,8 +306,8 @@
       ]
     },
     "C:\\xampp\\htdocs\\tafaextra\\tafafrontend\\node_modules\\hardhat\\console.sol": {
-      "lastModificationDate": 1700335091943,
-      "contentHash": "896f68942c3a20e9ae3c3c5bfd3add54",
+      "lastModificationDate": 1700838158972,
+      "contentHash": "4ff3cd2f6272c9a6516e9ee4f2b967d3",
       "sourceName": "hardhat/console.sol",
       "solcConfig": {
         "version": "0.8.20",
@@ -335,7 +335,7 @@
       },
       "imports": [],
       "versionPragmas": [
-        ">=0.4.22 <0.9.0"
+        ">= 0.4.22 <0.9.0"
       ],
       "artifacts": [
         "console"

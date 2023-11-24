@@ -37,8 +37,8 @@ library.add(faEye, faEyeSlash);
 const Dapp = () =>  {
 
   const router = useRouter();
-  const TAFAAddress = "0x675b2823BfeFd5633087e580C5B4313e8d61dfBE";
-  const StakeAddress = "0x612Da6260c969bCD0bb55FfB0AE38AA478106980";
+  const TAFAAddress = "0x40CAAd2F6F982788f046CD241A967117B300B502";
+  const StakeAddress = "0x74Ab6ac5deBC29d4BdA251DF9BdD0de6b13d6ab0";
   const { theme, setHandleDrawer, changeTheme, isDark } = useContext(ThemeContext);
   const [isNavOpen, setNavOpen] = useState(false);
   const [scrolling, setScrolling] = useState(false);
@@ -207,7 +207,7 @@ const handleCopyClick = () => {
       setWalletAddress(account)
       async function Addreferrer() {
         const [account] = await window.ethereum.request({ method: 'eth_requestAccounts' })
-        const provider = new ethers.providers.JsonRpcProvider('https://data-seed-prebsc-1-s1.bnbchain.org:8545', { chainId: 97 })
+        const provider = new ethers.providers.JsonRpcProvider('https://data-seed-prebsc-1-s1.bnbchain.org:8545')
         const signer = provider.getSigner(account);
         const TAFAContract = new ethers.Contract(TAFAAddress, TAFAAbi.abi, signer);
         const StakeContract = new ethers.Contract(StakeAddress, StakeArtifacts.abi, signer);

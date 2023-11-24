@@ -48,7 +48,9 @@ module.exports = {
       },
       {
         version: "0.8.20",
-        settings: {},
+        settings: {
+            evmVersion: 'paris'
+        },
       },
     ],
   settings: {
