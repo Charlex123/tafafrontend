@@ -11,7 +11,6 @@ import { faChevronLeft  } from "@fortawesome/free-solid-svg-icons";
 // component
 import Loading from '../components/Loading';
 import AlertMessage from './AlertMessage';
-import Iconify from '../components/Iconify';
 import { faLockOpen } from '@fortawesome/free-solid-svg-icons';
 
 // ----------------------------------------------------------------------

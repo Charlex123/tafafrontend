@@ -1,14 +1,11 @@
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { React, useState } from 'react';
 import { useRouter } from 'next/router';
-import { useSearchParams } from 'next/navigation';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faCheckCircle, faEye, faEyeSlash } from "@fortawesome/free-regular-svg-icons";
 import { faChevronLeft  } from "@fortawesome/free-solid-svg-icons";
 // material
-import { Stack, TextField, IconButton, InputAdornment } from '@mui/material';
 import Loading from "./Loading";
 import AlertMessage from "./AlertMessage";
 import regstyles from "../styles/register.module.css";

@@ -6,13 +6,10 @@ import styles from '../styles/dappnav.module.css';
 import logo from '../assets/images/logo.png';
 import Image from 'next/image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import WalletConnectProvider from "@walletconnect/web3-provider";
 // import { providers } from "ethers";
-import Web3 from "web3";
 import SelectWalletModal from "./web3-Modal";
 import { useWeb3React } from "@web3-react/core";
 import { networkParams } from "./web3-networks";
-import { connectors } from "./web3-connectors";
 import { toHex, truncateAddress } from "../utils/web3react-utils";
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas, faCheck, faCheckCircle, faChevronDown,faAlignJustify, faCircleDollarToSlot, faGift, faHandHoldingDollar, faPeopleGroup, faChevronUp, faAngleDoubleRight, faAngleRight } from '@fortawesome/free-solid-svg-icons'

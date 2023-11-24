@@ -6,16 +6,11 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { faEye, faEyeSlash } from "@fortawesome/free-regular-svg-icons";
 import { faChevronLeft  } from "@fortawesome/free-solid-svg-icons";
 // material
-import { Stack, TextField, IconButton, InputAdornment } from '@mui/material';
 import Loading from "./Loading";
 import AlertMessage from "./AlertMessage";
 import regstyles from "../styles/register.module.css";
 // component
-import Iconify from './Iconify';
-import WalletConnectProvider from "@walletconnect/web3-provider";
-import { providers } from "ethers";
 import Web3 from "web3";
-import { functions } from 'lodash';
 import { faLock } from '@fortawesome/free-solid-svg-icons';
 
 // ----------------------------------------------------------------------
