@@ -21,7 +21,9 @@ import { toHex, truncateAddress } from "../utils/web3react-utils";
 // import { providers } from "ethers";
 import axios from 'axios';
 import AlertMessage from './AlertMessage';
-import Web3 from "web3";
+import { ethers } from 'ethers';
+import TAFAAbi from '../../artifacts/contracts/TAFA.sol/TAFA.json';
+import StakeArtifacts from '../../artifacts/contracts/Stake.sol/Stake.json';
 import { ThemeContext } from '../contexts/theme-context';
 import DappNav from './Dappnav';
 import { connectors } from './web3-connectors';
@@ -38,6 +40,9 @@ library.add(faEye, faEyeSlash);
 const Dapp = () =>  {
 
   const router = useRouter();
+
+  const TAFAAddress = "0x675b2823BfeFd5633087e580C5B4313e8d61dfBE";
+  const StakeAddress = "0x612Da6260c969bCD0bb55FfB0AE38AA478106980";
 
   const { theme, setHandleDrawer, changeTheme, isDark } = useContext(ThemeContext);
   const [isNavOpen, setNavOpen] = useState(false);
@@ -58,17 +63,17 @@ const Dapp = () =>  {
   const [message, setMessage] = useState("");
   const [signedMessage, setSignedMessage] = useState("");
   const [verified, setVerified] = useState();
+  const [stakeAmount, setstakeAmount] = useState(50);
+  const [stakeDuration, setstakeDuration] = useState(30);
   
   const { isOpen, onOpen, onClose, closeWeb3Modal,openWeb3Modal } = useContext(Web3ModalContext);
   
   const [referralLink, setreferralLink] = useState('');
   const [buttonText, setButtonText] = useState("Copy");
 
-  const [tafaStakeValue, settafaStakeValue] = useState(50); // Initial value
-
   const handleChange = (event) => {
     const newValue = event.target.value;
-    settafaStakeValue(newValue);
+    setstakeAmount(newValue);
 };
 
 const handleCopyClick = () => {
@@ -185,6 +190,58 @@ const handleCopyClick = () => {
     setDappConnector(!dappConnector);
   }
 
+  const Stake = async () => {
+
+    if(account !== undefined) {
+      const [account] = await window.ethereum.request({ method: 'eth_requestAccounts' })
+      const provider = new ethers.providers.JsonRpcProvider('https://data-seed-prebsc-1-s1.bnbchain.org:8545', { chainId: 97 })
+      const signer = provider.getSigner(account);
+      const TAFAContract = new ethers.Contract(TAFAAddress, TAFAAbi.abi, signer);
+      const StakeContract = new ethers.Contract(StakeAddress, StakeArtifacts.abi, signer);
+      console.log('signer address', account)
+      console.log('tafa contract ',TAFAContract)
+      console.log('stake contract ',StakeContract)
+      const reslt = await StakeContract.stake(stakeAmount,stakeDuration);
+      console.log("Account Balance: ", reslt);
+    }
+    
+  }
+
+  const calculateReward = async () => {
+
+    if(account !== undefined) {
+      const [account] = await window.ethereum.request({ method: 'eth_requestAccounts' })
+      const provider = new ethers.providers.JsonRpcProvider('https://data-seed-prebsc-1-s1.bnbchain.org:8545', { chainId: 97 })
+      const signer = provider.getSigner(account);
+      const TAFAContract = new ethers.Contract(TAFAAddress, TAFAAbi.abi, signer);
+      const StakeContract = new ethers.Contract(StakeAddress, StakeArtifacts.abi, signer);
+      console.log('signer address', account)
+      console.log('tafa contract ',TAFAContract)
+      console.log('stake contract ',StakeContract)
+      const reslt = await StakeContract.calcReward();
+      console.log("Account Balance: ", reslt);
+    }
+    
+  }
+
+  const Withdraw = async () => {
+
+    if(account !== undefined) {
+      const [account] = await window.ethereum.request({ method: 'eth_requestAccounts' })
+      const provider = new ethers.providers.JsonRpcProvider('https://data-seed-prebsc-1-s1.bnbchain.org:8545', { chainId: 97 })
+      const signer = provider.getSigner(account);
+      const TAFAContract = new ethers.Contract(TAFAAddress, TAFAAbi.abi, signer);
+      const StakeContract = new ethers.Contract(StakeAddress, StakeArtifacts.abi, signer);
+      console.log('signer address', account)
+      console.log('tafa contract ',TAFAContract)
+      console.log('stake contract ',StakeContract)
+      const reslt = await StakeContract.withdrawStake();
+      console.log("Account Balance: ", reslt);
+    }
+    
+  }
+
+  
   useEffect(() => {
 
     if(connector) {
@@ -213,21 +270,6 @@ const handleCopyClick = () => {
       router.push(`/signin`);
     }
 
-    async function getreferrals() {
-      try {
-         const config = {
-         headers: {
-            "Content-type": "application/json"
-         }
-         }  
-         const {refdata} = await axios.get(`https://tafabackend.onrender.com/api/users/getreferrals/${udetails.userId}`, {
-         }, config);
-         console.log('ref data',refdata);
-      } catch (error) {
-         console.log(error)
-      }
-   }
-   getreferrals();
 
     // Function to handle window resize
     const handleResize = () => {
@@ -268,7 +310,7 @@ const handleCopyClick = () => {
   };
   
   
- }, [userId, router,connector,account])
+ }, [userId, router,connector,account,dappConnector])
 
  console.log('dapp connector iooooooo value',dappConnector)
  // Function to toggle the navigation menu
@@ -303,26 +345,6 @@ const handleCopyClick = () => {
     localStorage.removeItem('userInfo');
     router.push(`/signin`);
   };
-//  async function connectAccount() {
-//     if(window.ethereum)  {
-//         // window.web3 = new Web3(web3.currentProvider);
-//         const accounts = await window.ethereum.request({
-//             method: "eth_requestAccounts",
-//         });
-//         // setAccounts(accounts);
-//     } else {
-//         //  Create WalletConnect Provider
-//         const provider = new WalletConnectProvider({
-//             chainId: 57,
-//             rpc:'https://bsc-dataseed.binance.org/'
-//         });
-        
-//         //  Enable session (triggers QR Code modal)
-//         await provider.enable();
-
-//         const web3Provider = new providers.Web3Provider(provider);
-//     }
-// }
 
 const sideBarToggleCheck = dappsidebartoggle ? dappstyles.sidebartoggled : '';
 
@@ -391,17 +413,17 @@ const sideBarToggleCheck = dappsidebartoggle ? dappstyles.sidebartoggled : '';
                           <div className={dappstyles.s_m_in}>
                               <div className={dappstyles.s_m_inna}>
                                 <div className={dappstyles.s_m_in_c}>
-                                    <div className={dappstyles.s_a}>Stake Amount <div>{tafaStakeValue} TAFA</div></div>
+                                    <div className={dappstyles.s_a}>Stake Amount <div>{stakeAmount} TAFA</div></div>
                                     <div className={dappstyles.s_b}>Bonus <div>2%</div></div>
                                 </div>
                                 <div className={dappstyles.amountprog}>
                                   <input
                                     type="range"
                                     id="horizontalInput"
-                                    min={0}
+                                    min={50}
                                     max={50000}
                                     step={1}
-                                    value={tafaStakeValue}
+                                    value={stakeAmount}
                                     onChange={handleChange}
                                     style={{ width: '100%',height: '5px', cursor: 'pointer' }}
                                   />
@@ -411,7 +433,7 @@ const sideBarToggleCheck = dappsidebartoggle ? dappstyles.sidebartoggled : '';
                                 <h3>Stake Duration</h3>
                                 <div className={dappstyles.s_m_in_c}>
                                     <div className={dappstyles.s_a}>
-                                      <select>
+                                      <select onChange={(e) => setstakeDuration(e.target.value)}>
                                         <option value="">Select Duration</option>
                                         <option value="30">30 Days</option>
                                         <option value="90">90 Days</option>
@@ -454,14 +476,14 @@ const sideBarToggleCheck = dappsidebartoggle ? dappstyles.sidebartoggled : '';
 
                               <div className={dappstyles.cw_btn_div}>
                                   <div>
-                                      <button type='button' className={dappstyles.stakebtn}>Stake</button>
+                                      <button type='button' className={dappstyles.stakebtn} onClick={Stake}>Stake</button>
                                   </div>
                                   <div>
-                                      <button type='button' className={dappstyles.calcrwd}>Calc Reward</button>
+                                      <button type='button' className={dappstyles.calcrwd} onClick={calculateReward}>Calc Reward</button>
                                   </div>
 
                                   <div>
-                                      <button type='button' className={dappstyles.withd}>Withdraw</button>
+                                      <button type='button' className={dappstyles.withd} onClick={Withdraw}>Withdraw</button>
                                   </div>
                               </div>
                           </div>

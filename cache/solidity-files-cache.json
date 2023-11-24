@@ -38,8 +38,8 @@
       ]
     },
     "C:\\xampp\\htdocs\\tafaextra\\tafafrontend\\contracts\\Stake.sol": {
-      "lastModificationDate": 1700727555651,
-      "contentHash": "6cd7353d3655e92712a8c425e68c44b7",
+      "lastModificationDate": 1700823440780,
+      "contentHash": "c96fbce2132f9074517fe43e51f17df7",
       "sourceName": "contracts/Stake.sol",
       "solcConfig": {
         "version": "0.8.20",

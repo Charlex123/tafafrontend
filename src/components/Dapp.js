@@ -21,16 +21,15 @@ import { toHex, truncateAddress } from "../utils/web3react-utils";
 // import { providers } from "ethers";
 import axios from 'axios';
 import AlertMessage from './AlertMessage';
-import Web3 from "web3";
 import { ThemeContext } from '../contexts/theme-context';
 import DappNav from './Dappnav';
-import { connectors } from './web3-connectors';
+import { ethers } from 'ethers';
+import TAFAAbi from '../../artifacts/contracts/TAFA.sol/TAFA.json';
+import StakeArtifacts from '../../artifacts/contracts/Stake.sol/Stake.json';
 import DappFooter from './DappFooter';
 import { fas, faCheck, faCheckCircle, faChevronDown,faAlignJustify, faCircleDollarToSlot, faGift, faHandHoldingDollar, faPeopleGroup, faChevronUp, faAngleDoubleRight, faAngleRight, faXmark } from '@fortawesome/free-solid-svg-icons'
 import { faTwitter, faFontAwesome, faFacebook,faDiscord, faTelegram, faMedium, faYoutube } from '@fortawesome/free-brands-svg-icons'
 import { faQuestionCircle } from '@fortawesome/free-regular-svg-icons';
-
-
 
 library.add(fas, faTwitter, faFontAwesome,faQuestionCircle, faCheck,faCheckCircle,faAlignJustify)
 // ----------------------------------------------------------------------
@@ -38,7 +37,8 @@ library.add(faEye, faEyeSlash);
 const Dapp = () =>  {
 
   const router = useRouter();
-
+  const TAFAAddress = "0x675b2823BfeFd5633087e580C5B4313e8d61dfBE";
+  const StakeAddress = "0x612Da6260c969bCD0bb55FfB0AE38AA478106980";
   const { theme, setHandleDrawer, changeTheme, isDark } = useContext(ThemeContext);
   const [isNavOpen, setNavOpen] = useState(false);
   const [scrolling, setScrolling] = useState(false);
@@ -110,8 +110,7 @@ const handleCopyClick = () => {
     deactivate,
     active
   } = useWeb3React();
-
-  console.log('use web3 react', useWeb3React())
+  
   const disconnect = () => {
     refreshState();
     deactivate();
@@ -191,14 +190,12 @@ const handleCopyClick = () => {
     setisWalletAddressUpdated(!isWalletAddressUpdated);
   }
   useEffect(() => {
-
+    
     if(connector) {
       if(connector !== undefined && account !== undefined) {
-        console.log('metamask found', connector)
         setDappConnector(false)
       }else if(connector !== undefined && account === undefined) {
-        console.log('metamask not found', connector)
-        setDappConnector(!dappConnector)
+        // setDappConnector(!dappConnector)
         setErrorMessage("Metamask not found, install metamask to connect to dapp")
       }
     }else {
@@ -206,8 +203,28 @@ const handleCopyClick = () => {
     }
 
     if(account !== undefined) {
-        setWalletAddress(account)
+
+      setWalletAddress(account)
+      async function Addreferrer() {
+        const [account] = await window.ethereum.request({ method: 'eth_requestAccounts' })
+        const provider = new ethers.providers.JsonRpcProvider('https://data-seed-prebsc-1-s1.bnbchain.org:8545', { chainId: 97 })
+        const signer = provider.getSigner(account);
+        const TAFAContract = new ethers.Contract(TAFAAddress, TAFAAbi.abi, signer);
+        const StakeContract = new ethers.Contract(StakeAddress, StakeArtifacts.abi, signer);
+        console.log('signer address', account)
+        console.log('tafa contract ',TAFAContract)
+        console.log('stake contract ',StakeContract)
+        const reslt = await StakeContract.addReferrer("0xFCbB69B9CE13bec64a76878dbFF64e8e787f75Cf");
+        console.log("Account Balance: ", reslt);
+      }
+      Addreferrer();
+
         async function updateWalletAddress() {
+          // await provider.send("eth_requestAccounts", []);
+          const acct = await library.provider.request({
+            method: "eth_requestAccounts",
+          });
+
           try {
             const config = {
             headers: {
@@ -219,7 +236,7 @@ const handleCopyClick = () => {
               username
             }, config);
             console.log('update wallet data', data.message);
-            setisWalletAddressUpdated(!isWalletAddressUpdated);
+            // setisWalletAddressUpdated(!isWalletAddressUpdated);
           } catch (error) {
             console.log(error)
           }
@@ -247,9 +264,9 @@ const handleCopyClick = () => {
             "Content-type": "application/json"
          }
          }  
-         const {refdata} = await axios.get(`https://tafabackend.onrender.com/api/users/getreferrals/${udetails.userId}`, {
+         const {data} = await axios.get(`https://tafabackend.onrender.com/api/users/getreferrals/${udetails.userId}`, {
          }, config);
-         console.log('ref data',refdata);
+         console.log('ref data',data);
       } catch (error) {
          console.log(error)
       }
@@ -297,7 +314,6 @@ const handleCopyClick = () => {
   
  }, [userId, router,connector,account,dappConnector,isWalletAddressUpdated,username,walletaddress])
 
- console.log('dapp connector iooooooo value',dappConnector)
  // Function to toggle the navigation menu
  const toggleSideBar = () => {
     setSideBarToggle(!dappsidebartoggle);

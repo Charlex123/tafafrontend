@@ -38,7 +38,7 @@ module.exports = {
       url: "https://bsc-dataseed.bnbchain.org/",
       chainId: 56,
       gasPrice: 20000000000,
-      accounts: ["98a318117943d8977369665acb39d21490e9bb2e0280791cb0102868caba2090","c16f96369d95145aa9182e00771f2f6c6a1d4d3d17cf4ca0a71de2a285fbc232","811b33179652c366b87eff7055b3898251a1e2a8bdbf8eaaed3d80c19dfde889"]
+      accounts: [process.env.TAFA_PRIVATE_KEY1,process.env.TAFA_PRIVATE_KEY2,process.env.TAFA_PRIVATE_KEY3]
     }
   },
   solidity: {

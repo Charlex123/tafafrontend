@@ -6,7 +6,7 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 const injected = new InjectedConnector({
-  supportedChainIds: [1, 3, 4, 5, 42]
+  supportedChainIds: [1, 3, 4, 5, 42, 56, 97]
 });
 
 const walletconnect = new WalletConnectConnector({
