@@ -452,7 +452,7 @@ const sideBarToggleCheck = dappsidebartoggle ? dappstyles.sidebartoggled : '';
                     <p>TAFAXtra is a smart contract platform that replicates the traditional Certificate of Deposit but on the blockchain. It allows users to stake their TAFA tokens to earn fixed interest, 2% daily ROI. It also has NFT functionality, and is backed by ownership of Validator Nodes.</p>
                     <p>A community DAO manages the TAFA Vault, which collects fees from trade tax and early unstakes. The usage of these funds will be voted on by the community, to use on things such as purchasing additional Validator Nodes, Marketing, Conferences, Token Burns etc.</p>
                     <div className={dappstyles.get_sd_btns}>
-                      <a title='get started' href='/stake' rel='noopener noreferrer' className={dappstyles.getstarted}>Stake TaFaXtra</a>
+                      <a title='get started' href='/stakes' rel='noopener noreferrer' className={dappstyles.getstarted}>Stake TaFaXtra</a>
                       <a href='https://pancakeswap.finance/swap?outputCurrency=0x5ae155F89308CA9050f8Ce1C96741BaDd342C26B' rel='noopener noreferrer' className={dappstyles.learnmore}>Buy TafaXtra</a>
                     </div>
                 </div>
