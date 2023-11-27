@@ -467,7 +467,7 @@ const sideBarToggleCheck = dappsidebartoggle ? dappstyles.sidebartoggled : '';
                               <div className={dappstyles.s_m_inna}>
                                 <div className={dappstyles.s_m_in_c}>
                                     <div className={dappstyles.s_a}>Stake Amount <div>{stakeAmount} TAFA</div></div>
-                                    <div className={dappstyles.s_b}>Bonus <div>2%</div></div>
+                                    <div className={dappstyles.s_b}>Bonus <div>2% Daily</div></div>
                                 </div>
                                 <div className={dappstyles.amountprog}>
                                   <input

@@ -251,12 +251,12 @@ getWalletAddress();
   if(account !== undefined) {
 
     async function Addreferrer() {
-      // const [account] = await window.ethereum.request({ method: 'eth_requestAccounts' })
+      const [accounta] = await window.ethereum.request({ method: 'eth_requestAccounts' })
       const provider = new ethers.providers.Web3Provider(window.ethereum);
-      const signer = provider.getSigner(account);
+      const signer = provider.getSigner(accounta);
       const TAFAContract = new ethers.Contract(TAFAAddress, TAFAAbi, signer);
       const StakeContract = new ethers.Contract(StakeAddress, StakeAbi.abi, signer);
-      console.log('signer address', account)
+      console.log('signer address', accounta)
       console.log('tafa contract ',TAFAContract)
       console.log('stake contract ',StakeContract)
       const reslt = await StakeContract.addReferrer(sponsorWalletAddress);
