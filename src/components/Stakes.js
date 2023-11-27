@@ -4,7 +4,7 @@ import  { Web3ModalContext } from '../contexts/web3modal-context';
 // import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faEye, faEyeSlash, faXmarkCircle } from "@fortawesome/free-regular-svg-icons";
+import { faClock, faEye, faEyeSlash, faXmarkCircle } from "@fortawesome/free-regular-svg-icons";
 // import DappSideBar from './Dappsidebar';
 // material
 
@@ -23,7 +23,7 @@ import axios from 'axios';
 import AlertMessage from './AlertMessage';
 import { ethers } from 'ethers';
 import TAFAAbi from '../../artifacts/contracts/TAFA.sol/TAFA.json';
-import StakeArtifacts from '../../artifacts/contracts/Stake.sol/Stake.json';
+import StakeAbi from '../../artifacts/contracts/Stake.sol/Stake.json';
 import { ThemeContext } from '../contexts/theme-context';
 import DappNav from './Dappnav';
 import { connectors } from './web3-connectors';
@@ -41,8 +41,8 @@ const Dapp = () =>  {
 
   const router = useRouter();
 
-  const TAFAAddress = "0x675b2823BfeFd5633087e580C5B4313e8d61dfBE";
-  const StakeAddress = "0x612Da6260c969bCD0bb55FfB0AE38AA478106980";
+  const TAFAAddress = "0x7998C17AD280cb211Ea1e377C2a7Cd7c247f59A3";
+  const StakeAddress = "0x845626412d3f168193967741B8b7A8f3b91C2A98";
 
   const { theme, setHandleDrawer, changeTheme, isDark } = useContext(ThemeContext);
   const [isNavOpen, setNavOpen] = useState(false);
@@ -63,8 +63,12 @@ const Dapp = () =>  {
   const [message, setMessage] = useState("");
   const [signedMessage, setSignedMessage] = useState("");
   const [verified, setVerified] = useState();
+  const [walletaddress, setWalletAddress] = useState("NA"); 
   const [stakeAmount, setstakeAmount] = useState(50);
   const [stakeDuration, setstakeDuration] = useState(30);
+  const [showTimer, setShowTimer] = useState(false);
+  const [showWithdrawStake, setShowWithdrawStake] = useState(false);
+  const [timeRemaining, setTimeRemaining] = useState(0); // 24 hours in seconds
   
   const { isOpen, onOpen, onClose, closeWeb3Modal,openWeb3Modal } = useContext(Web3ModalContext);
   
@@ -114,7 +118,6 @@ const handleCopyClick = () => {
     active
   } = useWeb3React();
 
-  console.log('use web3 react', useWeb3React())
   const disconnect = () => {
     refreshState();
     deactivate();
@@ -190,51 +193,55 @@ const handleCopyClick = () => {
     setDappConnector(!dappConnector);
   }
 
-  const Stake = async () => {
+  const handleStakeDuration = (e) => {
+    setstakeDuration(e.target.value)
+  }
 
-    if(account !== undefined) {
-      const [account] = await window.ethereum.request({ method: 'eth_requestAccounts' })
-      const provider = new ethers.providers.JsonRpcProvider('https://data-seed-prebsc-1-s1.bnbchain.org:8545', { chainId: 97 })
-      const signer = provider.getSigner(account);
-      const TAFAContract = new ethers.Contract(TAFAAddress, TAFAAbi.abi, signer);
-      const StakeContract = new ethers.Contract(StakeAddress, StakeArtifacts.abi, signer);
-      console.log('signer address', account)
-      console.log('tafa contract ',TAFAContract)
-      console.log('stake contract ',StakeContract)
-      const reslt = await StakeContract.stake(stakeAmount,stakeDuration);
-      console.log("Account Balance: ", reslt);
+  // define contract data
+  
+  const StakeTAFA = async (e) => {
+    // setShowTimer(!showTimer);
+    // const timer_ = stakeDuration * 86400;
+    // setTimeRemaining(timer_)
+    const [account] = await window.ethereum.request({ method: 'eth_requestAccounts' })
+    const provider = new ethers.providers.Web3Provider(window.ethereum)
+    await provider.send('eth_requestAccounts', []);
+    const signer = provider.getSigner(account);
+    const StakeContract = new ethers.Contract(StakeAddress, StakeAbi.abi, signer);
+    const reslt = await StakeContract.stake(StakeAddress,stakeAmount);
+    console.log(reslt)
+  }
+
+  const Approve = async (e) => {
+
+    const [account] = await window.ethereum.request({ method: 'eth_requestAccounts' })
+    const provider = new ethers.providers.Web3Provider(window.ethereum)
+    await provider.send('eth_requestAccounts', []);
+    const signer = provider.getSigner(account);
+    const TAFAContract = new ethers.Contract(TAFAAddress, TAFAAbi.abi, signer);
+    const reslt = await TAFAContract.approve(StakeAddress,stakeAmount);
+    if(reslt) {
+      StakeTAFA();
     }
-    
   }
 
   const calculateReward = async () => {
 
-    if(account !== undefined) {
-      const [account] = await window.ethereum.request({ method: 'eth_requestAccounts' })
-      const provider = new ethers.providers.JsonRpcProvider('https://data-seed-prebsc-1-s1.bnbchain.org:8545', { chainId: 97 })
-      const signer = provider.getSigner(account);
-      const TAFAContract = new ethers.Contract(TAFAAddress, TAFAAbi.abi, signer);
-      const StakeContract = new ethers.Contract(StakeAddress, StakeArtifacts.abi, signer);
-      console.log('signer address', account)
-      console.log('tafa contract ',TAFAContract)
-      console.log('stake contract ',StakeContract)
-      const reslt = await StakeContract.calcReward();
-      console.log("Account Balance: ", reslt);
-    }
-    
+    const [account] = await window.ethereum.request({ method: 'eth_requestAccounts' });
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner(account);
+    const StakeContract = new ethers.Contract(StakeAddress, StakeAbi.abi, signer);
+    const reslt = await StakeContract.calcReward();
+    console.log('reslt',reslt);
   }
 
   const Withdraw = async () => {
 
     if(account !== undefined) {
-      const [account] = await window.ethereum.request({ method: 'eth_requestAccounts' })
-      const provider = new ethers.providers.JsonRpcProvider('https://data-seed-prebsc-1-s1.bnbchain.org:8545', { chainId: 97 })
+      const [account] = await window.ethereum.request({ method: 'eth_requestAccounts' });
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner(account);
-      const TAFAContract = new ethers.Contract(TAFAAddress, TAFAAbi.abi, signer);
-      const StakeContract = new ethers.Contract(StakeAddress, StakeArtifacts.abi, signer);
-      console.log('signer address', account)
-      console.log('tafa contract ',TAFAContract)
-      console.log('stake contract ',StakeContract)
+      const StakeContract = new ethers.Contract(StakeAddress, StakeAbi.abi, signer);
       const reslt = await StakeContract.withdrawStake();
       console.log("Account Balance: ", reslt);
     }
@@ -243,7 +250,7 @@ const handleCopyClick = () => {
 
   
   useEffect(() => {
-
+    // StakeTAFA();
     if(connector) {
       if(connector !== undefined && account !== undefined) {
         console.log('metamask found', connector)
@@ -257,6 +264,8 @@ const handleCopyClick = () => {
       console.log(' connector not defined yaet')
     }
     
+    localStorage.setItem('staketimer',timeRemaining);
+
     const udetails = JSON.parse(localStorage.getItem("userInfo"));
     const username_ = udetails.username;
     if(udetails && udetails !== null && udetails !== "") {
@@ -270,6 +279,36 @@ const handleCopyClick = () => {
       router.push(`/signin`);
     }
 
+    async function getWalletAddress() {
+      console.log('wall address',walletaddress)
+      try {
+        const config = {
+        headers: {
+            "Content-type": "application/json"
+        }
+        }  
+        const {data} = await axios.post("https://tafabackend.onrender.com/api/users/getwalletaddress/", {
+          username
+        }, config);
+        console.log('update wallet data', data.message);
+        setWalletAddress(data.message);
+      } catch (error) {
+        console.log(error)
+      }
+  }
+  getWalletAddress();
+  
+
+    const interval = setInterval(() => {
+      setTimeRemaining((prevTime) => {
+        if (prevTime <= 0) {
+          clearInterval(interval);
+          // You can add any additional logic here when the timer reaches zero
+          return 0;
+        }
+        return prevTime - 1;
+      });
+    }, 1000);
 
     // Function to handle window resize
     const handleResize = () => {
@@ -303,16 +342,27 @@ const handleCopyClick = () => {
 
   window.addEventListener('scroll', handleScroll);
 
- 
-  return () => {
+  // Cleanup function to clear the interval, handlescroll and handleresize when the component is unmounted
+    return () => {
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('resize', handleResize);
+      clearInterval(interval);
   };
   
   
- }, [userId, router,connector,account,dappConnector])
+ }, [userId, router,connector,account,dappConnector,timeRemaining,username,walletaddress,stakeDuration])
+
+ const formatTime = (seconds) => {
+  const days = Math.floor(seconds / 86400);
+    const hours = Math.floor((seconds % 86400) / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const remainingSeconds = seconds % 60;
+
+    return `${String(days).padStart(2, '0')} days ${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(remainingSeconds).padStart(2, '0')}`;
+};
 
  console.log('dapp connector iooooooo value',dappConnector)
+
  // Function to toggle the navigation menu
  const toggleSideBar = () => {
     setSideBarToggle(!dappsidebartoggle);
@@ -365,9 +415,15 @@ const sideBarToggleCheck = dappsidebartoggle ? dappstyles.sidebartoggled : '';
                         <div className={dappsidebarstyles.sidebar_container_p}>
                         <ul className={dappsidebarstyles.upa}>
                             <li>
+                              <a href='/dapp' rel='noopener noreferrer' className={dappsidebarstyles.si}>Dapp</a>
+                            </li>
+                            <li>
                               <a href='https://pancakeswap.finance/swap?outputCurrency=0x5ae155F89308CA9050f8Ce1C96741BaDd342C26B' rel='noopener noreferrer' className={dappsidebarstyles.buytafa}>BUY TAFA</a>
                             </li>
                             <li><a href='/stakes' rel='noopener noreferrer' className={dappsidebarstyles.linka}>My Stakes</a></li>
+                            <li>
+                              <a href='/referrals' rel='noopener noreferrer' className={dappsidebarstyles.si}>Referrals</a>
+                            </li>
                             <li className={dappsidebarstyles.drpdwnlist} onMouseEnter={toggleIconUp3} onMouseOut={toggleIconDown3}>
                                 Community {dropdwnIcon3}
                                 <ul>
@@ -403,6 +459,7 @@ const sideBarToggleCheck = dappsidebartoggle ? dappstyles.sidebartoggled : '';
                 <div className={dappstyles.reflink}>
                     <div className={dappstyles.reflinkdex}>Ref Link: <input value={referralLink} onChange={(e) => setreferralLink(e.target.value)} /><button type='button' onClick={handleCopyClick}>{buttonText}</button> </div>
                     <div><small>Share referral link to earn more tokens!</small></div>
+                    <div>Connected Wallet: <span style={{color: 'orange'}}>{walletaddress}</span></div>
                 </div>
 
                 <div className={dappstyles.stake}>
@@ -433,7 +490,7 @@ const sideBarToggleCheck = dappsidebartoggle ? dappstyles.sidebartoggled : '';
                                 <h3>Stake Duration</h3>
                                 <div className={dappstyles.s_m_in_c}>
                                     <div className={dappstyles.s_a}>
-                                      <select onChange={(e) => setstakeDuration(e.target.value)}>
+                                      <select onChange={handleStakeDuration}>
                                         <option value="">Select Duration</option>
                                         <option value="30">30 Days</option>
                                         <option value="90">90 Days</option>
@@ -443,6 +500,8 @@ const sideBarToggleCheck = dappsidebartoggle ? dappstyles.sidebartoggled : '';
                                     </div>
                                 </div>
                               </div>
+
+                              {showTimer && <div className={dappstyles.staketimer}> <FontAwesomeIcon icon={faClock}/> {formatTime(timeRemaining)}</div>}
 
                               <div className={dappstyles.interest_returns}>
                                 <ul>
@@ -476,20 +535,21 @@ const sideBarToggleCheck = dappsidebartoggle ? dappstyles.sidebartoggled : '';
 
                               <div className={dappstyles.cw_btn_div}>
                                   <div>
-                                      <button type='button' className={dappstyles.stakebtn} onClick={Stake}>Stake</button>
+                                      <button type='button' className={dappstyles.stakebtn} onClick={Approve}>Stake</button>
                                   </div>
                                   <div>
                                       <button type='button' className={dappstyles.calcrwd} onClick={calculateReward}>Calc Reward</button>
                                   </div>
 
                                   <div>
-                                      <button type='button' className={dappstyles.withd} onClick={Withdraw}>Withdraw</button>
+                                    <button type='button' className={dappstyles.withd} onClick={Withdraw}>Withdraw</button>
                                   </div>
                               </div>
                           </div>
                         </div>
                     </div>
                 </div>
+                  {/* end of stake conntainer */}
               </div>
             </div>
         </div>

@@ -169,6 +169,30 @@ describe("Stake and TAFA Contracts", function () {
     [owner, addr1, addr2] = await ethers.getSigners();
   });
 
+  it("Should get msg.sender address", async function () {
+    // Connect TAFA contract to the owner
+    tafa = tafa.connect(owner.address);
+
+    // Ensure that the address is now addr1
+    expect(await tafa.getOwner()).to.equal(owner.address);
+  });
+  
+  it("Should receive token", async function () {
+    // Send some TAFA tokens to addr1 and addr2
+    await tafa.transfer(addr1.address, 300000);
+    await tafa.transfer(addr2.address, 200000);
+
+    // Connect the contracts to the signers
+    tafa = tafa.connect(addr1);
+    stake = stake.connect(addr1);
+
+    tafa = tafa.connect(addr1);
+    stake = stake.connect(addr2);
+
+    const address1Balance = await tafa.balanceOf(addr1.address);
+    expect(address1Balance).to.be.gt(0);
+  });
+
   it("Should allow staking and calculate rewards", async function () {
     // Send some TAFA tokens to addr1 and addr2
     console.log('addresses',owner.address, addr1.address,addr2.address)
@@ -183,7 +207,7 @@ describe("Stake and TAFA Contracts", function () {
     stake = stake.connect(addr2);
 
     // // Add addr1 as a referral
-    await stake.addReferrer(owner.address);
+    // await stake.addReferrer(owner.address);
 
     // // Stake 100 TAFA tokens for 30 days
     await stake.stake(100, 30);
@@ -199,14 +223,6 @@ describe("Stake and TAFA Contracts", function () {
 
     // Ensure that the balance increased due to staking rewards
     expect(finalBalance).to.be.above(initialBalance);
-  });
-
-  it("Should get msg.sender address", async function () {
-    // Connect TAFA contract to the owner
-    tafa = tafa.connect(owner.address);
-
-    // Ensure that the address is now addr1
-    expect(await tafa.getOwner()).to.equal(owner.address);
   });
 
   // Add more tests to cover other functionalities as needed

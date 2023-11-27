@@ -32,14 +32,19 @@ module.exports = {
       url: "https://data-seed-prebsc-1-s1.bnbchain.org:8545",
       chainId: 97,
       gasPrice: 20000000000,
-      accounts:  [process.env.TAFA_PRIVATE_KEY1,process.env.TAFA_PRIVATE_KEY2,process.env.TAFA_PRIVATE_KEY3] 
+      accounts:  [process.env.TAFA_PRIVATE_KEY] 
     },
     mainnet: {
       url: "https://bsc-dataseed.bnbchain.org/",
       chainId: 56,
       gasPrice: 20000000000,
-      accounts: [process.env.TAFA_PRIVATE_KEY1,process.env.TAFA_PRIVATE_KEY2,process.env.TAFA_PRIVATE_KEY3]
+      accounts: [process.env.TAFA_PRIVATE_KEY]
     }
+  },
+  etherscan: {
+    // Your API key for Etherscan
+    // Obtain one at https://bscscan.com/
+    apiKey: process.env.BSCSCAN_APIKEY, 
   },
   solidity: {
     compilers: [

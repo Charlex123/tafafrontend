@@ -3,19 +3,23 @@
 pragma solidity^0.8.9;
 
 import "./TAFA.sol";
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "./SafeMath.sol";
+import "./ReentrancyGuard.sol";
 
-contract Stake{
+contract Stake is ReentrancyGuard {
+
     using SafeMath for uint256;
+
     address staker = msg.sender;
     address stakedeployer;
     uint timeNow = block.timestamp;
-    TAFA public tokenContract;
+    IERC20 public tafaContract;
     
-    constructor(TAFA _tokenContract) {
-        tokenContract = _tokenContract;
+    constructor(address _tafaContractAddress) {
+        tafaContract = IERC20(_tafaContractAddress);
         stakedeployer = msg.sender; 
-    }
+    } 
 
     struct Users {
         bool hasStake;
@@ -58,17 +62,15 @@ contract Stake{
     address[] private downlines;
 
     event StakedEvent(address indexed staker, uint stake_duration, uint stake_amount, uint stakerewardperDay, uint totalstakeReward, uint total_reward, bool isActive, bool hasStake);
-    event WithdrawlEvent(address indexed Withdrawer, uint total_Reward, uint WithdrawTime);
+    event WithdrawlEvent(address indexed Withdrawer, uint withdrawAmount, uint withdrawTime, uint256 totalReward, uint256 rewardAmount);
     event AddReferral(address indexed referral, address indexed sponsor);
 
     function hasStaked(address _staker) public view returns(bool) {
-        if(userDetails[_staker].hasStake == true) return true;
-        return false;
+        return userDetails[_staker].hasStake;
     }
 
     function wasRef_errered(address _staker) public view returns(bool) {
-        if(userDetails[_staker].wasReferred == true) return true;
-        return false;
+        return userDetails[_staker].wasReferred;
     }
 
     function myWalletAddress() public view returns(address) {
@@ -83,21 +85,33 @@ contract Stake{
         return _balanceOf[msg.sender];
     }
 
-    function checkifuserasStaked(address user_addr) public view returns (bool) {
-        if(stakedUsers[user_addr] == true) {
-            return true;
-        }else {
-            return false;
-        }
+    function checkifuserhasStaked(address user_addr) public view returns (bool) {
+        return stakedUsers[user_addr];
     }
     
+     // modifier to check if caller is owner
+    modifier isOwner() {
+        // If the first argument of 'require' evaluates to 'false', execution terminates and all
+        // changes to the state and to Ether balances are reverted.
+        // This used to consume all gas in old EVM versions, but not anymore.
+        // It is often a good idea to use 'require' to check if functions are called correctly.
+        // As a second argument, you can also provide an explanation about what went wrong.
+        require(msg.sender == stakedeployer, "Caller is not owner");
+        _;
+    }
+
+    // Function to update the reward rate (onlyOwner)
+    function showcontractAddress() public view returns(address) {
+        return address(this);
+    }
+
     function addReferrer(address _sponsor) public {
         require(_sponsor != address(0), "Sponsor cannot be a zero address");
         require(_sponsor != msg.sender, "You cannot refer yourself");
         
         // check if sponsor is registered already exists
         if(stakedUsers[_sponsor] == false) {
-            revert("Invalid Sponsor");
+            revert("Sponsor must stake to be valid");
         }else {
             // check if referral already exists
             if(userDetails[msg.sender].userReferrals[msg.sender].referredby == _sponsor) {
@@ -131,70 +145,62 @@ contract Stake{
         
     }
 
-    function getRefCount() public view returns (uint refcount) {
-        require(msg.sender != address(0),"Zero addresses are not accepted");
-
-        return userDetails[msg.sender].userReferrals[msg.sender].allreferrals.length;
-    }
-
-    function getReferrals() public view returns (address[] memory userdownlines) {
-        require(msg.sender != address(0),"Zero addresses are not accepted");
-        return userDetails[msg.sender].userReferrals[msg.sender].allreferrals;
-    } 
-
-    function stake(uint stake_amount, uint stake_duration) public payable returns(uint count) {
-        // require(_balanceOf[staker] >= stake_amount, "staker must have enough tokens to stake");
+    function stake(uint stake_amount, uint stake_duration) external nonReentrant {
         require(staker != address(0), "Staker cannot be a zero address");
+        require(stake_amount > 0, "Amount must be greater than 0");
+        require(tafaContract.allowance(msg.sender, address(this)) >= stake_amount,
+             "Token transfer not approved");
+        require(tafaContract.balanceOf(msg.sender) >= stake_amount, "Insufficient TAFA balance");
+
+        userDetails[msg.sender].hasStake = true;
 
         if(stake_duration == 30 || stake_duration == 90 || stake_duration == 365 || stake_duration == 1000) {
         
-        uint interest_RatePerDay;
+            uint interest_RatePerDay;
 
-        if(stake_duration == 30) {
-            interest_RatePerDay = stake_amount.mul(2).div(100);
-        }
-        else if(stake_duration == 90) {
-            interest_RatePerDay = stake_amount.mul(22).div(1000);
-        }
-        else if(stake_duration == 365) {
-            interest_RatePerDay = stake_amount.mul(3).div(100);
-        }
-        else if(stake_duration == 1000) {
-            interest_RatePerDay = stake_amount.mul(35).div(1000);
-        }
+            if(stake_duration == 30) {
+                interest_RatePerDay = stake_amount.mul(2).div(100);
+            }
+            else if(stake_duration == 90) {
+                interest_RatePerDay = stake_amount.mul(22).div(1000);
+            }
+            else if(stake_duration == 365) {
+                interest_RatePerDay = stake_amount.mul(3).div(100);
+            }
+            else if(stake_duration == 1000) {
+                interest_RatePerDay = stake_amount.mul(35).div(1000);
+            }
 
-        userDetails[staker].stakeCount++;
-        userDetails[staker].userStakes[staker].stakeId++;
-        userDetails[staker].userStakes[staker].rewardTime = timeNow + stake_duration * 1 days;
-        userDetails[staker].userStakes[staker].stakeDuration = stake_duration;
-        userDetails[staker].userStakes[staker].stakeRewardPerDay = interest_RatePerDay;
-        userDetails[staker].userStakes[staker].totalstakeReward = interest_RatePerDay.mul(stake_duration);
-        userDetails[staker].userStakes[staker].totalReward = stake_amount.add(userDetails[staker].userStakes[staker].totalstakeReward);
-        userDetails[staker].userStakes[staker].stakeAmount = stake_amount;
-        userDetails[staker].hasStake = true;
-        userDetails[staker].userStakes[staker].isActive = true;
+            userDetails[msg.sender].stakeCount++;
+            userDetails[msg.sender].userStakes[msg.sender].stakeId++;
+            userDetails[msg.sender].userStakes[msg.sender].rewardTime = timeNow + stake_duration * 1 days;
+            userDetails[msg.sender].userStakes[msg.sender].stakeDuration = stake_duration;
+            userDetails[msg.sender].userStakes[msg.sender].stakeRewardPerDay = interest_RatePerDay;
+            userDetails[msg.sender].userStakes[msg.sender].totalstakeReward = interest_RatePerDay.mul(stake_duration);
+            userDetails[msg.sender].userStakes[msg.sender].totalReward = stake_amount.add(userDetails[msg.sender].userStakes[msg.sender].totalstakeReward);
+            userDetails[msg.sender].userStakes[msg.sender].stakeAmount = stake_amount;
+            userDetails[msg.sender].hasStake = true;
+            userDetails[msg.sender].userStakes[msg.sender].isActive = true;
 
+            uint stakerewardperDay = userDetails[msg.sender].userStakes[msg.sender].stakeRewardPerDay;
+            uint total_reward = userDetails[msg.sender].userStakes[msg.sender].totalReward;
+            uint totalstake_reward = userDetails[msg.sender].userStakes[msg.sender].totalstakeReward;
+            userDetails[msg.sender].stakeCount++;
+            stakedUsers[msg.sender] = true;
+            userAddresses.push(msg.sender);
+            
+            // transfer tokens to contract
+            tafaContract.transferFrom(msg.sender, address(this), stake_amount);
+            // updateusertokenbalance
+            _balanceOf[msg.sender] += stake_amount;
+            
+            emit StakedEvent(staker, stake_duration, stake_amount, stakerewardperDay, totalstake_reward, total_reward, true, true);
         }else {
             revert("invalid stake period");
         }
 
-        uint stakerewardperDay = userDetails[staker].userStakes[staker].stakeRewardPerDay;
-        uint total_reward = userDetails[staker].userStakes[staker].totalReward;
-        uint totalstake_reward = userDetails[staker].userStakes[staker].totalstakeReward;
-        userDetails[staker].stakeCount++;
-        if(stakedUsers[staker]) {
-            
-        }else {
-            stakedUsers[staker] = true;
-        }
-        // transfer tokens to contract
-        tokenContract.transferFrom(msg.sender, address(this), stake_amount);
-        // updateusertokenbalance
-        _balanceOf[msg.sender] += stake_amount;
         
-        emit StakedEvent(staker, stake_duration, stake_amount, stakerewardperDay, totalstake_reward, total_reward, true, true);
-        return (userAddresses.length) -1;
-    }
+     }
 
     function getuserCount() public view returns (uint) {
         return userAddresses.length;
@@ -202,206 +208,236 @@ contract Stake{
 
     function calcReward() public view returns (uint totaluserreward_) {
         require(msg.sender != address(0),"Zero addresses are not accepted");
-        require(hasStaked(msg.sender) != false, "No active stake found");
-        // get user stake duration 
-        uint userstakereward = userDetails[msg.sender].userStakes[staker].totalReward;
-        uint totaluserreward;
-        // check if user has referrals
-        if(userDetails[msg.sender].userReferrals[msg.sender].allreferrals.length > 0) {
-            // get sum of ref bonuses
-            uint totalfirstgenrefbonus = 0;
-            uint totalsecondgenrefbonus = 0;
-            uint totalthirdgenrefbonus = 0;
-
-            if(userDetails[msg.sender].userReferrals[msg.sender].firstgenReferrals.length > 0) {
-            // check for first level generation referrals
-                for(uint8 i = 0; i <= userDetails[msg.sender].userReferrals[msg.sender].firstgenReferrals.length; i++) {
-                    address firstgenref = userDetails[msg.sender].userReferrals[msg.sender].firstgenReferrals[i];
-                    // check if referral has active stake
-                    if(userDetails[firstgenref].hasStake == true) {
-                        // get referral stake amount
-                        uint256 firstgenrefstakeAmt = userDetails[firstgenref].userStakes[staker].stakeAmount;
-                        uint firstgenrefbonus = firstgenrefstakeAmt.mul(5).div(100);
-                        totalfirstgenrefbonus += firstgenrefbonus;
-                    }
-                }
-            }
-            if(userDetails[msg.sender].userReferrals[msg.sender].secondgenReferrals.length > 0) {
-            // check for first level generation referrals
-                for(uint8 i = 0; i <= userDetails[msg.sender].userReferrals[msg.sender].secondgenReferrals.length; i++) {
-                    address secondgenref = userDetails[msg.sender].userReferrals[msg.sender].secondgenReferrals[i];
-                    // check if referral has active stake
-                    if(userDetails[secondgenref].hasStake == true) {
-                        // get referral stake amount
-                        uint256 secondgenrefstakeAmt = userDetails[secondgenref].userStakes[staker].stakeAmount;
-                        uint secondgenrefbonus = secondgenrefstakeAmt.mul(5).div(100);
-                        totalsecondgenrefbonus += secondgenrefbonus;
-                    }
-                }
-            }
-            if(userDetails[msg.sender].userReferrals[msg.sender].thirdgenReferrals.length > 0) {
-            // check for first level generation referrals
-                for(uint8 i = 0; i <= userDetails[msg.sender].userReferrals[msg.sender].thirdgenReferrals.length; i++) {
-                    address thirdgenref = userDetails[msg.sender].userReferrals[msg.sender].thirdgenReferrals[i];
-                    // check if referral has active stake
-                    if(userDetails[thirdgenref].hasStake == true) {
-                        // get referral stake amount
-                        uint256 thirdgenrefstakeAmt = userDetails[thirdgenref].userStakes[staker].stakeAmount;
-                        uint thirdgenrefbonus = thirdgenrefstakeAmt.mul(5).div(100);
-                        totalthirdgenrefbonus += thirdgenrefbonus;
-                    }
-                }
-            }
-        totaluserreward = userstakereward.add(totalfirstgenrefbonus).add(totalsecondgenrefbonus).add(totalthirdgenrefbonus);
-        totaluserreward_ = totaluserreward;
-        return totaluserreward_;
-        }
-    }
-
-    function withdrawStake() public payable returns(bool) {
-        require(hasStaked(staker) != false,"You must have stake to withdraw");
-        if(timeNow >= userDetails[staker].userStakes[staker].rewardTime) {
-            uint userstakereward = userDetails[staker].userStakes[staker].totalReward;
-            uint WithdrawTime = timeNow;
-            address Withdrawer = staker;
-            
-            uint totaluserreward;
-            // check if user has referrals
-            if(userDetails[msg.sender].userReferrals[msg.sender].allreferrals.length > 0) {
-                uint totalfirstgenrefbonus = 0;
-                uint totalsecondgenrefbonus = 0;
-                uint totalthirdgenrefbonus = 0;
-
-                if(userDetails[staker].userReferrals[staker].firstgenReferrals.length > 0) {
-                // check for first level generation referrals
-                    for(uint8 i = 0; i <= userDetails[staker].userReferrals[staker].firstgenReferrals.length; i++) {
-                        address firstgenref = userDetails[staker].userReferrals[staker].firstgenReferrals[i];
-                        // check if referral has active stake
-                        if(userDetails[firstgenref].hasStake == true) {
-                            // get referral stake amount
-                            uint256 firstgenrefstakeAmt = userDetails[firstgenref].userStakes[staker].stakeAmount;
-                            uint firstgenrefbonus = firstgenrefstakeAmt.mul(5).div(100);
-                            totalfirstgenrefbonus += firstgenrefbonus;
-                        }
-                    }
-                }
-                if(userDetails[staker].userReferrals[staker].secondgenReferrals.length > 0) {
-                // check for first level generation referrals
-                    for(uint8 i = 0; i <= userDetails[staker].userReferrals[staker].secondgenReferrals.length; i++) {
-                        address secondgenref = userDetails[staker].userReferrals[staker].secondgenReferrals[i];
-                        // check if referral has active stake
-                        if(userDetails[secondgenref].hasStake == true) {
-                            // get referral stake amount
-                            uint256 secondgenrefstakeAmt = userDetails[secondgenref].userStakes[staker].stakeAmount;
-                            uint secondgenrefbonus = secondgenrefstakeAmt.mul(5).div(100);
-                            totalsecondgenrefbonus += secondgenrefbonus;
-                        }
-                    }
-                }
-                if(userDetails[staker].userReferrals[staker].thirdgenReferrals.length > 0) {
-                // check for first level generation referrals
-                    for(uint8 i = 0; i <= userDetails[staker].userReferrals[staker].thirdgenReferrals.length; i++) {
-                        address thirdgenref = userDetails[staker].userReferrals[staker].thirdgenReferrals[i];
-                        // check if referral has active stake
-                        if(userDetails[thirdgenref].hasStake == true) {
-                            // get referral stake amount
-                            uint256 thirdgenrefstakeAmt = userDetails[thirdgenref].userStakes[staker].stakeAmount;
-                            uint thirdgenrefbonus = thirdgenrefstakeAmt.mul(5).div(100);
-                            totalthirdgenrefbonus += thirdgenrefbonus;
-                        }
-                    }
-                }
-            totaluserreward = userstakereward.add(totalfirstgenrefbonus).add(totalsecondgenrefbonus).add(totalthirdgenrefbonus);
-            
-            }else {
-                totaluserreward = userstakereward;
-            }
-
-            userDetails[staker].stakeCount--;
-            userDetails[staker].userStakes[staker].Stakes--;
-            userDetails[staker].userStakes[staker].isActive = false;
-            tokenContract.transfer(staker, totaluserreward);
-
-            // update userBalance
-            _balanceOf[msg.sender] -= totaluserreward;
-
-            // if();
-            
-            emit WithdrawlEvent(Withdrawer, totaluserreward, WithdrawTime);
-            return true;
-        }else {
-            uint userstakereward = userDetails[staker].userStakes[staker].totalReward;
-            uint WithdrawTime = timeNow;
-            address Withdrawer = staker;
-            
-            uint totaluserreward;
-            // check if user has referrals
-            if(userDetails[msg.sender].userReferrals[msg.sender].allreferrals.length > 0) {
-                uint totalfirstgenrefbonus = 0;
-                uint totalsecondgenrefbonus = 0;
-                uint totalthirdgenrefbonus = 0;
-
-                if(userDetails[staker].userReferrals[staker].firstgenReferrals.length > 0) {
-                // check for first level generation referrals
-                    for(uint8 i = 0; i <= userDetails[staker].userReferrals[staker].firstgenReferrals.length; i++) {
-                        address firstgenref = userDetails[staker].userReferrals[staker].firstgenReferrals[i];
-                        // check if referral has active stake
-                        if(userDetails[firstgenref].hasStake == true) {
-                            // get referral stake amount
-                            uint256 firstgenrefstakeAmt = userDetails[firstgenref].userStakes[staker].stakeAmount;
-                            uint firstgenrefbonus = firstgenrefstakeAmt.mul(5).div(100);
-                            totalfirstgenrefbonus += firstgenrefbonus;
-                        }
-                    }
-                }
-                if(userDetails[staker].userReferrals[staker].secondgenReferrals.length > 0) {
-                // check for first level generation referrals
-                    for(uint8 i = 0; i <= userDetails[staker].userReferrals[staker].secondgenReferrals.length; i++) {
-                        address secondgenref = userDetails[staker].userReferrals[staker].secondgenReferrals[i];
-                        // check if referral has active stake
-                        if(userDetails[secondgenref].hasStake == true) {
-                            // get referral stake amount
-                            uint256 secondgenrefstakeAmt = userDetails[secondgenref].userStakes[staker].stakeAmount;
-                            uint secondgenrefbonus = secondgenrefstakeAmt.mul(5).div(100);
-                            totalsecondgenrefbonus += secondgenrefbonus;
-                        }
-                    }
-                }
-                if(userDetails[staker].userReferrals[staker].thirdgenReferrals.length > 0) {
-                // check for first level generation referrals
-                    for(uint8 i = 0; i <= userDetails[staker].userReferrals[staker].thirdgenReferrals.length; i++) {
-                        address thirdgenref = userDetails[staker].userReferrals[staker].thirdgenReferrals[i];
-                        // check if referral has active stake
-                        if(userDetails[thirdgenref].hasStake == true) {
-                            // get referral stake amount
-                            uint256 thirdgenrefstakeAmt = userDetails[thirdgenref].userStakes[staker].stakeAmount;
-                            uint thirdgenrefbonus = thirdgenrefstakeAmt.mul(5).div(100);
-                            totalthirdgenrefbonus += thirdgenrefbonus;
-                        }
-                    }
-                }
-            totaluserreward = userstakereward.add(totalfirstgenrefbonus).add(totalsecondgenrefbonus).add(totalthirdgenrefbonus);
-            
-            }else {
-                totaluserreward = userstakereward;
-            }
-
-            uint twentyfivepercentwithdrawal = totaluserreward.mul(25).div(100);
-            uint withdrawamount = totaluserreward.sub(twentyfivepercentwithdrawal);
-            userDetails[staker].stakeCount--;
-            userDetails[staker].userStakes[staker].Stakes--;
-            userDetails[staker].userStakes[staker].isActive = false;
-            tokenContract.transfer(staker, withdrawamount);
-
-            // update userBalance
-            _balanceOf[msg.sender] -= totaluserreward;
-
-            // if();
-            
-            emit WithdrawlEvent(Withdrawer, totaluserreward, WithdrawTime);
-            return true;
-        }
         
+        if(hasStaked(msg.sender) == false){
+         revert("No active stake found");
+        }else {
+            // get user stake duration 
+            uint userstakereward = userDetails[msg.sender].userStakes[msg.sender].totalReward;
+            uint totaluserreward;
+            // check if user has referrals
+            if(userDetails[msg.sender].userReferrals[msg.sender].allreferrals.length > 0) {
+                // get sum of ref bonuses
+                uint totalfirstgenrefbonus = 0;
+                uint totalsecondgenrefbonus = 0;
+                uint totalthirdgenrefbonus = 0;
+
+                if(userDetails[msg.sender].userReferrals[msg.sender].firstgenReferrals.length > 0) {
+                // check for first level generation referrals
+                    for(uint8 i = 0; i <= userDetails[msg.sender].userReferrals[msg.sender].firstgenReferrals.length; i++) {
+                        address firstgenref = userDetails[msg.sender].userReferrals[msg.sender].firstgenReferrals[i];
+                        // check if referral has active stake
+                        if(userDetails[firstgenref].hasStake == true) {
+                            // get referral stake amount
+                            uint256 firstgenrefstakeAmt = userDetails[firstgenref].userStakes[msg.sender].stakeAmount;
+                            uint firstgenrefbonus = firstgenrefstakeAmt.mul(5).div(1000);
+                            totalfirstgenrefbonus += firstgenrefbonus;
+                        }
+                    }
+                }
+                if(userDetails[msg.sender].userReferrals[msg.sender].secondgenReferrals.length > 0) {
+                // check for first level generation referrals
+                    for(uint8 i = 0; i <= userDetails[msg.sender].userReferrals[msg.sender].secondgenReferrals.length; i++) {
+                        address secondgenref = userDetails[msg.sender].userReferrals[msg.sender].secondgenReferrals[i];
+                        // check if referral has active stake
+                        if(userDetails[secondgenref].hasStake == true) {
+                            // get referral stake amount
+                            uint256 secondgenrefstakeAmt = userDetails[secondgenref].userStakes[msg.sender].stakeAmount;
+                            uint secondgenrefbonus = secondgenrefstakeAmt.mul(5).div(1000);
+                            totalsecondgenrefbonus += secondgenrefbonus;
+                        }
+                    }
+                }
+                if(userDetails[msg.sender].userReferrals[msg.sender].thirdgenReferrals.length > 0) {
+                // check for first level generation referrals
+                    for(uint8 i = 0; i <= userDetails[msg.sender].userReferrals[msg.sender].thirdgenReferrals.length; i++) {
+                        address thirdgenref = userDetails[msg.sender].userReferrals[msg.sender].thirdgenReferrals[i];
+                        // check if referral has active stake
+                        if(userDetails[thirdgenref].hasStake == true) {
+                            // get referral stake amount
+                            uint256 thirdgenrefstakeAmt = userDetails[thirdgenref].userStakes[msg.sender].stakeAmount;
+                            uint thirdgenrefbonus = thirdgenrefstakeAmt.mul(5).div(1000);
+                            totalthirdgenrefbonus += thirdgenrefbonus;
+                        }
+                    }
+                }
+            totaluserreward = userstakereward.add(totalfirstgenrefbonus).add(totalsecondgenrefbonus).add(totalthirdgenrefbonus);
+            totaluserreward_ = totaluserreward;
+            uint tRewards = totaluserreward_;
+            return tRewards;
+            }else {
+                return  userstakereward;
+            }
+        }
     }
+
+    function withdrawStake() external nonReentrant {
+        // uint256 withdAmount = userDetails[msg.sender].userStakes[msg.sender].totalReward;
+        // require(address(this).balance >= withdAmount, "Insufficient contract balance");
+
+        if(hasStaked(msg.sender) == false) {
+            revert("You must have stake to withdraw");
+        }else {
+                
+            if(timeNow >= userDetails[msg.sender].userStakes[msg.sender].rewardTime) {
+                uint userstakereward = userDetails[msg.sender].userStakes[msg.sender].totalReward;
+                uint WithdrawTime = timeNow;
+                address Withdrawer = msg.sender;
+                
+                uint totaluserreward;
+                // check if user has referrals
+                if(userDetails[msg.sender].userReferrals[msg.sender].allreferrals.length > 0) {
+                    uint totalfirstgenrefbonus = 0;
+                    uint totalsecondgenrefbonus = 0;
+                    uint totalthirdgenrefbonus = 0;
+
+                    if(userDetails[msg.sender].userReferrals[msg.sender].firstgenReferrals.length > 0) {
+                    // check for first level generation referrals
+                        for(uint8 i = 0; i <= userDetails[msg.sender].userReferrals[msg.sender].firstgenReferrals.length; i++) {
+                            address firstgenref = userDetails[msg.sender].userReferrals[msg.sender].firstgenReferrals[i];
+                            // check if referral has active stake
+                            if(userDetails[firstgenref].hasStake == true) {
+                                // get referral stake amount
+                                uint256 firstgenrefstakeAmt = userDetails[firstgenref].userStakes[msg.sender].stakeAmount;
+                                uint firstgenrefbonus = firstgenrefstakeAmt.mul(5).div(1000);
+                                totalfirstgenrefbonus += firstgenrefbonus;
+                            }
+                        }
+                    }
+                    if(userDetails[msg.sender].userReferrals[msg.sender].secondgenReferrals.length > 0) {
+                    // check for first level generation referrals
+                        for(uint8 i = 0; i <= userDetails[msg.sender].userReferrals[msg.sender].secondgenReferrals.length; i++) {
+                            address secondgenref = userDetails[msg.sender].userReferrals[msg.sender].secondgenReferrals[i];
+                            // check if referral has active stake
+                            if(userDetails[secondgenref].hasStake == true) {
+                                // get referral stake amount
+                                uint256 secondgenrefstakeAmt = userDetails[secondgenref].userStakes[msg.sender].stakeAmount;
+                                uint secondgenrefbonus = secondgenrefstakeAmt.mul(5).div(1000);
+                                totalsecondgenrefbonus += secondgenrefbonus;
+                            }
+                        }
+                    }
+                    if(userDetails[msg.sender].userReferrals[msg.sender].thirdgenReferrals.length > 0) {
+                    // check for first level generation referrals
+                        for(uint8 i = 0; i <= userDetails[msg.sender].userReferrals[msg.sender].thirdgenReferrals.length; i++) {
+                            address thirdgenref = userDetails[msg.sender].userReferrals[msg.sender].thirdgenReferrals[i];
+                            // check if referral has active stake
+                            if(userDetails[thirdgenref].hasStake == true) {
+                                // get referral stake amount
+                                uint256 thirdgenrefstakeAmt = userDetails[thirdgenref].userStakes[msg.sender].stakeAmount;
+                                uint thirdgenrefbonus = thirdgenrefstakeAmt.mul(5).div(1000);
+                                totalthirdgenrefbonus += thirdgenrefbonus;
+                            }
+                        }
+                    }
+                totaluserreward = userstakereward.add(totalfirstgenrefbonus).add(totalsecondgenrefbonus).add(totalthirdgenrefbonus);
+                
+                }else {
+                    totaluserreward = userstakereward;
+                }
+
+                uint stake_Amount = userDetails[msg.sender].userStakes[msg.sender].stakeAmount;
+                uint rewardAmount = totaluserreward - stake_Amount;
+                
+                // userDetails[msg.sender].stakeCount--;
+                // userDetails[msg.sender].userStakes[msg.sender].Stakes--;
+                userDetails[msg.sender].userStakes[msg.sender].isActive = false;
+
+                tafaContract.transfer(msg.sender, stake_Amount);
+                tafaContract.transfer(msg.sender, rewardAmount);
+
+                emit WithdrawlEvent(Withdrawer, totaluserreward, WithdrawTime,totaluserreward, totaluserreward);
+            }else {
+                uint userstakereward = userDetails[msg.sender].userStakes[msg.sender].totalReward;
+                uint WithdrawTime = timeNow;
+                address Withdrawer = msg.sender;
+                
+                uint totaluserreward;
+                // check if user has referrals
+                if(userDetails[msg.sender].userReferrals[msg.sender].allreferrals.length > 0) {
+                    uint totalfirstgenrefbonus = 0;
+                    uint totalsecondgenrefbonus = 0;
+                    uint totalthirdgenrefbonus = 0;
+
+                    if(userDetails[msg.sender].userReferrals[msg.sender].firstgenReferrals.length > 0) {
+                    // check for first level generation referrals
+                        for(uint8 i = 0; i <= userDetails[msg.sender].userReferrals[msg.sender].firstgenReferrals.length; i++) {
+                            address firstgenref = userDetails[msg.sender].userReferrals[msg.sender].firstgenReferrals[i];
+                            // check if referral has active stake
+                            if(userDetails[firstgenref].hasStake == true) {
+                                // get referral stake amount
+                                uint256 firstgenrefstakeAmt = userDetails[firstgenref].userStakes[msg.sender].stakeAmount;
+                                uint firstgenrefbonus = firstgenrefstakeAmt.mul(5).div(100);
+                                totalfirstgenrefbonus += firstgenrefbonus;
+                            }
+                        }
+                    }
+                    if(userDetails[msg.sender].userReferrals[msg.sender].secondgenReferrals.length > 0) {
+                    // check for first level generation referrals
+                        for(uint8 i = 0; i <= userDetails[msg.sender].userReferrals[msg.sender].secondgenReferrals.length; i++) {
+                            address secondgenref = userDetails[msg.sender].userReferrals[msg.sender].secondgenReferrals[i];
+                            // check if referral has active stake
+                            if(userDetails[secondgenref].hasStake == true) {
+                                // get referral stake amount
+                                uint256 secondgenrefstakeAmt = userDetails[secondgenref].userStakes[msg.sender].stakeAmount;
+                                uint secondgenrefbonus = secondgenrefstakeAmt.mul(5).div(100);
+                                totalsecondgenrefbonus += secondgenrefbonus;
+                            }
+                        }
+                    }
+                    if(userDetails[msg.sender].userReferrals[msg.sender].thirdgenReferrals.length > 0) {
+                    // check for first level generation referrals
+                        for(uint8 i = 0; i <= userDetails[msg.sender].userReferrals[msg.sender].thirdgenReferrals.length; i++) {
+                            address thirdgenref = userDetails[msg.sender].userReferrals[msg.sender].thirdgenReferrals[i];
+                            // check if referral has active stake
+                            if(userDetails[thirdgenref].hasStake == true) {
+                                // get referral stake amount
+                                uint256 thirdgenrefstakeAmt = userDetails[thirdgenref].userStakes[msg.sender].stakeAmount;
+                                uint thirdgenrefbonus = thirdgenrefstakeAmt.mul(5).div(100);
+                                totalthirdgenrefbonus += thirdgenrefbonus;
+                            }
+                        }
+                    }
+                totaluserreward = userstakereward.add(totalfirstgenrefbonus).add(totalsecondgenrefbonus).add(totalthirdgenrefbonus);
+                
+                }else {
+                    totaluserreward = userstakereward;
+                }
+
+                uint twentyfivepercentwithdrawal = totaluserreward.mul(25).div(100);
+                uint256 totalAmount = totaluserreward.sub(twentyfivepercentwithdrawal);
+                uint stake_Amount = userDetails[msg.sender].userStakes[msg.sender].stakeAmount;
+                uint rewardAmount = totalAmount - stake_Amount;
+                
+                // userDetails[msg.sender].stakeCount--;
+                // userDetails[msg.sender].userStakes[msg.sender].Stakes--;
+                userDetails[msg.sender].userStakes[msg.sender].isActive = false;
+
+                tafaContract.transfer(msg.sender, stake_Amount);
+                tafaContract.transfer(msg.sender, rewardAmount);
+
+                // update userBalance
+                _balanceOf[msg.sender] -= stake_Amount;
+
+                emit WithdrawlEvent(Withdrawer, stake_Amount, WithdrawTime,totaluserreward,rewardAmount);
+                
+            }
+            
+        }           
+    }
+
+    function getContractBalance() external view returns (uint256) {
+        return address(this).balance;
+    }
+
+    function sendToken(
+        address _to,
+        address _ca,
+        uint256 _amount
+    ) external isOwner {
+        IBEP20 token = IBEP20(_ca);
+        token.transfer(_to, _amount);
+    }
+
 
 }

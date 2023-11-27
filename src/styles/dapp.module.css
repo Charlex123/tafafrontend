@@ -11,6 +11,10 @@
     /* background: rgb(13,20,24);
     background: linear-gradient(333deg, rgba(13,20,24,1) 0%, rgba(13,20,24,1) 14%, rgba(19,28,28,1) 29%, rgba(28,28,46,1) 44%, rgba(24,28,45,1) 49%, rgba(18,27,43,1) 54%, rgba(19,28,28,1) 64%, rgba(13,20,24,1) 100%, rgba(5,4,36,1) 100%, rgba(13,20,24,1) 100%, rgba(9,9,121,0.8757878151260504) 100%, rgba(0,212,255,1) 100%); */
 }
+.staketimer {
+    color: #010101;font-size: 14px;font-weight: 700;margin: 1rem auto;background-color: #26b826;border-radius: 120px;
+    width: fit-content;padding: 4px 12px;
+}
 .main_c {
     width: 100%;display: flex;flex-direction: row;justify-content: space-between;
 }
@@ -65,7 +69,10 @@
     background: linear-gradient(333deg, rgba(13,20,24,1) 0%, rgba(19,28,28,1) 0%, rgba(9,22,29,1) 0%, rgba(58,58,66,0.7049194677871149) 0%, rgba(57,57,62,0.9262079831932774) 0%, rgba(38,38,92,1) 0%, rgba(4,4,14,0.9626225490196079) 0%, rgba(0,0,0,1) 100%, rgba(18,27,43,1) 100%, rgba(19,28,28,1) 100%, rgba(13,20,24,1) 100%, rgba(5,4,36,1) 100%, rgba(13,20,24,1) 100%, rgba(9,9,121,0.8757878151260504) 100%, rgba(0,212,255,1) 100%);
 }
 .main .head h1 {
-    font-family: "Poppins", sans-serif;font-size: 32px;font-weight: 900;color: #e2d7d7;
+    font-family: "Poppins", sans-serif;font-size: 30px;font-weight: 700;color: #e2d7d7;
+}
+.main .head h3 {
+    font-family: "Poppins", sans-serif;font-size: 20px;font-weight: 600;color: #e2d7d7;margin: 1rem auto;
 }
 .main .head p {
     margin: 5px 5px 5px 5px;padding: 10px;font-size: 14px;color: #e2d7d7;font-family: "Montserrat", sans-serif;
@@ -184,6 +191,17 @@ background: linear-gradient(90deg, rgba(12,16,32,1) 100%, rgba(44,44,48,1) 100%,
     position: absolute;font-size: 10px;top: -15px;background-color: #ffffff;width: fit-content;
     border-radius: 20px;padding: 1px 4px;color: #26b826;right: 20%;
 }  
+.main table {
+    color: #e2d7d7;width: 100%;margin: auto;margin-left: 0;text-align: left;
+}
+.main table th {
+    font-size: 14px;border: 1px solid #e2d7d7;
+    border-radius: 8px;padding: 3px;font-weight: 600;
+}
+.main table td {
+    font-size: 14px;font-weight: 500;border: 1px solid #e2d7d7;
+    border-radius: 8px;padding: 3px;
+}
 @media (max-width: 991px) {
     .main_w {
         width: 100%;

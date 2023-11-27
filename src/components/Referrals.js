@@ -34,11 +34,11 @@ import { faQuestionCircle } from '@fortawesome/free-regular-svg-icons';
 library.add(fas, faTwitter, faFontAwesome,faQuestionCircle, faCheck,faCheckCircle,faAlignJustify)
 // ----------------------------------------------------------------------
 library.add(faEye, faEyeSlash);
-const Dapp = () =>  {
+const Referrals = () =>  {
 
   const router = useRouter();
-  const TAFAAddress = "0x7998C17AD280cb211Ea1e377C2a7Cd7c247f59A3";
-  const StakeAddress = "0x845626412d3f168193967741B8b7A8f3b91C2A98";
+  const TAFAAddress = "0x40CAAd2F6F982788f046CD241A967117B300B502";
+  const StakeAddress = "0x74Ab6ac5deBC29d4BdA251DF9BdD0de6b13d6ab0";
   const { theme, setHandleDrawer, changeTheme, isDark } = useContext(ThemeContext);
   const [isNavOpen, setNavOpen] = useState(false);
   const [scrolling, setScrolling] = useState(false);
@@ -62,6 +62,9 @@ const Dapp = () =>  {
   const [sponsorWalletAddress, setsponsorWalletAddress] = useState("");
   const [userObjId, setUserObjId] = useState(""); // Initial value
   const [verified, setVerified] = useState();
+  const [firstgenreferrals, setFirstGenReferrals] = useState([]);
+  const [secondgenreferrals, setSecondGenReferrals] = useState([]);
+  const [thirdgenreferrals, setThirdGenReferrals] = useState([]);
   
   const { isOpen, onOpen, onClose, closeWeb3Modal,openWeb3Modal } = useContext(Web3ModalContext);
   
@@ -105,7 +108,7 @@ const handleCopyClick = () => {
     deactivate,
     active
   } = useWeb3React();
-  console.log('useweb3',useWeb3React())
+  
   const disconnect = () => {
     refreshState();
     deactivate();
@@ -218,17 +221,6 @@ const handleCopyClick = () => {
   }
   getSponsorWalletAddress();
 
-   if(connector) {
-    if(connector !== undefined && account !== undefined) {
-      setDappConnector(false)
-    }else if(connector !== undefined && account === undefined) {
-      // setDappConnector(!dappConnector)
-      setErrorMessage("Metamask not found, install metamask to connect to dapp")
-    }
-  }else {
-    console.log(' connector not defined yaet')
-  }
-
   async function getWalletAddress() {
     console.log('wall address',walletaddress)
     try {
@@ -248,6 +240,34 @@ const handleCopyClick = () => {
 }
 getWalletAddress();
 
+
+    async function getreferrals() {
+      try {
+         const config = {
+         headers: {
+            "Content-type": "application/json"
+         }
+         }  
+         const {data} = await axios.get(`https://tafabackend.onrender.com/api/users/getreferrals/${udetails.userId}`, {
+         }, config);
+         setFirstGenReferrals(data.firstgendownlines);
+         console.log('ref data',data.firstgendownlines);
+      } catch (error) {
+      }
+   }
+   getreferrals();
+
+   if(connector) {
+    if(connector !== undefined && account !== undefined) {
+      setDappConnector(false)
+    }else if(connector !== undefined && account === undefined) {
+      // setDappConnector(!dappConnector)
+      setErrorMessage("Metamask not found, install metamask to connect to dapp")
+    }
+  }else {
+    console.log(' connector not defined yaet')
+  }
+
   if(account !== undefined) {
 
     async function Addreferrer() {
@@ -265,6 +285,7 @@ getWalletAddress();
     Addreferrer();
 
       async function updateWalletAddress() {
+        console.log('wall address',walletaddress)
         try {
           const config = {
           headers: {
@@ -330,6 +351,8 @@ getWalletAddress();
     setSideBarToggle(!dappsidebartoggle);
     setIsSideBarToggled(!isSideBarToggled);
   };
+
+  console.log('refs',firstgenreferrals)
 
   // const toggleIconUp1 = () => {
   //     setDropdownIcon1(<FontAwesomeIcon icon={faChevronUp} size='lg' className={dappsidebarstyles.sidebarlisttoggle}/>)
@@ -445,16 +468,77 @@ const sideBarToggleCheck = dappsidebartoggle ? dappstyles.sidebartoggled : '';
                 </div>
 
                 <div className={dappstyles.head}>
-                    <div className={dappstyles.uname}><span>Hi, {username}</span></div>
                     <h1>
-                        WELCOME TO TAFAXTRA 
+                        MY REFERRALS 
                     </h1>
-                    <p>TAFAXtra is a smart contract platform that replicates the traditional Certificate of Deposit but on the blockchain. It allows users to stake their TAFA tokens to earn fixed interest, 2% daily ROI. It also has NFT functionality, and is backed by ownership of Validator Nodes.</p>
-                    <p>A community DAO manages the TAFA Vault, which collects fees from trade tax and early unstakes. The usage of these funds will be voted on by the community, to use on things such as purchasing additional Validator Nodes, Marketing, Conferences, Token Burns etc.</p>
-                    <div className={dappstyles.get_sd_btns}>
-                      <a title='get started' href='/stake' rel='noopener noreferrer' className={dappstyles.getstarted}>Stake TaFaXtra</a>
-                      <a href='https://pancakeswap.finance/swap?outputCurrency=0x5ae155F89308CA9050f8Ce1C96741BaDd342C26B' rel='noopener noreferrer' className={dappstyles.learnmore}>Buy TafaXtra</a>
-                    </div>
+                    { firstgenreferrals.length > 0 ?
+                    (<div>
+                        <h3>
+                            First Generation Referrals
+                        </h3>
+                        <table id="resultTable" className="table01 margin-table">
+                            <thead>
+                                <tr>
+                                    <th id="accountTh" width="" className="align-L">UserId</th>
+                                    <th id="balanceTh" width="10%">Wallet Address</th>
+                                </tr>
+                            </thead>
+                            <tbody id="userData">
+                            {firstgenreferrals.map((downline) =>(
+                                <tr key={downline._id}>
+                                <td>{downline.userId}</td>
+                                <td>{downline.walletaddress}</td>
+                            </tr>
+                            ))}
+                            </tbody>
+                        </table>
+                    </div>) : 'First Generation Referrals Not Found' }
+
+                    { secondgenreferrals.length > 0 ?
+                    (<div>
+                        <h3>
+                            Second Generation Referrals
+                        </h3>
+                        <table id="resultTable" className="table01 margin-table">
+                            <thead>
+                                <tr>
+                                    <th id="accountTh" width="" className="align-L">UserId</th>
+                                    <th id="balanceTh" width="10%">Wallet Address</th>
+                                </tr>
+                            </thead>
+                            <tbody id="userData">
+                            {secondgenreferrals.map((downline) =>(
+                                <tr key={downline._id}>
+                                <td>{downline.userId}</td>
+                                <td>{downline.walletaddress}</td>
+                            </tr>
+                            ))}
+                            </tbody>
+                        </table>
+                    </div>) : 'Second Generation Referrals Not Found' }
+
+                    { thirdgenreferrals.length > 0 ?
+                    (<div>
+                        <h3>
+                            Third Generation Referrals
+                        </h3>
+                        <table id="resultTable" className="table01 margin-table">
+                            <thead>
+                                <tr>
+                                    <th id="accountTh" width="" className="align-L">UserId</th>
+                                    <th id="balanceTh" width="10%">Wallet Address</th>
+                                </tr>
+                            </thead>
+                            <tbody id="userData">
+                            {thirdgenreferrals.map((downline) =>(
+                                <tr key={downline._id}>
+                                <td>{downline.userId}</td>
+                                <td>{downline.walletaddress}</td>
+                            </tr>
+                            ))}
+                            </tbody>
+                        </table>
+                    </div>) : 'Third Generation Referrals Not Found' }
                 </div>
               </div>
             </div>
@@ -485,4 +569,4 @@ const sideBarToggleCheck = dappsidebartoggle ? dappstyles.sidebartoggled : '';
   );
 }
 
-export default Dapp
+export default Referrals
