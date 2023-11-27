@@ -433,7 +433,7 @@ const sideBarToggleCheck = dappsidebartoggle ? dappstyles.sidebartoggled : '';
                             </li>
                         </ul>
                         <ul className={dappsidebarstyles.upa}>
-                            <li className={dappsidebarstyles.ld}><a href='/stake' rel='noopener noreferrer'>Stake TafaXtra</a></li>
+                            <li className={dappsidebarstyles.ld}><a href='/stakes' rel='noopener noreferrer'>Stake TafaXtra</a></li>
                             <li><button type='button' onClick={logout} className={dappsidebarstyles.linka}>Logout</button></li>
                         </ul>
                         
