@@ -375,7 +375,7 @@ const toggleNav = () => {
                 </h5>
                 <ul>
                   <li>
-                    <FontAwesomeIcon icon={faChevronRight} size='lg' className={styles.chronotitleicon}/> First Generation.
+                    <FontAwesomeIcon icon={faChevronRight} size='lg' className={styles.chronotitleicon}/> First Generation
                   </li>
                   <li>
                     <FontAwesomeIcon icon={faChevronRight} size='lg' className={styles.chronotitleicon}/> Second Generation
@@ -386,17 +386,17 @@ const toggleNav = () => {
                 </ul>
                 <ul>
                   <li>
-                    <FontAwesomeIcon icon={faCheckSquare} size='lg' className={styles.chronotitleicon}/> You earn 0.5% daily return on investment from all your direct referrals (first genration referrals).
+                    <FontAwesomeIcon icon={faCheckSquare} size='lg' className={styles.chronotitleicon}/> You earn 0.5% daily return on investment from all your direct referrals (first genration referrals)
                   </li>
                   <li>
-                    <FontAwesomeIcon icon={faCheckSquare} size='lg' className={styles.chronotitleicon}/> You earn 0.3% daily ROI from all your second genration referrals                 </li>
+                    <FontAwesomeIcon icon={faCheckSquare} size='lg' className={styles.chronotitleicon}/> You earn 0.3% daily ROI from all your second genration referrals                </li>
                   <li>
                     <FontAwesomeIcon icon={faCheckSquare} size='lg' className={styles.chronotitleicon}/> You earn 0.2% daily ROI from all your second genration referrals
                   </li>
                 </ul>
 
                 <p>
-                Welcome to the world of Community referral income, where spreading the word about amazing crypto investment opportunities and services can generate lucrative daily returns for you! If you're looking for a reliable avenue to increase your TAFA portfolio and earn passive income, referral programs offer a compelling opportunity. 
+                Welcome to the world of Community referral income, where spreading the word about amazing crypto investment opportunities and services can generate lucrative daily returns for you! If you're looking for a reliable avenue to increase your TAFA portfolio and earn passive income, referral programs offer a compelling opportunity 
                 </p>
                 {refReadMore && (
                   <>
