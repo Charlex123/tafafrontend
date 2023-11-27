@@ -25,7 +25,7 @@ import { ThemeContext } from '../contexts/theme-context';
 import DappNav from './Dappnav';
 import { ethers } from 'ethers';
 import TAFAAbi from '../../artifacts/contracts/TAFA.sol/TAFA.json';
-import StakeArtifacts from '../../artifacts/contracts/Stake.sol/Stake.json';
+import StakeAbi from '../../artifacts/contracts/Stake.sol/Stake.json';
 import DappFooter from './DappFooter';
 import { fas, faCheck, faCheckCircle, faChevronDown,faAlignJustify, faCircleDollarToSlot, faGift, faHandHoldingDollar, faPeopleGroup, faChevronUp, faAngleDoubleRight, faAngleRight, faXmark } from '@fortawesome/free-solid-svg-icons'
 import { faTwitter, faFontAwesome, faFacebook,faDiscord, faTelegram, faMedium, faYoutube } from '@fortawesome/free-brands-svg-icons'
@@ -37,8 +37,8 @@ library.add(faEye, faEyeSlash);
 const Dapp = () =>  {
 
   const router = useRouter();
-  const TAFAAddress = "0x7998C17AD280cb211Ea1e377C2a7Cd7c247f59A3";
-  const StakeAddress = "0x845626412d3f168193967741B8b7A8f3b91C2A98";
+  const TAFAAddress = "0x5ae155f89308ca9050f8ce1c96741badd342c26b";
+  const StakeAddress = "0xE182a7e66E95a30F75971B2924346Ef5d187CE13";
   const { theme, setHandleDrawer, changeTheme, isDark } = useContext(ThemeContext);
   const [isNavOpen, setNavOpen] = useState(false);
   const [scrolling, setScrolling] = useState(false);
@@ -252,10 +252,10 @@ getWalletAddress();
 
     async function Addreferrer() {
       // const [account] = await window.ethereum.request({ method: 'eth_requestAccounts' })
-      const provider = new ethers.providers.JsonRpcProvider('https://data-seed-prebsc-1-s1.bnbchain.org:8545')
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner(account);
-      const TAFAContract = new ethers.Contract(TAFAAddress, TAFAAbi.abi, signer);
-      const StakeContract = new ethers.Contract(StakeAddress, StakeArtifacts.abi, signer);
+      const TAFAContract = new ethers.Contract(TAFAAddress, TAFAAbi, signer);
+      const StakeContract = new ethers.Contract(StakeAddress, StakeAbi.abi, signer);
       console.log('signer address', account)
       console.log('tafa contract ',TAFAContract)
       console.log('stake contract ',StakeContract)

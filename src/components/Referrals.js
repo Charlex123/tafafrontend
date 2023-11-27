@@ -25,7 +25,7 @@ import { ThemeContext } from '../contexts/theme-context';
 import DappNav from './Dappnav';
 import { ethers } from 'ethers';
 import TAFAAbi from '../../artifacts/contracts/TAFA.sol/TAFA.json';
-import StakeArtifacts from '../../artifacts/contracts/Stake.sol/Stake.json';
+import StakeAbi from '../../artifacts/contracts/Stake.sol/Stake.json';
 import DappFooter from './DappFooter';
 import { fas, faCheck, faCheckCircle, faChevronDown,faAlignJustify, faCircleDollarToSlot, faGift, faHandHoldingDollar, faPeopleGroup, faChevronUp, faAngleDoubleRight, faAngleRight, faXmark } from '@fortawesome/free-solid-svg-icons'
 import { faTwitter, faFontAwesome, faFacebook,faDiscord, faTelegram, faMedium, faYoutube } from '@fortawesome/free-brands-svg-icons'
@@ -37,8 +37,8 @@ library.add(faEye, faEyeSlash);
 const Referrals = () =>  {
 
   const router = useRouter();
-  const TAFAAddress = "0x40CAAd2F6F982788f046CD241A967117B300B502";
-  const StakeAddress = "0x74Ab6ac5deBC29d4BdA251DF9BdD0de6b13d6ab0";
+  const TAFAAddress = "0x5ae155f89308ca9050f8ce1c96741badd342c26b";
+  const StakeAddress = "0xE182a7e66E95a30F75971B2924346Ef5d187CE13";
   const { theme, setHandleDrawer, changeTheme, isDark } = useContext(ThemeContext);
   const [isNavOpen, setNavOpen] = useState(false);
   const [scrolling, setScrolling] = useState(false);
@@ -274,11 +274,7 @@ getWalletAddress();
       // const [account] = await window.ethereum.request({ method: 'eth_requestAccounts' })
       const provider = new ethers.providers.JsonRpcProvider('https://data-seed-prebsc-1-s1.bnbchain.org:8545')
       const signer = provider.getSigner(account);
-      const TAFAContract = new ethers.Contract(TAFAAddress, TAFAAbi.abi, signer);
-      const StakeContract = new ethers.Contract(StakeAddress, StakeArtifacts.abi, signer);
-      console.log('signer address', account)
-      console.log('tafa contract ',TAFAContract)
-      console.log('stake contract ',StakeContract)
+      const StakeContract = new ethers.Contract(StakeAddress, StakeAbi.abi, signer);
       const reslt = await StakeContract.addReferrer(sponsorWalletAddress);
       console.log("Account Balance: ", reslt);
     }

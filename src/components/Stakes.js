@@ -41,8 +41,8 @@ const Dapp = () =>  {
 
   const router = useRouter();
 
-  const TAFAAddress = "0x7998C17AD280cb211Ea1e377C2a7Cd7c247f59A3";
-  const StakeAddress = "0x845626412d3f168193967741B8b7A8f3b91C2A98";
+  const TAFAAddress = "0x5ae155f89308ca9050f8ce1c96741badd342c26b";
+  const StakeAddress = "0xE182a7e66E95a30F75971B2924346Ef5d187CE13";
 
   const { theme, setHandleDrawer, changeTheme, isDark } = useContext(ThemeContext);
   const [isNavOpen, setNavOpen] = useState(false);
@@ -218,7 +218,7 @@ const handleCopyClick = () => {
     const provider = new ethers.providers.Web3Provider(window.ethereum)
     await provider.send('eth_requestAccounts', []);
     const signer = provider.getSigner(account);
-    const TAFAContract = new ethers.Contract(TAFAAddress, TAFAAbi.abi, signer);
+    const TAFAContract = new ethers.Contract(TAFAAddress, TAFAAbi, signer);
     const reslt = await TAFAContract.approve(StakeAddress,stakeAmount);
     if(reslt) {
       StakeTAFA();
@@ -236,21 +236,17 @@ const handleCopyClick = () => {
   }
 
   const Withdraw = async () => {
-
-    if(account !== undefined) {
-      const [account] = await window.ethereum.request({ method: 'eth_requestAccounts' });
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      const signer = provider.getSigner(account);
-      const StakeContract = new ethers.Contract(StakeAddress, StakeAbi.abi, signer);
-      const reslt = await StakeContract.withdrawStake();
-      console.log("Account Balance: ", reslt);
-    }
-    
+    const [account] = await window.ethereum.request({ method: 'eth_requestAccounts' });
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner(account);
+    const StakeContract = new ethers.Contract(StakeAddress, StakeAbi.abi, signer);
+    const reslt = await StakeContract.withdrawStake();
+    console.log("Account Balance: ", reslt);
   }
 
   
   useEffect(() => {
-    // StakeTAFA();
+    
     if(connector) {
       if(connector !== undefined && account !== undefined) {
         console.log('metamask found', connector)

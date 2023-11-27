@@ -46,6 +46,9 @@ module.exports = {
     // Obtain one at https://bscscan.com/
     apiKey: process.env.BSCSCAN_APIKEY, 
   },
+  sourcify: {
+    enabled: true
+  },
   solidity: {
     compilers: [
       {

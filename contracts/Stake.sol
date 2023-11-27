@@ -272,9 +272,6 @@ contract Stake is ReentrancyGuard {
     }
 
     function withdrawStake() external nonReentrant {
-        // uint256 withdAmount = userDetails[msg.sender].userStakes[msg.sender].totalReward;
-        // require(address(this).balance >= withdAmount, "Insufficient contract balance");
-
         if(hasStaked(msg.sender) == false) {
             revert("You must have stake to withdraw");
         }else {
