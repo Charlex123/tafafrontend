@@ -1,6 +1,6 @@
 import { useEffect, useState, useContext } from 'react';
 import { useRouter } from 'next/router';
-import  { Web3ModalContext } from '../contexts/web3modal-context';
+// import  { Web3ModalContext } from '../contexts/web3modal-context';
 // import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from "@fortawesome/fontawesome-svg-core";
@@ -14,7 +14,7 @@ import dappstyles from "../styles/dapp.module.css";
 import dappconalertstyles from "../styles/dappconnalert.module.css";
 import dappsidebarstyles from '../styles/dappsidebar.module.css';
 // component
-import SelectWalletModal from "./web3-Modal";
+// import SelectWalletModal from "./web3-Modal";
 import { useWeb3React } from "@web3-react/core";
 import { networkParams } from "./web3-networks";
 import { toHex, truncateAddress } from "../utils/web3react-utils";
@@ -66,7 +66,7 @@ const Referrals = () =>  {
   const [secondgenreferrals, setSecondGenReferrals] = useState([]);
   const [thirdgenreferrals, setThirdGenReferrals] = useState([]);
   
-  const { isOpen, onOpen, onClose, closeWeb3Modal,openWeb3Modal } = useContext(Web3ModalContext);
+  // const { isOpen, onOpen, onClose, closeWeb3Modal,openWeb3Modal } = useContext(Web3ModalContext);
   
   const [referralLink, setreferralLink] = useState('');
   const [buttonText, setButtonText] = useState("Copy");
@@ -190,9 +190,9 @@ const handleCopyClick = () => {
   useEffect(() => {
     
     const udetails = JSON.parse(localStorage.getItem("userInfo"));
-    const username_ = udetails.username;
+    
     if(udetails && udetails !== null && udetails !== "") {
-      
+      const username_ = udetails.username;  
       if(username_) {
         setUsername(username_);
         setUserId(udetails.userId)
@@ -211,7 +211,7 @@ const handleCopyClick = () => {
             "Content-type": "application/json"
         }
         }  
-        const {data} = await axios.post("https://tafabackend.onrender.com/api/users/getsponsorwalletaddress", {
+        const {data} = await axios.post("http://localhost:7000/api/users/getsponsorwalletaddress", {
           userObjId,
         }, config);
         setsponsorWalletAddress(data.message);
@@ -229,7 +229,7 @@ const handleCopyClick = () => {
           "Content-type": "application/json"
       }
       }  
-      const {data} = await axios.post("https://tafabackend.onrender.com/api/users/getwalletaddress/", {
+      const {data} = await axios.post("http://localhost:7000/api/users/getwalletaddress/", {
         username
       }, config);
       console.log('update wallet data', data.message);
@@ -248,7 +248,7 @@ getWalletAddress();
             "Content-type": "application/json"
          }
          }  
-         const {data} = await axios.get(`https://tafabackend.onrender.com/api/users/getreferrals/${udetails.userId}`, {
+         const {data} = await axios.get(`http://localhost:7000/api/users/getreferrals/${udetails.userId}`, {
          }, config);
          setFirstGenReferrals(data.firstgendownlines);
          console.log('ref data',data.firstgendownlines);
@@ -288,7 +288,7 @@ getWalletAddress();
               "Content-type": "application/json"
           }
           }  
-          const {data} = await axios.post("https://tafabackend.onrender.com/api/users/updatewalletaddress/", {
+          const {data} = await axios.post("http://localhost:7000/api/users/updatewalletaddress/", {
             walletaddress,
             username
           }, config);
@@ -448,11 +448,11 @@ const sideBarToggleCheck = dappsidebartoggle ? dappstyles.sidebartoggled : '';
               </div>
               <div className={`${dappstyles.main} ${sideBarToggleCheck}`}>
               <div className={dappstyles.con_btns}>
-              {!active ? (
+              {/* {!active ? (
                 <button onClick={openWeb3Modal} className={dappstyles.connect}>Connect Wallet</button>
                 ) : (
                 <button onClick={disconnect} className={dappstyles.connected}><span>connected</span>Disconnect</button>
-                )}
+                )} */}
               </div>
               <button title='togglebtn' className={dappstyles.sidebar_toggle_btn} type='button' onClick={toggleSideBar}>
                 <FontAwesomeIcon icon={faAlignJustify} size='lg' className={dappstyles.navlisttoggle}/> 
@@ -559,7 +559,6 @@ const sideBarToggleCheck = dappsidebartoggle ? dappstyles.sidebartoggled : '';
               </div>
             </div>
           </>)}
-        {isOpen && (<SelectWalletModal isOpen={isOpen} closeWeb3Modal={closeWeb3Modal} />)}
         <DappFooter />
     </>
   );

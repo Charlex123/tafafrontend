@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // import { providers } from "ethers";
 import SelectWalletModal from "./web3-Modal";
 import { useWeb3React } from "@web3-react/core";
+import { useWeb3Modal } from '@web3modal/ethers5/react';
 import { networkParams } from "./web3-networks";
 import { toHex, truncateAddress } from "../utils/web3react-utils";
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -27,8 +28,8 @@ function Navbar() {
     const [dropdwnIcon2, setDropdownIcon2] = useState(<FontAwesomeIcon icon={faChevronDown} size='lg' className={styles.navlisttoggle}/>);
     const [dropdwnIcon3, setDropdownIcon3] = useState(<FontAwesomeIcon icon={faChevronDown} size='lg' className={styles.navlisttoggle}/>);
 
-    const { isOpen, onOpen, onClose, closeWeb3Modal,openWeb3Modal } = useContext(Web3ModalContext);
-    
+    // const { isOpen, onOpen, onClose, closeWeb3Modal,openWeb3Modal } = useContext(Web3ModalContext);
+    const { open } = useWeb3Modal()
     const router = useRouter();
 
   const {
@@ -251,7 +252,7 @@ function Navbar() {
                 <ul className={styles.upa}>
                     <li className={styles.ld}>
                         {!active ? (
-                        <button onClick={openWeb3Modal}>Connect Wallet</button>
+                        <button onClick={() => open()}>Open Connect Modal</button>
                         ) : (
                         <button onClick={disconnect} className={styles.connected}><span>connected</span>Disconnect</button>
                         )}</li>
@@ -260,7 +261,7 @@ function Navbar() {
                 </div>)
                 }
             </div>
-            {isOpen && (<SelectWalletModal isOpen={isOpen} closeWeb3Modal={closeWeb3Modal} />)}
+            {/* {isOpen && (<SelectWalletModal isOpen={isOpen} closeWeb3Modal={closeWeb3Modal} />)} */}
         </nav>
     );
 }

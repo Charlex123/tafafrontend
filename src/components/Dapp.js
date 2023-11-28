@@ -24,6 +24,10 @@ import AlertMessage from './AlertMessage';
 import { ThemeContext } from '../contexts/theme-context';
 import DappNav from './Dappnav';
 import { ethers } from 'ethers';
+import { useWeb3Modal } from '@web3modal/ethers5/react';
+import { useWeb3ModalAccount } from '@web3modal/ethers5/react';
+import { useWeb3ModalProvider } from '@web3modal/ethers5/react';
+
 import TAFAAbi from '../../artifacts/contracts/TAFA.sol/TAFA.json';
 import StakeAbi from '../../artifacts/contracts/Stake.sol/Stake.json';
 import DappFooter from './DappFooter';
@@ -63,8 +67,12 @@ const Dapp = () =>  {
   const [userObjId, setUserObjId] = useState(""); // Initial value
   const [verified, setVerified] = useState();
   
-  const { isOpen, onOpen, onClose, closeWeb3Modal,openWeb3Modal } = useContext(Web3ModalContext);
-  
+  // const { isOpen, onOpen, onClose, closeWeb3Modal,openWeb3Modal } = useContext(Web3ModalContext);
+  const { open } = useWeb3Modal();
+
+  const { address, chainId, isConnected } = useWeb3ModalAccount();
+  console.log('useweb3',useWeb3ModalAccount())
+  console.log('addressssssssss---',address)
   const [referralLink, setreferralLink] = useState('');
   const [buttonText, setButtonText] = useState("Copy");
 
@@ -98,14 +106,14 @@ const handleCopyClick = () => {
 
   const {
     library,
-    chainId,
+    // chainId,
     connector,
     account,
     activate,
     deactivate,
     active
   } = useWeb3React();
-  console.log('useweb3',useWeb3React())
+  
   const disconnect = () => {
     refreshState();
     deactivate();
@@ -187,9 +195,8 @@ const handleCopyClick = () => {
   useEffect(() => {
     
     const udetails = JSON.parse(localStorage.getItem("userInfo"));
-    const username_ = udetails.username;
     if(udetails && udetails !== null && udetails !== "") {
-      
+      const username_ = udetails.username;  
       if(username_) {
         setUsername(username_);
         setUserId(udetails.userId)
@@ -208,7 +215,7 @@ const handleCopyClick = () => {
             "Content-type": "application/json"
         }
         }  
-        const {data} = await axios.post("https://tafabackend.onrender.com/api/users/getsponsorwalletaddress", {
+        const {data} = await axios.post("http://localhost:7000/api/users/getsponsorwalletaddress", {
           userObjId,
         }, config);
         setsponsorWalletAddress(data.message);
@@ -237,7 +244,7 @@ const handleCopyClick = () => {
           "Content-type": "application/json"
       }
       }  
-      const {data} = await axios.post("https://tafabackend.onrender.com/api/users/getwalletaddress/", {
+      const {data} = await axios.post("http://localhost:7000/api/users/getwalletaddress/", {
         username
       }, config);
       console.log('update wallet data', data.message);
@@ -271,7 +278,7 @@ getWalletAddress();
               "Content-type": "application/json"
           }
           }  
-          const {data} = await axios.post("https://tafabackend.onrender.com/api/users/updatewalletaddress/", {
+          const {data} = await axios.post("http://localhost:7000/api/users/updatewalletaddress/", {
             walletaddress,
             username
           }, config);
@@ -430,7 +437,7 @@ const sideBarToggleCheck = dappsidebartoggle ? dappstyles.sidebartoggled : '';
               <div className={`${dappstyles.main} ${sideBarToggleCheck}`}>
               <div className={dappstyles.con_btns}>
               {!active ? (
-                <button onClick={openWeb3Modal} className={dappstyles.connect}>Connect Wallet</button>
+                <button onClick={() => open()}>Open Connect Modal</button>
                 ) : (
                 <button onClick={disconnect} className={dappstyles.connected}><span>connected</span>Disconnect</button>
                 )}
@@ -479,7 +486,7 @@ const sideBarToggleCheck = dappsidebartoggle ? dappstyles.sidebartoggled : '';
               </div>
             </div>
           </>)}
-        {isOpen && (<SelectWalletModal isOpen={isOpen} closeWeb3Modal={closeWeb3Modal} />)}
+        {/* {isOpen && (<SelectWalletModal isOpen={isOpen} closeWeb3Modal={closeWeb3Modal} />)} */}
         <DappFooter />
     </>
   );

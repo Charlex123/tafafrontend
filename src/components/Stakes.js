@@ -1,6 +1,7 @@
 import { useEffect, useState, useContext } from 'react';
 import { useRouter } from 'next/router';
 import  { Web3ModalContext } from '../contexts/web3modal-context';
+import { useWeb3Modal } from '@web3modal/ethers5/react';
 // import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from "@fortawesome/fontawesome-svg-core";
@@ -70,8 +71,8 @@ const Dapp = () =>  {
   const [showWithdrawStake, setShowWithdrawStake] = useState(false);
   const [timeRemaining, setTimeRemaining] = useState(0); // 24 hours in seconds
   
-  const { isOpen, onOpen, onClose, closeWeb3Modal,openWeb3Modal } = useContext(Web3ModalContext);
-  
+  // const { isOpen, onOpen, onClose, closeWeb3Modal,openWeb3Modal } = useContext(Web3ModalContext);
+  const { open } = useWeb3Modal();
   const [referralLink, setreferralLink] = useState('');
   const [buttonText, setButtonText] = useState("Copy");
 
@@ -263,9 +264,9 @@ const handleCopyClick = () => {
     localStorage.setItem('staketimer',timeRemaining);
 
     const udetails = JSON.parse(localStorage.getItem("userInfo"));
-    const username_ = udetails.username;
+    
     if(udetails && udetails !== null && udetails !== "") {
-      
+      const username_ = udetails.username;  
       if(username_) {
         setUsername(username_);
         setUserId(udetails.userId)
@@ -283,7 +284,7 @@ const handleCopyClick = () => {
             "Content-type": "application/json"
         }
         }  
-        const {data} = await axios.post("https://tafabackend.onrender.com/api/users/getwalletaddress/", {
+        const {data} = await axios.post("http://localhost:7000/api/users/getwalletaddress/", {
           username
         }, config);
         console.log('update wallet data', data.message);
@@ -444,7 +445,7 @@ const sideBarToggleCheck = dappsidebartoggle ? dappstyles.sidebartoggled : '';
               <div className={`${dappstyles.main} ${sideBarToggleCheck}`}>
               <div className={dappstyles.con_btns}>
               {!active ? (
-                <button onClick={openWeb3Modal} className={dappstyles.connect}>Connect Wallet</button>
+                <button onClick={() => open()}>Open Connect Modal</button>
                 ) : (
                 <button onClick={disconnect} className={dappstyles.connected}><span>connected</span>Disconnect</button>
                 )}
@@ -559,7 +560,7 @@ const sideBarToggleCheck = dappsidebartoggle ? dappstyles.sidebartoggled : '';
               </div>
             </div>
           </>)}
-        {isOpen && (<SelectWalletModal isOpen={isOpen} closeWeb3Modal={closeWeb3Modal} />)}
+        {/* {isOpen && (<SelectWalletModal isOpen={isOpen} closeWeb3Modal={closeWeb3Modal} />)} */}
         <DappFooter />
     </>
   );

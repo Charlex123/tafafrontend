@@ -9,10 +9,11 @@ const nextConfig = {
     'imgbox.com'],
   },
   webpack: (config) => {
-    config.module.rules.push({
-      test: /\.node/,
-      use: "raw-loader",
-    });
+    // config.module.rules.push({
+    //   test: /\.node/,
+    //   use: "raw-loader",
+    // });
+    config.externals.push('pino-pretty', 'lokijs', 'encoding');
 return config;
   },
 };
