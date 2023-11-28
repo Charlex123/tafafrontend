@@ -284,7 +284,7 @@ const handleCopyClick = () => {
             "Content-type": "application/json"
         }
         }  
-        const {data} = await axios.post("http://localhost:7000/api/users/getwalletaddress/", {
+        const {data} = await axios.post("https://tafabackend.onrender.com/api/users/getwalletaddress/", {
           username
         }, config);
         console.log('update wallet data', data.message);
@@ -445,7 +445,7 @@ const sideBarToggleCheck = dappsidebartoggle ? dappstyles.sidebartoggled : '';
               <div className={`${dappstyles.main} ${sideBarToggleCheck}`}>
               <div className={dappstyles.con_btns}>
               {!active ? (
-                <button onClick={() => open()}>Open Connect Modal</button>
+                <button onClick={() => open()}> Connect Dapp</button>
                 ) : (
                 <button onClick={disconnect} className={dappstyles.connected}><span>connected</span>Disconnect</button>
                 )}

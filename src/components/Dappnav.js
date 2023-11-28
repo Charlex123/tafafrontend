@@ -252,7 +252,7 @@ function Navbar() {
                 <ul className={styles.upa}>
                     <li className={styles.ld}>
                         {!active ? (
-                        <button onClick={() => open()}>Open Connect Modal</button>
+                        <button onClick={() => open()}>Connect Dapp</button>
                         ) : (
                         <button onClick={disconnect} className={styles.connected}><span>connected</span>Disconnect</button>
                         )}</li>

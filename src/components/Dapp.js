@@ -68,11 +68,11 @@ const Dapp = () =>  {
   const [verified, setVerified] = useState();
   
   // const { isOpen, onOpen, onClose, closeWeb3Modal,openWeb3Modal } = useContext(Web3ModalContext);
-  const { open } = useWeb3Modal();
+  const { open, close } = useWeb3Modal();
 
   const { address, chainId, isConnected } = useWeb3ModalAccount();
   console.log('useweb3',useWeb3ModalAccount())
-  console.log('addressssssssss---',address)
+  console.log('addressssssssss---',isConnected)
   const [referralLink, setreferralLink] = useState('');
   const [buttonText, setButtonText] = useState("Copy");
 
@@ -436,10 +436,10 @@ const sideBarToggleCheck = dappsidebartoggle ? dappstyles.sidebartoggled : '';
               </div>
               <div className={`${dappstyles.main} ${sideBarToggleCheck}`}>
               <div className={dappstyles.con_btns}>
-              {!active ? (
-                <button onClick={() => open()}>Open Connect Modal</button>
+              {!isConnected ? (
+                <button onClick={() => open()}>Connect Dapp</button>
                 ) : (
-                <button onClick={disconnect} className={dappstyles.connected}><span>connected</span>Disconnect</button>
+                <button onClick={() => close()} className={dappstyles.connected}><span>connected</span>Disconnect</button>
                 )}
               </div>
               <button title='togglebtn' className={dappstyles.sidebar_toggle_btn} type='button' onClick={toggleSideBar}>
