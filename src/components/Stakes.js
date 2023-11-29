@@ -30,7 +30,6 @@ import TAFAAbi from '../../artifacts/contracts/TAFA.sol/TAFA.json';
 import StakeAbi from '../../artifacts/contracts/Stake.sol/Stake.json';
 import { ThemeContext } from '../contexts/theme-context';
 import DappNav from './Dappnav';
-import { connectors } from './web3-connectors';
 import DappFooter from './DappFooter';
 import { fas, faCheck, faCheckCircle, faChevronDown,faAlignJustify, faCircleDollarToSlot, faGift, faHandHoldingDollar, faPeopleGroup, faChevronUp, faAngleDoubleRight, faAngleRight, faXmark } from '@fortawesome/free-solid-svg-icons'
 import { faTwitter, faFontAwesome, faFacebook,faDiscord, faTelegram, faMedium, faYoutube } from '@fortawesome/free-brands-svg-icons'
@@ -58,7 +57,7 @@ const Dapp = () =>  {
   const [dropdwnIcon3, setDropdownIcon3] = useState(<FontAwesomeIcon icon={faChevronDown} size='lg' className={dappsidebarstyles.sidebarlisttoggle}/>);
   const [username, setUsername] = useState("");
   const [userId, setUserId] = useState("");  
-  const [dappConnector,setDappConnector] = useState(false);
+  // const [dappConnector,setDappConnector] = useState(false);
 
   const [signature, setSignature] = useState("");
   const [error, setError] = useState(false);
@@ -124,9 +123,9 @@ const handleCopyClick = () => {
     console.log(signature)
   }
 
-  const closeDappConAlert = () => {
-    setDappConnector(!dappConnector);
-  }
+  // const closeDappConAlert = () => {
+  //   setDappConnector(!dappConnector);
+  // }
 
   const handleStakeDuration = (e) => {
     setstakeDuration(e.target.value)
@@ -264,7 +263,7 @@ const handleCopyClick = () => {
   };
   
   
- }, [userId, router,dappConnector,timeRemaining,username,walletaddress,stakeDuration])
+ }, [userId, router,timeRemaining,username,walletaddress,stakeDuration])
 
  const formatTime = (seconds) => {
   const days = Math.floor(seconds / 86400);
@@ -275,7 +274,6 @@ const handleCopyClick = () => {
     return `${String(days).padStart(2, '0')} days ${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(remainingSeconds).padStart(2, '0')}`;
 };
 
- console.log('dapp connector iooooooo value',dappConnector)
 
  // Function to toggle the navigation menu
  const toggleSideBar = () => {

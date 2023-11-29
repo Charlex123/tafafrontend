@@ -24,6 +24,10 @@ import AlertMessage from './AlertMessage';
 import { ThemeContext } from '../contexts/theme-context';
 import DappNav from './Dappnav';
 import { ethers } from 'ethers';
+import { useWeb3Modal } from '@web3modal/ethers5/react';
+import { useWeb3ModalAccount } from '@web3modal/ethers5/react';
+import { useWeb3ModalProvider } from '@web3modal/ethers5/react';
+import { useDisconnect } from '@web3modal/ethers5/react';
 import TAFAAbi from '../../artifacts/contracts/TAFA.sol/TAFA.json';
 import StakeAbi from '../../artifacts/contracts/Stake.sol/Stake.json';
 import DappFooter from './DappFooter';
@@ -51,7 +55,7 @@ const Referrals = () =>  {
   const [userId, setUserId] = useState("");  
   const [walletaddress, setWalletAddress] = useState("NA");  
   const [isWalletAddressUpdated,setisWalletAddressUpdated] = useState(false);
-  const [dappConnector,setDappConnector] = useState(false);
+  // const [dappConnector,setDappConnector] = useState(false);
 
   const [signature, setSignature] = useState("");
   const [error, setError] = useState(false);
@@ -67,6 +71,10 @@ const Referrals = () =>  {
   const [thirdgenreferrals, setThirdGenReferrals] = useState([]);
   
   // const { isOpen, onOpen, onClose, closeWeb3Modal,openWeb3Modal } = useContext(Web3ModalContext);
+  const { open, close } = useWeb3Modal();
+  const { walletProvider } = useWeb3ModalProvider();
+  const { address, chainId, isConnected } = useWeb3ModalAccount();
+  const { disconnect } = useDisconnect();
   
   const [referralLink, setreferralLink] = useState('');
   const [buttonText, setButtonText] = useState("Copy");
@@ -98,91 +106,9 @@ const handleCopyClick = () => {
       setButtonText("Copy");
    }, 1500);
  };
-
-  const {
-    library,
-    chainId,
-    connector,
-    account,
-    activate,
-    deactivate,
-    active
-  } = useWeb3React();
-  
-  const disconnect = () => {
-    refreshState();
-    deactivate();
-  };  
-  
-  
-  const handleNetwork = (e) => {
-    const id = e.target.value;
-    setNetwork(Number(id));
-  };
-  
-  const handleInput = (e) => {
-    const msg = e.target.value;
-    setMessage(msg);
-  };
-  
-  const switchNetwork = async () => {
-    try {
-      await library.provider.request({
-        method: "wallet_switchEthereumChain",
-        params: [{ chainId: toHex(network) }]
-      });
-    } catch (switchError) {
-      if (switchError.code === 4902) {
-        try {
-          await library.provider.request({
-            method: "wallet_addEthereumChain",
-            params: [networkParams[toHex(network)]]
-          });
-        } catch (error) {
-          setError(error);
-        }
-      }
-    }
-  };
-  
-  const signMessage = async () => {
-    if (!library) return;
-    try {
-      const signature = await library.provider.request({
-        method: "personal_sign",
-        params: [message, account]
-      });
-      setSignedMessage(message);
-      setSignature(signature);
-    } catch (error) {
-      setError(error);
-    }
-  };
-  
-  const verifyMessage = async () => {
-    if (!library) return;
-    try {
-      const verify = await library.provider.request({
-        method: "personal_ecRecover",
-        params: [signedMessage, signature]
-      });
-      setVerified(verify === account.toLowerCase());
-    } catch (error) {
-      setError(error);
-    }
-  };
-  
-  const refreshState = () => {
-    window.localStorage.setItem("provider", undefined);
-    setNetwork("");
-    setMessage("");
-    setSignature("");
-    setVerified(undefined);
-  };
-
-  const closeDappConAlert = () => {
-    setDappConnector(!dappConnector);
-  }
+  // const closeDappConAlert = () => {
+  //   setDappConnector(!dappConnector);
+  // }
 
   const closeDappConAlerted = () => {
     setisWalletAddressUpdated(!isWalletAddressUpdated);
@@ -257,23 +183,14 @@ getWalletAddress();
    }
    getreferrals();
 
-   if(connector) {
-    if(connector !== undefined && account !== undefined) {
-      setDappConnector(false)
-    }else if(connector !== undefined && account === undefined) {
-      // setDappConnector(!dappConnector)
-      setErrorMessage("Metamask not found, install metamask to connect to dapp")
-    }
-  }else {
-    console.log(' connector not defined yaet')
-  }
+   
 
-  if(account !== undefined) {
+  if(address !== undefined) {
 
     async function Addreferrer() {
       // const [account] = await window.ethereum.request({ method: 'eth_requestAccounts' })
       const provider = new ethers.providers.JsonRpcProvider('https://data-seed-prebsc-1-s1.bnbchain.org:8545')
-      const signer = provider.getSigner(account);
+      const signer = provider.getSigner(address);
       const StakeContract = new ethers.Contract(StakeAddress, StakeAbi.abi, signer);
       const reslt = await StakeContract.addReferrer(sponsorWalletAddress);
       console.log("Account Balance: ", reslt);
@@ -340,7 +257,7 @@ getWalletAddress();
   };
   
   
- }, [userId, router,connector,account,dappConnector,isWalletAddressUpdated,username,walletaddress,userObjId,sponsorWalletAddress])
+ }, [userId, router,address,isWalletAddressUpdated,username,walletaddress,userObjId,sponsorWalletAddress])
 
  // Function to toggle the navigation menu
  const toggleSideBar = () => {
@@ -539,7 +456,7 @@ const sideBarToggleCheck = dappsidebartoggle ? dappstyles.sidebartoggled : '';
               </div>
             </div>
         </div>
-        {dappConnector && 
+        {/* {dappConnector && 
           (<>
             <div className={dappconalertstyles.overlay_dap}></div>
             <div className={dappconalertstyles.dappconalert}>
@@ -548,7 +465,7 @@ const sideBarToggleCheck = dappsidebartoggle ? dappstyles.sidebartoggled : '';
                 Metamask not found, install metamask to connect to dapp
               </div>
             </div>
-          </>)}
+          </>)} */}
           {isWalletAddressUpdated &&
           (<>
             <div className={dappconalertstyles.overlay_dap}></div>

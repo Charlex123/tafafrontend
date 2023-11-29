@@ -55,7 +55,6 @@ const Dapp = () =>  {
   const [userId, setUserId] = useState("");  
   const [walletaddress, setWalletAddress] = useState("NA");  
   const [isWalletAddressUpdated,setisWalletAddressUpdated] = useState(false);
-  const [dappConnector,setDappConnector] = useState(false);
 
   const [signature, setSignature] = useState("");
   const [error, setError] = useState(false);
@@ -108,10 +107,6 @@ const handleCopyClick = () => {
  };
 
   
-
-  const closeDappConAlert = () => {
-    setDappConnector(!dappConnector);
-  }
 
   const closeDappConAlerted = () => {
     setisWalletAddressUpdated(!isWalletAddressUpdated);
@@ -244,7 +239,7 @@ getWalletAddress();
   };
   
   
- }, [userId, router,address,dappConnector,isWalletAddressUpdated,username,walletaddress,userObjId,sponsorWalletAddress])
+ }, [userId, router,address,isWalletAddressUpdated,username,walletaddress,userObjId,sponsorWalletAddress])
 
  // Function to toggle the navigation menu
  const toggleSideBar = () => {
@@ -380,16 +375,6 @@ const sideBarToggleCheck = dappsidebartoggle ? dappstyles.sidebartoggled : '';
               </div>
             </div>
         </div>
-        {dappConnector && 
-          (<>
-            <div className={dappconalertstyles.overlay_dap}></div>
-            <div className={dappconalertstyles.dappconalert}>
-              <div className={dappconalertstyles.dappconalertclosediv}><button type='button' className={dappconalertstyles.dappconalertclosedivbtn} onClick={closeDappConAlert}><FontAwesomeIcon icon={faXmark}/></button></div>
-              <div className={dappconalertstyles.dappconalert_in}>
-                Metamask not found, install metamask to connect to dapp
-              </div>
-            </div>
-          </>)}
           {isWalletAddressUpdated &&
           (<>
             <div className={dappconalertstyles.overlay_dap}></div>
