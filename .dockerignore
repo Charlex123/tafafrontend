@@ -23,3 +23,5 @@
 README.md
 secrets.json
 secrets
+env
+.env
