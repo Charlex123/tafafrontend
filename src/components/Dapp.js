@@ -139,7 +139,7 @@ const handleCopyClick = () => {
             "Content-type": "application/json"
         }
         }  
-        const {data} = await axios.post("http://localhost:7000/api/users/getsponsorwalletaddress", {
+        const {data} = await axios.post("https://tafabackend.onrender.com/api/users/getsponsorwalletaddress", {
           userObjId,
         }, config);
         setsponsorWalletAddress(data.message);
@@ -158,7 +158,7 @@ const handleCopyClick = () => {
           "Content-type": "application/json"
       }
       }  
-      const {data} = await axios.post("http://localhost:7000/api/users/getwalletaddress/", {
+      const {data} = await axios.post("https://tafabackend.onrender.com/api/users/getwalletaddress/", {
         username
       }, config);
       console.log('update wallet data', data.message);
@@ -192,7 +192,7 @@ getWalletAddress();
               "Content-type": "application/json"
           }
           }  
-          const {data} = await axios.post("http://localhost:7000/api/users/updatewalletaddress/", {
+          const {data} = await axios.post("https://tafabackend.onrender.com/api/users/updatewalletaddress/", {
             walletaddress,
             username
           }, config);
