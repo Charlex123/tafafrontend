@@ -13,20 +13,6 @@ const chains = [
     explorerUrl: 'https://bscscan.io',
     rpcUrl: 'https://bsc-dataseed.binance.org/'
   },
-  {
-    chainId: 1,
-    name: 'Ethereum',
-    currency: 'ETH',
-    explorerUrl: 'https://etherscan.io',
-    rpcUrl: 'https://cloudflare-eth.com'
-  },
-  {
-    chainId: 42161,
-    name: 'Arbitrum',
-    currency: 'ETH',
-    explorerUrl: 'https://arbiscan.io',
-    rpcUrl: 'https://arb1.arbitrum.io/rpc'
-  }
 ]
 
 // 3. Create modal
