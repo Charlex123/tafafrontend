@@ -25,6 +25,7 @@ import { ethers } from 'ethers';
 import { useWeb3Modal } from '@web3modal/ethers5/react';
 import { useWeb3ModalAccount } from '@web3modal/ethers5/react';
 import { useWeb3ModalProvider } from '@web3modal/ethers5/react';
+import { useDisconnect } from '@web3modal/ethers5/react';
 import TAFAAbi from '../../artifacts/contracts/TAFA.sol/TAFA.json';
 import StakeAbi from '../../artifacts/contracts/Stake.sol/Stake.json';
 import { ThemeContext } from '../contexts/theme-context';
@@ -77,10 +78,11 @@ const Dapp = () =>  {
   const { open, close } = useWeb3Modal();
   const { walletProvider } = useWeb3ModalProvider();
   const { address, chainId, isConnected } = useWeb3ModalAccount();
+  const { disconnect } = useDisconnect();
 
   const [referralLink, setreferralLink] = useState('');
   const [buttonText, setButtonText] = useState("Copy");
-
+  
   const handleChange = (event) => {
     const newValue = event.target.value;
     setstakeAmount(newValue);
@@ -175,7 +177,7 @@ const handleCopyClick = () => {
 
   
   useEffect(() => {
-    
+    console.log(' ssssssdes', address, chainId, isConnected);
     localStorage.setItem('staketimer',timeRemaining);
 
     const udetails = JSON.parse(localStorage.getItem("userInfo"));
@@ -359,11 +361,11 @@ const sideBarToggleCheck = dappsidebartoggle ? dappstyles.sidebartoggled : '';
               </div>
               <div className={`${dappstyles.main} ${sideBarToggleCheck}`}>
               <div className={dappstyles.con_btns}>
-              {/* {!isConnected ? ( */}
-                <button onClick={() => open()}> Connect Dapp</button>
-                {/* ) : ( */}
-                {/* <button onClick={() => close()} className={dappstyles.connected}><span>connected</span>Disconnect</button> */}
-                {/* )} */}
+              {!isConnected ? (
+                <button onClick={() => open()} className={dappstyles.connect}> Connect Dapp</button>
+                ) : (
+                <button onClick={() => disconnect()} className={dappstyles.connected}><span>connected</span>Disconnect</button>
+                )}
               </div>
               <button title='togglebtn' className={dappstyles.sidebar_toggle_btn} type='button' onClick={toggleSideBar}>
                 <FontAwesomeIcon icon={faAlignJustify} size='lg' className={dappstyles.navlisttoggle}/> 

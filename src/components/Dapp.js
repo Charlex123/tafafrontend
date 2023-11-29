@@ -27,7 +27,7 @@ import { ethers } from 'ethers';
 import { useWeb3Modal } from '@web3modal/ethers5/react';
 import { useWeb3ModalAccount } from '@web3modal/ethers5/react';
 import { useWeb3ModalProvider } from '@web3modal/ethers5/react';
-
+import { useDisconnect } from '@web3modal/ethers5/react';
 import TAFAAbi from '../../artifacts/contracts/TAFA.sol/TAFA.json';
 import StakeAbi from '../../artifacts/contracts/Stake.sol/Stake.json';
 import DappFooter from './DappFooter';
@@ -72,9 +72,9 @@ const Dapp = () =>  {
 
   const { address, chainId, isConnected } = useWeb3ModalAccount();
   const { walletProvider } = useWeb3ModalProvider();
-
+  const { disconnect } = useDisconnect();
   console.log('useweb3',useWeb3ModalAccount())
-  console.log('addressssssssss---',isConnected)
+  console.log('addressssssssss---',isConnected, address,chainId)
   const [referralLink, setreferralLink] = useState('');
   const [buttonText, setButtonText] = useState("Copy");
 
@@ -107,86 +107,7 @@ const handleCopyClick = () => {
    }, 1500);
  };
 
-  const {
-    library,
-    // chainId,
-    connector,
-    account,
-    activate,
-    deactivate,
-    active
-  } = useWeb3React();
   
-  const disconnect = () => {
-    refreshState();
-    deactivate();
-  };  
-  
-  
-  const handleNetwork = (e) => {
-    const id = e.target.value;
-    setNetwork(Number(id));
-  };
-  
-  const handleInput = (e) => {
-    const msg = e.target.value;
-    setMessage(msg);
-  };
-  
-  const switchNetwork = async () => {
-    try {
-      await library.provider.request({
-        method: "wallet_switchEthereumChain",
-        params: [{ chainId: toHex(network) }]
-      });
-    } catch (switchError) {
-      if (switchError.code === 4902) {
-        try {
-          await library.provider.request({
-            method: "wallet_addEthereumChain",
-            params: [networkParams[toHex(network)]]
-          });
-        } catch (error) {
-          setError(error);
-        }
-      }
-    }
-  };
-  
-  const signMessage = async () => {
-    if (!library) return;
-    try {
-      const signature = await library.provider.request({
-        method: "personal_sign",
-        params: [message, account]
-      });
-      setSignedMessage(message);
-      setSignature(signature);
-    } catch (error) {
-      setError(error);
-    }
-  };
-  
-  const verifyMessage = async () => {
-    if (!library) return;
-    try {
-      const verify = await library.provider.request({
-        method: "personal_ecRecover",
-        params: [signedMessage, signature]
-      });
-      setVerified(verify === account.toLowerCase());
-    } catch (error) {
-      setError(error);
-    }
-  };
-  
-  const refreshState = () => {
-    window.localStorage.setItem("provider", undefined);
-    setNetwork("");
-    setMessage("");
-    setSignature("");
-    setVerified(undefined);
-  };
 
   const closeDappConAlert = () => {
     setDappConnector(!dappConnector);
@@ -228,17 +149,7 @@ const handleCopyClick = () => {
   }
   getSponsorWalletAddress();
 
-   if(connector) {
-    if(connector !== undefined && account !== undefined) {
-      setDappConnector(false)
-    }else if(connector !== undefined && account === undefined) {
-      // setDappConnector(!dappConnector)
-      setErrorMessage("Metamask not found, install metamask to connect to dapp")
-    }
-  }else {
-    console.log(' connector not defined yaet')
-  }
-
+   
   async function getWalletAddress() {
     console.log('wall address',walletaddress)
     try {
@@ -258,7 +169,7 @@ const handleCopyClick = () => {
 }
 getWalletAddress();
 
-  if(account !== undefined) {
+  if(address !== undefined) {
 
     async function Addreferrer() {
       const [accounta] = await window.ethereum.request({ method: 'eth_requestAccounts' })
@@ -333,7 +244,7 @@ getWalletAddress();
   };
   
   
- }, [userId, router,connector,account,dappConnector,isWalletAddressUpdated,username,walletaddress,userObjId,sponsorWalletAddress])
+ }, [userId, router,address,dappConnector,isWalletAddressUpdated,username,walletaddress,userObjId,sponsorWalletAddress])
 
  // Function to toggle the navigation menu
  const toggleSideBar = () => {
@@ -439,10 +350,10 @@ const sideBarToggleCheck = dappsidebartoggle ? dappstyles.sidebartoggled : '';
               </div>
               <div className={`${dappstyles.main} ${sideBarToggleCheck}`}>
               <div className={dappstyles.con_btns}>
-              {!active ? (
+              {!isConnected ? (
                 <button onClick={() => open()} className={dappstyles.connect}>Connect Dapp</button>
                 ) : (
-                <button onClick={() => close()} className={dappstyles.connected}>Disconnect</button>
+                <button onClick={() => disconnect()} className={dappstyles.connected}>Disconnect</button>
                 )}
               </div>
               <button title='togglebtn' className={dappstyles.sidebar_toggle_btn} type='button' onClick={toggleSideBar}>

@@ -9,9 +9,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // import { providers } from "ethers";
 import SelectWalletModal from "./web3-Modal";
 import { useWeb3React } from "@web3-react/core";
+import { ethers } from 'ethers';
 import { useWeb3Modal } from '@web3modal/ethers5/react';
-import { networkParams } from "./web3-networks";
-import { toHex, truncateAddress } from "../utils/web3react-utils";
+import { useWeb3ModalAccount } from '@web3modal/ethers5/react';
+import { useWeb3ModalProvider } from '@web3modal/ethers5/react';
+import { useDisconnect } from '@web3modal/ethers5/react';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas, faCheck, faCheckCircle, faChevronDown,faAlignJustify, faCircleDollarToSlot, faGift, faHandHoldingDollar, faPeopleGroup, faChevronUp, faAngleDoubleRight, faAngleRight } from '@fortawesome/free-solid-svg-icons'
 import { faTwitter, faFontAwesome, faFacebook,faDiscord, faTelegram, faMedium, faYoutube } from '@fortawesome/free-brands-svg-icons'
@@ -29,93 +31,23 @@ function Navbar() {
     const [dropdwnIcon3, setDropdownIcon3] = useState(<FontAwesomeIcon icon={faChevronDown} size='lg' className={styles.navlisttoggle}/>);
 
     // const { isOpen, onOpen, onClose, closeWeb3Modal,openWeb3Modal } = useContext(Web3ModalContext);
-    const { open } = useWeb3Modal()
+    const { open, close } = useWeb3Modal();
+
+    const { address, chainId, isConnected } = useWeb3ModalAccount();
+    const { walletProvider } = useWeb3ModalProvider();
+    const { disconnect } = useDisconnect();
+
     const router = useRouter();
 
-  const {
-    library,
-    chainId,
-    account,
-    activate,
-    deactivate,
-    active
-  } = useWeb3React();
-  const [signature, setSignature] = useState("");
-  const [error, setError] = useState("");
-  const [network, setNetwork] = useState(undefined);
-  const [message, setMessage] = useState("");
-  const [signedMessage, setSignedMessage] = useState("");
-  const [verified, setVerified] = useState();
+  
+    const [signature, setSignature] = useState("");
+    const [error, setError] = useState("");
+    const [network, setNetwork] = useState(undefined);
+    const [message, setMessage] = useState("");
+    const [signedMessage, setSignedMessage] = useState("");
+    const [verified, setVerified] = useState();
 
-  const handleNetwork = (e) => {
-    const id = e.target.value;
-    setNetwork(Number(id));
-  };
-
-  const handleInput = (e) => {
-    const msg = e.target.value;
-    setMessage(msg);
-  };
-
-  const switchNetwork = async () => {
-    try {
-      await library.provider.request({
-        method: "wallet_switchEthereumChain",
-        params: [{ chainId: toHex(network) }]
-      });
-    } catch (switchError) {
-      if (switchError.code === 4902) {
-        try {
-          await library.provider.request({
-            method: "wallet_addEthereumChain",
-            params: [networkParams[toHex(network)]]
-          });
-        } catch (error) {
-          setError(error);
-        }
-      }
-    }
-  };
-
-  const signMessage = async () => {
-    if (!library) return;
-    try {
-      const signature = await library.provider.request({
-        method: "personal_sign",
-        params: [message, account]
-      });
-      setSignedMessage(message);
-      setSignature(signature);
-    } catch (error) {
-      setError(error);
-    }
-  };
-
-  const verifyMessage = async () => {
-    if (!library) return;
-    try {
-      const verify = await library.provider.request({
-        method: "personal_ecRecover",
-        params: [signedMessage, signature]
-      });
-      setVerified(verify === account.toLowerCase());
-    } catch (error) {
-      setError(error);
-    }
-  };
-
-  const refreshState = () => {
-    window.localStorage.setItem("provider", undefined);
-    setNetwork("");
-    setMessage("");
-    setSignature("");
-    setVerified(undefined);
-  };
-
-  const disconnect = () => {
-    refreshState();
-    deactivate();
-  };    
+    
     useEffect(() => {
 
         // const provider = window.localStorage.getItem("provider");
@@ -251,10 +183,10 @@ function Navbar() {
                 </ul>
                 <ul className={styles.upa}>
                     <li className={styles.ld}>
-                        {!active ? (
+                        {!isConnected ? (
                         <button onClick={() => open()}>Connect Dapp</button>
                         ) : (
-                        <button onClick={disconnect} className={styles.connected}><span>connected</span>Disconnect</button>
+                        <button onClick={() => disconnect()} className={styles.connected}><span>connected</span>Disconnect</button>
                         )}</li>
                     <li className={styles.si}><button onClick={logout} type='button'>Logout</button></li>
                 </ul>
