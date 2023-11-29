@@ -1,6 +1,5 @@
 import { useEffect, useState, useContext } from 'react';
 import { useRouter } from 'next/router';
-// import  { Web3ModalContext } from '../contexts/web3modal-context';
 // import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from "@fortawesome/fontawesome-svg-core";
@@ -16,8 +15,6 @@ import dappsidebarstyles from '../styles/dappsidebar.module.css';
 // component
 // import SelectWalletModal from "./web3-Modal";
 import { useWeb3React } from "@web3-react/core";
-import { networkParams } from "./web3-networks";
-import { toHex, truncateAddress } from "../utils/web3react-utils";
 // import { providers } from "ethers";
 import axios from 'axios';
 import AlertMessage from './AlertMessage';

@@ -1,13 +1,11 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import  { Web3ModalContext } from '../contexts/web3modal-context';
 import { ThemeContext } from '../contexts/theme-context';
 import styles from '../styles/dappnav.module.css';
 import logo from '../assets/images/logo.png';
 import Image from 'next/image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // import { providers } from "ethers";
-import SelectWalletModal from "./web3-Modal";
 import { useWeb3React } from "@web3-react/core";
 import { ethers } from 'ethers';
 import { useWeb3Modal } from '@web3modal/ethers5/react';
