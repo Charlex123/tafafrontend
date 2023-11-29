@@ -5,35 +5,47 @@ dotenv.config()
 // 1. Get projectId
 const projectId = process.env['NEXT_PUBLIC_WALLETCONNECTPROJECTID'];
 // 2. Set chains
-const mainnet = [
-    {
-        chainId: 1,
-        name: 'Ethereum',
-        currency: 'ETH',
-        explorerUrl: 'https://etherscan.io',
-        rpcUrl: 'https://cloudflare-eth.com'
-      },
-      {
-        chainId: 56,
-        name: 'BNB Chain',
-        currency: 'BNB',
-        explorerUrl: 'https://bscscan.io',
-        rpcUrl: 'https://bsc-dataseed.bnbchain.org'
-      }
+const chains = [
+  {
+    chainId: 56,
+    name: 'BNB Chain',
+    currency: 'BNB',
+    explorerUrl: 'https://bscscan.io',
+    rpcUrl: 'https://bsc-dataseed.binance.org/'
+  },
+  {
+    chainId: 1,
+    name: 'Ethereum',
+    currency: 'ETH',
+    explorerUrl: 'https://etherscan.io',
+    rpcUrl: 'https://cloudflare-eth.com'
+  },
+  {
+    chainId: 42161,
+    name: 'Arbitrum',
+    currency: 'ETH',
+    explorerUrl: 'https://arbiscan.io',
+    rpcUrl: 'https://arb1.arbitrum.io/rpc'
+  }
 ]
 
 // 3. Create modal
-const metadata = {
-  name: 'Tafaxtra',
-  description: 'Tafaxtra Staking Dapp',
-  url: 'https://tafaextra.io',
-  icons: ['https://avatars.mywebsite.com/']
-}
+const ethersConfig = defaultConfig({
+  metadata: {
+    name: 'Tafaxtra',
+    description: 'Tafaxtra Staking Dpp',
+    url: 'https://tafaextra.io',
+    icons: ['https://avatars.githubusercontent.com/u/37784886']
+  },
+  defaultChainId: 56,
+  rpcUrl: 'https://bsc-dataseed.binance.org/'
+})
 
 createWeb3Modal({
-  ethersConfig: defaultConfig({ metadata }),
-  chains: [mainnet],
-  projectId
+  ethersConfig,
+  chains,
+  projectId,
+  enableAnalytics: true
 })
 
 export function Web3ModalProvider({ children }) {

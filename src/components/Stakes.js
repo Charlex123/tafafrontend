@@ -1,7 +1,6 @@
 import { useEffect, useState, useContext } from 'react';
 import { useRouter } from 'next/router';
 import  { Web3ModalContext } from '../contexts/web3modal-context';
-import { useWeb3Modal } from '@web3modal/ethers5/react';
 // import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from "@fortawesome/fontawesome-svg-core";
@@ -23,6 +22,9 @@ import { toHex, truncateAddress } from "../utils/web3react-utils";
 import axios from 'axios';
 import AlertMessage from './AlertMessage';
 import { ethers } from 'ethers';
+import { useWeb3Modal } from '@web3modal/ethers5/react';
+import { useWeb3ModalAccount } from '@web3modal/ethers5/react';
+import { useWeb3ModalProvider } from '@web3modal/ethers5/react';
 import TAFAAbi from '../../artifacts/contracts/TAFA.sol/TAFA.json';
 import StakeAbi from '../../artifacts/contracts/Stake.sol/Stake.json';
 import { ThemeContext } from '../contexts/theme-context';
@@ -72,7 +74,10 @@ const Dapp = () =>  {
   const [timeRemaining, setTimeRemaining] = useState(0); // 24 hours in seconds
   
   // const { isOpen, onOpen, onClose, closeWeb3Modal,openWeb3Modal } = useContext(Web3ModalContext);
-  const { open } = useWeb3Modal();
+  const { open, close } = useWeb3Modal();
+  const { walletProvider } = useWeb3ModalProvider();
+  const { address, chainId, isConnected } = useWeb3ModalAccount();
+
   const [referralLink, setreferralLink] = useState('');
   const [buttonText, setButtonText] = useState("Copy");
 
@@ -109,86 +114,13 @@ const handleCopyClick = () => {
    }, 1500);
  };
 
-  const {
-    library,
-    chainId,
-    connector,
-    account,
-    activate,
-    deactivate,
-    active
-  } = useWeb3React();
-
-  const disconnect = () => {
-    refreshState();
-    deactivate();
-  };  
   
-  
-  const handleNetwork = (e) => {
-    const id = e.target.value;
-    setNetwork(Number(id));
-  };
-  
-  const handleInput = (e) => {
-    const msg = e.target.value;
-    setMessage(msg);
-  };
-  
-  const switchNetwork = async () => {
-    try {
-      await library.provider.request({
-        method: "wallet_switchEthereumChain",
-        params: [{ chainId: toHex(network) }]
-      });
-    } catch (switchError) {
-      if (switchError.code === 4902) {
-        try {
-          await library.provider.request({
-            method: "wallet_addEthereumChain",
-            params: [networkParams[toHex(network)]]
-          });
-        } catch (error) {
-          setError(error);
-        }
-      }
-    }
-  };
-  
-  const signMessage = async () => {
-    if (!library) return;
-    try {
-      const signature = await library.provider.request({
-        method: "personal_sign",
-        params: [message, account]
-      });
-      setSignedMessage(message);
-      setSignature(signature);
-    } catch (error) {
-      setError(error);
-    }
-  };
-  
-  const verifyMessage = async () => {
-    if (!library) return;
-    try {
-      const verify = await library.provider.request({
-        method: "personal_ecRecover",
-        params: [signedMessage, signature]
-      });
-      setVerified(verify === account.toLowerCase());
-    } catch (error) {
-      setError(error);
-    }
-  };
-  
-  const refreshState = () => {
-    window.localStorage.setItem("provider", undefined);
-    setNetwork("");
-    setMessage("");
-    setSignature("");
-    setVerified(undefined);
-  };
+  async function onSignMessage() {
+    const provider = new ethers.providers.Web3Provider(walletProvider)
+    const signer = provider.getSigner()
+    const signature = await signer?.signMessage('Hello Web3Modal Ethers')
+    console.log(signature)
+  }
 
   const closeDappConAlert = () => {
     setDappConnector(!dappConnector);
@@ -204,10 +136,8 @@ const handleCopyClick = () => {
     // setShowTimer(!showTimer);
     // const timer_ = stakeDuration * 86400;
     // setTimeRemaining(timer_)
-    const [account] = await window.ethereum.request({ method: 'eth_requestAccounts' })
-    const provider = new ethers.providers.Web3Provider(window.ethereum)
-    await provider.send('eth_requestAccounts', []);
-    const signer = provider.getSigner(account);
+    const provider = new ethers.providers.Web3Provider(walletProvider)
+    const signer = provider.getSigner()
     const StakeContract = new ethers.Contract(StakeAddress, StakeAbi.abi, signer);
     const reslt = await StakeContract.stake(StakeAddress,stakeAmount);
     console.log(reslt)
@@ -215,10 +145,8 @@ const handleCopyClick = () => {
 
   const Approve = async (e) => {
 
-    const [account] = await window.ethereum.request({ method: 'eth_requestAccounts' })
-    const provider = new ethers.providers.Web3Provider(window.ethereum)
-    await provider.send('eth_requestAccounts', []);
-    const signer = provider.getSigner(account);
+    const provider = new ethers.providers.Web3Provider(walletProvider)
+    const signer = provider.getSigner()
     const TAFAContract = new ethers.Contract(TAFAAddress, TAFAAbi, signer);
     const reslt = await TAFAContract.approve(StakeAddress,stakeAmount);
     if(reslt) {
@@ -247,19 +175,6 @@ const handleCopyClick = () => {
 
   
   useEffect(() => {
-    
-    if(connector) {
-      if(connector !== undefined && account !== undefined) {
-        console.log('metamask found', connector)
-        setDappConnector(false)
-      }else if(connector !== undefined && account === undefined) {
-        console.log('metamask not found', connector)
-        setDappConnector(!dappConnector)
-        setErrorMessage("Metamask not found, install metamask to connect to dapp")
-      }
-    }else {
-      console.log(' connector not defined yaet')
-    }
     
     localStorage.setItem('staketimer',timeRemaining);
 
@@ -347,7 +262,7 @@ const handleCopyClick = () => {
   };
   
   
- }, [userId, router,connector,account,dappConnector,timeRemaining,username,walletaddress,stakeDuration])
+ }, [userId, router,dappConnector,timeRemaining,username,walletaddress,stakeDuration])
 
  const formatTime = (seconds) => {
   const days = Math.floor(seconds / 86400);
@@ -444,11 +359,11 @@ const sideBarToggleCheck = dappsidebartoggle ? dappstyles.sidebartoggled : '';
               </div>
               <div className={`${dappstyles.main} ${sideBarToggleCheck}`}>
               <div className={dappstyles.con_btns}>
-              {!active ? (
+              {/* {!isConnected ? ( */}
                 <button onClick={() => open()}> Connect Dapp</button>
-                ) : (
-                <button onClick={disconnect} className={dappstyles.connected}><span>connected</span>Disconnect</button>
-                )}
+                {/* ) : ( */}
+                {/* <button onClick={() => close()} className={dappstyles.connected}><span>connected</span>Disconnect</button> */}
+                {/* )} */}
               </div>
               <button title='togglebtn' className={dappstyles.sidebar_toggle_btn} type='button' onClick={toggleSideBar}>
                 <FontAwesomeIcon icon={faAlignJustify} size='lg' className={dappstyles.navlisttoggle}/> 
@@ -550,7 +465,7 @@ const sideBarToggleCheck = dappsidebartoggle ? dappstyles.sidebartoggled : '';
               </div>
             </div>
         </div>
-        {dappConnector && 
+        {/* {dappConnector && 
           (<>
             <div className={dappconalertstyles.overlay_dap}></div>
             <div className={dappconalertstyles.dappconalert}>
@@ -559,7 +474,7 @@ const sideBarToggleCheck = dappsidebartoggle ? dappstyles.sidebartoggled : '';
                 Metamask not found, install metamask to connect to dapp
               </div>
             </div>
-          </>)}
+          </>)} */}
         {/* {isOpen && (<SelectWalletModal isOpen={isOpen} closeWeb3Modal={closeWeb3Modal} />)} */}
         <DappFooter />
     </>

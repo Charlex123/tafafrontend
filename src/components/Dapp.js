@@ -71,11 +71,14 @@ const Dapp = () =>  {
   const { open, close } = useWeb3Modal();
 
   const { address, chainId, isConnected } = useWeb3ModalAccount();
+  const { walletProvider } = useWeb3ModalProvider();
+
   console.log('useweb3',useWeb3ModalAccount())
   console.log('addressssssssss---',isConnected)
   const [referralLink, setreferralLink] = useState('');
   const [buttonText, setButtonText] = useState("Copy");
 
+  
 const handleCopyClick = () => {
    // Create a temporary textarea element
    const textArea = document.createElement('textarea');
@@ -436,10 +439,10 @@ const sideBarToggleCheck = dappsidebartoggle ? dappstyles.sidebartoggled : '';
               </div>
               <div className={`${dappstyles.main} ${sideBarToggleCheck}`}>
               <div className={dappstyles.con_btns}>
-              {!isConnected ? (
-                <button onClick={() => open()}>Connect Dapp</button>
+              {!active ? (
+                <button onClick={() => open()} className={dappstyles.connect}>Connect Dapp</button>
                 ) : (
-                <button onClick={() => close()} className={dappstyles.connected}><span>connected</span>Disconnect</button>
+                <button onClick={() => close()} className={dappstyles.connected}>Disconnect</button>
                 )}
               </div>
               <button title='togglebtn' className={dappstyles.sidebar_toggle_btn} type='button' onClick={toggleSideBar}>
