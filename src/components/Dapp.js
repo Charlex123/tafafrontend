@@ -344,7 +344,7 @@ const sideBarToggleCheck = dappsidebartoggle ? dappstyles.sidebartoggled : '';
               {!isConnected ? (
                 <button onClick={() => open()} className={dappstyles.connect}>Connect Dapp</button>
                 ) : (
-                <button onClick={() => disconnect()} className={dappstyles.connected}>Disconnect</button>
+                <button onClick={() => disconnect()} className={dappstyles.connected}><span>connected</span>Disconnect</button>
                 )}
               </div>
               <button title='togglebtn' className={dappstyles.sidebar_toggle_btn} type='button' onClick={toggleSideBar}>

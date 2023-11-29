@@ -53,7 +53,7 @@ const Dapp = () =>  {
   const [dropdwnIcon3, setDropdownIcon3] = useState(<FontAwesomeIcon icon={faChevronDown} size='lg' className={dappsidebarstyles.sidebarlisttoggle}/>);
   const [username, setUsername] = useState("");
   const [userId, setUserId] = useState("");  
-  // const [dappConnector,setDappConnector] = useState(false);
+  const [dappConnector,setDappConnector] = useState(false);
 
   const [signature, setSignature] = useState("");
   const [error, setError] = useState(false);
@@ -119,9 +119,9 @@ const handleCopyClick = () => {
     console.log(signature)
   }
 
-  // const closeDappConAlert = () => {
-  //   setDappConnector(!dappConnector);
-  // }
+  const closeDappConAlert = () => {
+    setDappConnector(!dappConnector);
+  }
 
   const handleStakeDuration = (e) => {
     setstakeDuration(e.target.value)
@@ -155,19 +155,30 @@ const handleCopyClick = () => {
 
   const calculateReward = async () => {
 
-    const provider = new ethers.providers.Web3Provider(walletProvider);
-    const signer = provider.getSigner();
-    const StakeContract = new ethers.Contract(StakeAddress, StakeAbi.abi, signer);
-    const reslt = await StakeContract.calcReward();
-    console.log('reslt',reslt);
+    try {
+      const provider = new ethers.providers.Web3Provider(walletProvider);
+      const signer = provider.getSigner();
+      const StakeContract = new ethers.Contract(StakeAddress, StakeAbi.abi, signer);
+      const reslt = await StakeContract.calcReward();
+      console.log('calc reward error',reslt);
+    }catch(error) {
+      setDappConnector(true);
+      setErrorMessage("No active stake found");
+    }
+    
   }
 
   const Withdraw = async () => {
-    const provider = new ethers.providers.Web3Provider(walletProvider);
-    const signer = provider.getSigner();
-    const StakeContract = new ethers.Contract(StakeAddress, StakeAbi.abi, signer);
-    const reslt = await StakeContract.withdrawStake();
-    console.log("Account Balance: ", reslt);
+    try {
+      const provider = new ethers.providers.Web3Provider(walletProvider);
+      const signer = provider.getSigner();
+      const StakeContract = new ethers.Contract(StakeAddress, StakeAbi.abi, signer);
+      const reslt = await StakeContract.withdrawStake();
+      console.log("Account Balance: ", reslt);
+    } catch (error) {
+      setDappConnector(true);
+      setErrorMessage("You must have stake to withdraw");
+    }
   }
 
   
@@ -309,6 +320,15 @@ const sideBarToggleCheck = dappsidebartoggle ? dappstyles.sidebartoggled : '';
   return (
     <>
         <DappNav/>
+        {dappConnector && (<>
+            <div className={dappconalertstyles.overlay_dap}></div>
+            <div className={dappconalertstyles.dappconalert}>
+              <div className={dappconalertstyles.dappconalertclosediv}><button type='button' className={dappconalertstyles.dappconalertclosedivbtn} onClick={closeDappConAlert}><FontAwesomeIcon icon={faXmark}/></button></div>
+              <div className={dappconalertstyles.dappconalert_in}>
+                {errorMessage}
+              </div>
+            </div>
+          </>) }
         <div className={dappstyles.main_w}>
             <div className={dappstyles.main_c}>
               <div className={`${dappstyles.sidebar} ${sideBarToggleCheck}`}>
@@ -461,16 +481,6 @@ const sideBarToggleCheck = dappsidebartoggle ? dappstyles.sidebartoggled : '';
               </div>
             </div>
         </div>
-        {/* {dappConnector && 
-          (<>
-            <div className={dappconalertstyles.overlay_dap}></div>
-            <div className={dappconalertstyles.dappconalert}>
-              <div className={dappconalertstyles.dappconalertclosediv}><button type='button' className={dappconalertstyles.dappconalertclosedivbtn} onClick={closeDappConAlert}><FontAwesomeIcon icon={faXmark}/></button></div>
-              <div className={dappconalertstyles.dappconalert_in}>
-                Metamask not found, install metamask to connect to dapp
-              </div>
-            </div>
-          </>)} */}
         {/* {isOpen && (<SelectWalletModal isOpen={isOpen} closeWeb3Modal={closeWeb3Modal} />)} */}
         <DappFooter />
     </>
