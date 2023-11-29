@@ -143,28 +143,28 @@ const handleCopyClick = () => {
   const Approve = async (e) => {
 
     const provider = new ethers.providers.Web3Provider(walletProvider)
-    const signer = provider.getSigner()
+    const signer = provider.getSigner();
     const TAFAContract = new ethers.Contract(TAFAAddress, TAFAAbi, signer);
     const reslt = await TAFAContract.approve(StakeAddress,stakeAmount);
     if(reslt) {
       StakeTAFA();
     }
+    console.log('approve pprovider',provider);
+    console.log('approve siner',signer);
   }
 
   const calculateReward = async () => {
 
-    const [account] = await window.ethereum.request({ method: 'eth_requestAccounts' });
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    const signer = provider.getSigner(account);
+    const provider = new ethers.providers.Web3Provider(walletProvider);
+    const signer = provider.getSigner();
     const StakeContract = new ethers.Contract(StakeAddress, StakeAbi.abi, signer);
     const reslt = await StakeContract.calcReward();
     console.log('reslt',reslt);
   }
 
   const Withdraw = async () => {
-    const [account] = await window.ethereum.request({ method: 'eth_requestAccounts' });
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    const signer = provider.getSigner(account);
+    const provider = new ethers.providers.Web3Provider(walletProvider);
+    const signer = provider.getSigner();
     const StakeContract = new ethers.Contract(StakeAddress, StakeAbi.abi, signer);
     const reslt = await StakeContract.withdrawStake();
     console.log("Account Balance: ", reslt);
@@ -259,7 +259,7 @@ const handleCopyClick = () => {
   };
   
   
- }, [userId, router,timeRemaining,username,walletaddress,stakeDuration])
+ }, [userId, router,timeRemaining,username,address,chainId,isConnected,walletaddress,stakeDuration])
 
  const formatTime = (seconds) => {
   const days = Math.floor(seconds / 86400);
