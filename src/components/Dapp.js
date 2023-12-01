@@ -14,16 +14,15 @@ import dappconalertstyles from "../styles/dappconnalert.module.css";
 import dappsidebarstyles from '../styles/dappsidebar.module.css';
 // component
 import { useWeb3React } from "@web3-react/core";
-// import { providers } from "ethers";
-import axios from 'axios';
-import AlertMessage from './AlertMessage';
-import { ThemeContext } from '../contexts/theme-context';
-import DappNav from './Dappnav';
 import { ethers } from 'ethers';
 import { useWeb3Modal } from '@web3modal/ethers5/react';
 import { useWeb3ModalAccount } from '@web3modal/ethers5/react';
 import { useWeb3ModalProvider } from '@web3modal/ethers5/react';
 import { useDisconnect } from '@web3modal/ethers5/react';
+import axios from 'axios';
+import AlertMessage from './AlertMessage';
+import { ThemeContext } from '../contexts/theme-context';
+import DappNav from './Dappnav';
 import TAFAAbi from '../../artifacts/contracts/TAFA.sol/TAFA.json';
 import StakeAbi from '../../artifacts/contracts/Stake.sol/Stake.json';
 import DappFooter from './DappFooter';
@@ -34,6 +33,7 @@ import { faQuestionCircle } from '@fortawesome/free-regular-svg-icons';
 library.add(fas, faTwitter, faFontAwesome,faQuestionCircle, faCheck,faCheckCircle,faAlignJustify)
 // ----------------------------------------------------------------------
 library.add(faEye, faEyeSlash);
+
 const Dapp = () =>  {
 
   const router = useRouter();
@@ -62,14 +62,11 @@ const Dapp = () =>  {
   const [userObjId, setUserObjId] = useState(""); // Initial value
   const [verified, setVerified] = useState();
   
-  // const { isOpen, onOpen, onClose, closeWeb3Modal,openWeb3Modal } = useContext(Web3ModalContext);
   const { open, close } = useWeb3Modal();
-
-  const { address, chainId, isConnected } = useWeb3ModalAccount();
   const { walletProvider } = useWeb3ModalProvider();
+  const { address, chainId, isConnected } = useWeb3ModalAccount();
   const { disconnect } = useDisconnect();
-  console.log('useweb3',useWeb3ModalAccount())
-  console.log('addressssssssss---',isConnected, address,chainId)
+
   const [referralLink, setreferralLink] = useState('');
   const [buttonText, setButtonText] = useState("Copy");
 
@@ -235,7 +232,7 @@ getWalletAddress();
   };
   
   
- }, [userId, router,address,isWalletAddressUpdated,username,walletaddress,userObjId,sponsorWalletAddress])
+ }, [userId, router,isWalletAddressUpdated,username,walletaddress,userObjId,sponsorWalletAddress])
 
  // Function to toggle the navigation menu
  const toggleSideBar = () => {
@@ -351,7 +348,7 @@ const sideBarToggleCheck = dappsidebartoggle ? dappstyles.sidebartoggled : '';
                 <FontAwesomeIcon icon={faAlignJustify} size='lg' className={dappstyles.navlisttoggle}/> 
               </button>
                 <div className={dappstyles.reflink}>
-                    <div className={dappstyles.reflinkdex}>Ref Link: <input value={referralLink} onChange={(e) => setreferralLink(e.target.value)} /><button type='button' onClick={handleCopyClick}>{buttonText}</button> </div>
+                    <div className={dappstyles.reflinkdex}>Ref Link: <input title="input" value={referralLink} onChange={(e) => setreferralLink(e.target.value)} /><button type='button' onClick={handleCopyClick}>{buttonText}</button> </div>
                     <div><small>Share referral link to earn more tokens!</small></div>
                     <div>Connected Wallet: <span style={{color: 'orange'}}>{walletaddress}</span></div>
                 </div>
@@ -375,7 +372,7 @@ const sideBarToggleCheck = dappsidebartoggle ? dappstyles.sidebartoggled : '';
           (<>
             <div className={dappconalertstyles.overlay_dap}></div>
             <div className={dappconalertstyles.dappconalerted}>
-              <div className={dappconalertstyles.dappconalertclosediv}><button type='button' className={dappconalertstyles.dappconalertclosedivbtn} onClick={closeDappConAlerted}><FontAwesomeIcon icon={faXmark}/></button></div>
+              <div className={dappconalertstyles.dappconalertclosediv}><button title="button" type='button' className={dappconalertstyles.dappconalertclosedivbtn} onClick={closeDappConAlerted}><FontAwesomeIcon icon={faXmark}/></button></div>
               <div className={dappconalertstyles.dappconalert_in}>
                 Wallet Address Connected To Dapp
               </div>

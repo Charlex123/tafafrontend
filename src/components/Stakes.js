@@ -388,6 +388,7 @@ const sideBarToggleCheck = dappsidebartoggle ? dappstyles.sidebartoggled : '';
                     <div className={dappstyles.reflinkdex}>Ref Link: <input value={referralLink} onChange={(e) => setreferralLink(e.target.value)} /><button type='button' onClick={handleCopyClick}>{buttonText}</button> </div>
                     <div><small>Share referral link to earn more tokens!</small></div>
                     <div>Connected Wallet: <span style={{color: 'orange'}}>{walletaddress}</span></div>
+                    <button onClick={onSignMessage}>onSignMessage</button>
                 </div>
 
                 <div className={dappstyles.stake}>
