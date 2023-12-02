@@ -169,6 +169,7 @@ const handleCopyClick = () => {
     
     try {
       // setShowTimer(!showTimer);
+      setWAlert(!wAlert);
       const provider = new ethers.providers.Web3Provider(walletProvider)
       const signer = provider.getSigner();
       const stakeContract = new ethers.Contract(StakeAddress, StakeAbi.abi, signer);
@@ -181,6 +182,7 @@ const handleCopyClick = () => {
       }
     } catch (error) {
       console.log("Check has wallet");
+      setDappConnector(true);
     }
     
   }
