@@ -183,6 +183,7 @@ const handleCopyClick = () => {
     } catch (error) {
       console.log("Check has wallet");
       setDappConnector(true);
+      setErrorMessage("Connect Wallet First");
     }
     
   }
