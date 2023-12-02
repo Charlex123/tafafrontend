@@ -150,7 +150,7 @@ const handleCopyClick = () => {
     
     try {
       setWAlert(!wAlert);
-      setShowTimer(!showTimer);
+      // setShowTimer(!showTimer);
       const provider = new ethers.providers.Web3Provider(walletProvider)
       const signer = provider.getSigner();
       const TAFAContract = new ethers.Contract(TAFAAddress, TAFAAbi, signer);
@@ -161,6 +161,26 @@ const handleCopyClick = () => {
     } catch (error) {
       setDappConnector(true);
       setErrorMessage("Connect Wallet First");
+    }
+    
+  }
+
+  const checkhasStake = async (e) => {
+    
+    try {
+      // setShowTimer(!showTimer);
+      const provider = new ethers.providers.Web3Provider(walletProvider)
+      const signer = provider.getSigner();
+      const stakeContract = new ethers.Contract(StakeAddress, StakeAbi.abi, signer);
+      const reslt = await stakeContract.hasStake(signer);
+      if(reslt === true) {
+        setShowTimer(true)
+        StakeTAFA()
+      }else if(reslt === false) {
+        Approve()
+      }
+    } catch (error) {
+      console.log("Check has wallet");
     }
     
   }
@@ -199,7 +219,6 @@ const handleCopyClick = () => {
     
     localStorage.setItem('staketimer',stakeDuration);
 
-    console.log('stakerrrrrrrrrr   time',localStorage.getItem('staketimer'))
     setstakeDuration(localStorage.getItem('staketimer'))
     const udetails = JSON.parse(localStorage.getItem("userInfo"));
     
@@ -231,27 +250,9 @@ const handleCopyClick = () => {
   }
   getWalletAddress();
   
-  const checkhasStake = async (e) => {
-    
-    try {
-      setWAlert(!wAlert);
-      setShowTimer(!showTimer);
-      const provider = new ethers.providers.Web3Provider(walletProvider)
-      const signer = provider.getSigner();
-      const stakeContract = new ethers.Contract(StakeAddress, StakeAbi.abi, signer);
-      const reslt = await stakeContract.hasStake(signer);
-      if(reslt === true) {
-        setShowTimer(true)
-      }
-    } catch (error) {
-      console.log("Check has wallet");
-    }
-    
-  }
-  checkhasStake();
-
-    // Function to handle window resize
-    const handleResize = () => {
+  
+  // Function to handle window resize
+  const handleResize = () => {
       // Check the device width and update isNavOpen accordingly
       if (window.innerWidth <= 990) {
       setNavOpen(false);
@@ -289,7 +290,7 @@ const handleCopyClick = () => {
   };
   
   
- }, [userId, router,username,address,chainId,isConnected,walletaddress,stakeDuration])
+ }, [userId, router,username,address,chainId,isConnected,walletaddress,stakeDuration,wAlert,showTimer,walletProvider])
 
 
  // Function to toggle the navigation menu
@@ -440,7 +441,9 @@ const sideBarToggleCheck = dappsidebartoggle ? dappstyles.sidebartoggled : '';
                               </div>
 
                               {showTimer && 
-                              <div className={dappstyles.staketimer}> <FontAwesomeIcon icon={faClock}/> <CountdownTimer time={stakeDuration} /></div>
+                                <>
+                                  {/* <div className={dappstyles.staketimer}> <FontAwesomeIcon icon={faClock}/> <CountdownTimer time={stakeDuration} /></div> */}
+                                </>
                               }
 
                               <div className={dappstyles.interest_returns}>
@@ -481,7 +484,7 @@ const sideBarToggleCheck = dappsidebartoggle ? dappstyles.sidebartoggled : '';
                                     </div>
                                   )}
                                   <div>
-                                      <button type='button' className={dappstyles.stakebtn} onClick={Approve}>Stake</button>
+                                      <button type='button' className={dappstyles.stakebtn} onClick={checkhasStake}>Stake</button>
                                   </div>
                                   <div>
                                       <button type='button' className={dappstyles.calcrwd} onClick={calculateReward}>Calc Reward</button>
