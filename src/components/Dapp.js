@@ -62,7 +62,7 @@ const Dapp = () =>  {
   const [userObjId, setUserObjId] = useState(""); // Initial value
   const [verified, setVerified] = useState();
   
-  const { open, close } = useWeb3Modal();
+  const { open } = useWeb3Modal();
   const { walletProvider } = useWeb3ModalProvider();
   const { address, chainId, isConnected } = useWeb3ModalAccount();
   const { disconnect } = useDisconnect();
@@ -70,8 +70,7 @@ const Dapp = () =>  {
   const [referralLink, setreferralLink] = useState('');
   const [buttonText, setButtonText] = useState("Copy");
 
-  
-const handleCopyClick = () => {
+  const handleCopyClick = () => {
    // Create a temporary textarea element
    const textArea = document.createElement('textarea');
    
@@ -119,27 +118,9 @@ const handleCopyClick = () => {
       router.push(`/signin`);
     }
 
-    async function getSponsorWalletAddress() {
-      console.log('u objid',userObjId)
-      try {
-        const config = {
-        headers: {
-            "Content-type": "application/json"
-        }
-        }  
-        const {data} = await axios.post("https://tafabackend.onrender.com/api/users/getsponsorwalletaddress", {
-          userObjId,
-        }, config);
-        setsponsorWalletAddress(data.message);
-      } catch (error) {
-        console.log(error)
-      }
-  }
-  getSponsorWalletAddress();
-
-   
+    
   async function getWalletAddress() {
-    console.log('wall address',walletaddress)
+    
     try {
       const config = {
       headers: {
@@ -149,7 +130,6 @@ const handleCopyClick = () => {
       const {data} = await axios.post("https://tafabackend.onrender.com/api/users/getwalletaddress/", {
         username
       }, config);
-      console.log('update wallet data', data.message);
       setWalletAddress(data.message);
     } catch (error) {
       console.log(error)
@@ -157,21 +137,40 @@ const handleCopyClick = () => {
 }
 getWalletAddress();
 
-  if(address !== undefined) {
+  if(isConnected) {
+    setWalletAddress(address)
+
+    async function getSponsorWalletAddress() {
+      try {
+        const config = {
+        headers: {
+            "Content-type": "application/json"
+        }
+        }  
+        const {data} = await axios.post("https://tafabackend.onrender.com/api/users/getsponsorwalletaddress", {
+          userObjId,
+        }, config);
+        if(data.message === "You do not have a sponsor") {
+        }else {
+          setsponsorWalletAddress(data.message);
+          Addreferrer();
+        }
+        
+      } catch (error) {
+        console.log(error)
+      }
+  }
+  getSponsorWalletAddress();
 
     async function Addreferrer() {
-      const [accounta] = await window.ethereum.request({ method: 'eth_requestAccounts' })
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      const signer = provider.getSigner(accounta);
-      const TAFAContract = new ethers.Contract(TAFAAddress, TAFAAbi, signer);
+      // const [accounta] = await window.ethereum.request({ method: 'eth_requestAccounts' })
+      const provider = new ethers.providers.Web3Provider(walletProvider)
+      const signer = provider.getSigner();
       const StakeContract = new ethers.Contract(StakeAddress, StakeAbi.abi, signer);
-      console.log('signer address', accounta)
-      console.log('tafa contract ',TAFAContract)
-      console.log('stake contract ',StakeContract)
       const reslt = await StakeContract.addReferrer(sponsorWalletAddress);
       console.log("Account Balance: ", reslt);
     }
-    Addreferrer();
+    
 
       async function updateWalletAddress() {
         try {
@@ -232,7 +231,7 @@ getWalletAddress();
   };
   
   
- }, [userId, router,isWalletAddressUpdated,username,walletaddress,userObjId,sponsorWalletAddress])
+ }, [userId,address,router,isWalletAddressUpdated,username,walletaddress,userObjId,sponsorWalletAddress,isConnected,walletProvider])
 
  // Function to toggle the navigation menu
  const toggleSideBar = () => {
@@ -339,7 +338,7 @@ const sideBarToggleCheck = dappsidebartoggle ? dappstyles.sidebartoggled : '';
               <div className={`${dappstyles.main} ${sideBarToggleCheck}`}>
               <div className={dappstyles.con_btns}>
               {!isConnected ? (
-                <button onClick={() => open()} className={dappstyles.connect}>Connect Dapp</button>
+                <button onClick={() => open()} className={dappstyles.connect}>Connect Wallet</button>
                 ) : (
                 <button onClick={() => disconnect()} className={dappstyles.connected}><span>connected</span>Disconnect</button>
                 )}

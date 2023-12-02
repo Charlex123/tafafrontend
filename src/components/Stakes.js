@@ -16,7 +16,7 @@ import dappsidebarstyles from '../styles/dappsidebar.module.css';
 import { useWeb3React } from "@web3-react/core";
 // import { providers } from "ethers";
 import axios from 'axios';
-import AlertMessage from './AlertMessage';
+import CountdownTimer from './CountDownTimer';
 import { ethers } from 'ethers';
 import { useWeb3Modal } from '@web3modal/ethers5/react';
 import { useWeb3ModalAccount } from '@web3modal/ethers5/react';
@@ -54,6 +54,7 @@ const Dapp = () =>  {
   const [username, setUsername] = useState("");
   const [userId, setUserId] = useState("");  
   const [dappConnector,setDappConnector] = useState(false);
+  const [wAlert,setWAlert] = useState(false);
 
   const [signature, setSignature] = useState("");
   const [error, setError] = useState(false);
@@ -64,10 +65,9 @@ const Dapp = () =>  {
   const [verified, setVerified] = useState();
   const [walletaddress, setWalletAddress] = useState("NA"); 
   const [stakeAmount, setstakeAmount] = useState(50);
-  const [stakeDuration, setstakeDuration] = useState(30);
+  const [stakeDuration, setstakeDuration] = useState(2592000);
   const [showTimer, setShowTimer] = useState(false);
   const [showWithdrawStake, setShowWithdrawStake] = useState(false);
-  const [timeRemaining, setTimeRemaining] = useState(0); // 24 hours in seconds
   
   // const { isOpen, onOpen, onClose, closeWeb3Modal,openWeb3Modal } = useContext(Web3ModalContext);
   const { open, close } = useWeb3Modal();
@@ -112,15 +112,19 @@ const handleCopyClick = () => {
  };
 
   
-  async function onSignMessage() {
-    const provider = new ethers.providers.Web3Provider(walletProvider)
-    const signer = provider.getSigner()
-    const signature = await signer?.signMessage('Hello Web3Modal Ethers')
-    console.log(signature)
-  }
+  // async function onSignMessage() {
+  //   const provider = new ethers.providers.Web3Provider(walletProvider)
+  //   const signer = provider.getSigner()
+  //   const signature = await signer?.signMessage('Hello Web3Modal Ethers')
+  //   console.log(signature)
+  // }
 
   const closeDappConAlert = () => {
     setDappConnector(!dappConnector);
+  }
+
+  const closeWAlert = () => {
+    setWAlert(!wAlert);
   }
 
   const handleStakeDuration = (e) => {
@@ -130,32 +134,40 @@ const handleCopyClick = () => {
   // define contract data
   
   const StakeTAFA = async (e) => {
-    // setShowTimer(!showTimer);
-    // const timer_ = stakeDuration * 86400;
-    // setTimeRemaining(timer_)
-    const provider = new ethers.providers.Web3Provider(walletProvider)
-    const signer = provider.getSigner()
-    const StakeContract = new ethers.Contract(StakeAddress, StakeAbi.abi, signer);
-    const reslt = await StakeContract.stake(StakeAddress,stakeAmount);
-    console.log(reslt)
+    try {
+      setWAlert(!wAlert);
+      const provider = new ethers.providers.Web3Provider(walletProvider)
+      const signer = provider.getSigner()
+      const StakeContract = new ethers.Contract(StakeAddress, StakeAbi.abi, signer);
+      const reslt = await StakeContract.stake(StakeAddress,stakeAmount);
+      console.log(reslt)
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   const Approve = async (e) => {
-
-    const provider = new ethers.providers.Web3Provider(walletProvider)
-    const signer = provider.getSigner();
-    const TAFAContract = new ethers.Contract(TAFAAddress, TAFAAbi, signer);
-    const reslt = await TAFAContract.approve(StakeAddress,stakeAmount);
-    if(reslt) {
-      StakeTAFA();
+    
+    try {
+      setWAlert(!wAlert);
+      setShowTimer(!showTimer);
+      const provider = new ethers.providers.Web3Provider(walletProvider)
+      const signer = provider.getSigner();
+      const TAFAContract = new ethers.Contract(TAFAAddress, TAFAAbi, signer);
+      const reslt = await TAFAContract.approve(StakeAddress,stakeAmount);
+      if(reslt) {
+        StakeTAFA();
+      }
+    } catch (error) {
+      setDappConnector(true);
+      setErrorMessage("Connect Wallet First");
     }
-    console.log('approve pprovider',provider);
-    console.log('approve siner',signer);
+    
   }
 
   const calculateReward = async () => {
-
     try {
+      setWAlert(!wAlert);
       const provider = new ethers.providers.Web3Provider(walletProvider);
       const signer = provider.getSigner();
       const StakeContract = new ethers.Contract(StakeAddress, StakeAbi.abi, signer);
@@ -170,6 +182,7 @@ const handleCopyClick = () => {
 
   const Withdraw = async () => {
     try {
+      setWAlert(!wAlert);
       const provider = new ethers.providers.Web3Provider(walletProvider);
       const signer = provider.getSigner();
       const StakeContract = new ethers.Contract(StakeAddress, StakeAbi.abi, signer);
@@ -183,9 +196,11 @@ const handleCopyClick = () => {
 
   
   useEffect(() => {
-    console.log(' ssssssdes', address, chainId, isConnected);
-    localStorage.setItem('staketimer',timeRemaining);
+    
+    localStorage.setItem('staketimer',stakeDuration);
 
+    console.log('stakerrrrrrrrrr   time',localStorage.getItem('staketimer'))
+    setstakeDuration(localStorage.getItem('staketimer'))
     const udetails = JSON.parse(localStorage.getItem("userInfo"));
     
     if(udetails && udetails !== null && udetails !== "") {
@@ -200,7 +215,6 @@ const handleCopyClick = () => {
     }
 
     async function getWalletAddress() {
-      console.log('wall address',walletaddress)
       try {
         const config = {
         headers: {
@@ -210,7 +224,6 @@ const handleCopyClick = () => {
         const {data} = await axios.post("https://tafabackend.onrender.com/api/users/getwalletaddress/", {
           username
         }, config);
-        console.log('update wallet data', data.message);
         setWalletAddress(data.message);
       } catch (error) {
         console.log(error)
@@ -218,17 +231,24 @@ const handleCopyClick = () => {
   }
   getWalletAddress();
   
-
-    const interval = setInterval(() => {
-      setTimeRemaining((prevTime) => {
-        if (prevTime <= 0) {
-          clearInterval(interval);
-          // You can add any additional logic here when the timer reaches zero
-          return 0;
-        }
-        return prevTime - 1;
-      });
-    }, 1000);
+  const checkhasStake = async (e) => {
+    
+    try {
+      setWAlert(!wAlert);
+      setShowTimer(!showTimer);
+      const provider = new ethers.providers.Web3Provider(walletProvider)
+      const signer = provider.getSigner();
+      const stakeContract = new ethers.Contract(StakeAddress, StakeAbi.abi, signer);
+      const reslt = await stakeContract.hasStake(signer);
+      if(reslt === true) {
+        setShowTimer(true)
+      }
+    } catch (error) {
+      console.log("Check has wallet");
+    }
+    
+  }
+  checkhasStake();
 
     // Function to handle window resize
     const handleResize = () => {
@@ -266,20 +286,10 @@ const handleCopyClick = () => {
     return () => {
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('resize', handleResize);
-      clearInterval(interval);
   };
   
   
- }, [userId, router,timeRemaining,username,address,chainId,isConnected,walletaddress,stakeDuration])
-
- const formatTime = (seconds) => {
-  const days = Math.floor(seconds / 86400);
-    const hours = Math.floor((seconds % 86400) / 3600);
-    const minutes = Math.floor((seconds % 3600) / 60);
-    const remainingSeconds = seconds % 60;
-
-    return `${String(days).padStart(2, '0')} days ${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(remainingSeconds).padStart(2, '0')}`;
-};
+ }, [userId, router,username,address,chainId,isConnected,walletaddress,stakeDuration])
 
 
  // Function to toggle the navigation menu
@@ -376,7 +386,7 @@ const sideBarToggleCheck = dappsidebartoggle ? dappstyles.sidebartoggled : '';
               <div className={`${dappstyles.main} ${sideBarToggleCheck}`}>
               <div className={dappstyles.con_btns}>
               {!isConnected ? (
-                <button onClick={() => open()} className={dappstyles.connect}> Connect Dapp</button>
+                <button onClick={() => open()} className={dappstyles.connect}> Connect Wallet</button>
                 ) : (
                 <button onClick={() => disconnect()} className={dappstyles.connected}><span>connected</span>Disconnect</button>
                 )}
@@ -388,7 +398,6 @@ const sideBarToggleCheck = dappsidebartoggle ? dappstyles.sidebartoggled : '';
                     <div className={dappstyles.reflinkdex}>Ref Link: <input value={referralLink} onChange={(e) => setreferralLink(e.target.value)} /><button type='button' onClick={handleCopyClick}>{buttonText}</button> </div>
                     <div><small>Share referral link to earn more tokens!</small></div>
                     <div>Connected Wallet: <span style={{color: 'orange'}}>{walletaddress}</span></div>
-                    <button onClick={onSignMessage}>onSignMessage</button>
                 </div>
 
                 <div className={dappstyles.stake}>
@@ -430,7 +439,9 @@ const sideBarToggleCheck = dappsidebartoggle ? dappstyles.sidebartoggled : '';
                                 </div>
                               </div>
 
-                              {showTimer && <div className={dappstyles.staketimer}> <FontAwesomeIcon icon={faClock}/> {formatTime(timeRemaining)}</div>}
+                              {showTimer && 
+                              <div className={dappstyles.staketimer}> <FontAwesomeIcon icon={faClock}/> <CountdownTimer time={stakeDuration} /></div>
+                              }
 
                               <div className={dappstyles.interest_returns}>
                                 <ul>
@@ -463,6 +474,12 @@ const sideBarToggleCheck = dappsidebartoggle ? dappstyles.sidebartoggled : '';
                               </div>
 
                               <div className={dappstyles.cw_btn_div}>
+                                  {wAlert && (
+                                    <div className={dappstyles.w_alert}>
+                                      <div>Go to your connected wallet and complete transaction</div>
+                                      <div className={dappstyles.walertclosediv}><button type='button' className={dappstyles.walertclosedivbtn} onClick={closeWAlert}><FontAwesomeIcon icon={faXmark}/></button></div>
+                                    </div>
+                                  )}
                                   <div>
                                       <button type='button' className={dappstyles.stakebtn} onClick={Approve}>Stake</button>
                                   </div>

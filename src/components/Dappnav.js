@@ -182,7 +182,7 @@ function Navbar() {
                 <ul className={styles.upa}>
                     <li className={styles.ld}>
                         {!isConnected ? (
-                        <button onClick={() => open()}>Connect Dapp</button>
+                        <button onClick={() => open()}>Connect Wallet</button>
                         ) : (
                         <button onClick={() => disconnect()} className={styles.connected}><span>connected</span>Disconnect</button>
                         )}</li>

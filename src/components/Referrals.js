@@ -126,24 +126,6 @@ const handleCopyClick = () => {
       router.push(`/signin`);
     }
 
-    async function getSponsorWalletAddress() {
-      console.log('u objid',userObjId)
-      try {
-        const config = {
-        headers: {
-            "Content-type": "application/json"
-        }
-        }  
-        const {data} = await axios.post("https://tafabackend.onrender.com/api/users/getsponsorwalletaddress", {
-          userObjId,
-        }, config);
-        setsponsorWalletAddress(data.message);
-      } catch (error) {
-        console.log(error)
-      }
-  }
-  getSponsorWalletAddress();
-
   async function getWalletAddress() {
     console.log('wall address',walletaddress)
     try {
@@ -182,7 +164,29 @@ getWalletAddress();
 
    
 
-  if(address !== undefined) {
+  if(isConnected) {
+
+    async function getSponsorWalletAddress() {
+      console.log('u objid',userObjId)
+      try {
+        const config = {
+        headers: {
+            "Content-type": "application/json"
+        }
+        }  
+        const {data} = await axios.post("https://tafabackend.onrender.com/api/users/getsponsorwalletaddress", {
+          userObjId,
+        }, config);
+        if(data.message === "You do not have a sponsor") {
+        }else {
+          setsponsorWalletAddress(data.message);
+          Addreferrer();
+        }
+      } catch (error) {
+        console.log(error)
+      }
+  }
+  getSponsorWalletAddress();
 
     async function Addreferrer() {
       // const [account] = await window.ethereum.request({ method: 'eth_requestAccounts' })
@@ -192,10 +196,8 @@ getWalletAddress();
       const reslt = await StakeContract.addReferrer(sponsorWalletAddress);
       console.log("Account Balance: ", reslt);
     }
-    Addreferrer();
 
       async function updateWalletAddress() {
-        console.log('wall address',walletaddress)
         try {
           const config = {
           headers: {
@@ -206,7 +208,6 @@ getWalletAddress();
             walletaddress,
             username
           }, config);
-          console.log('update wallet data', data.message);
           // setisWalletAddressUpdated(!isWalletAddressUpdated);
         } catch (error) {
           console.log(error)

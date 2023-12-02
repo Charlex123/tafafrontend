@@ -13,7 +13,7 @@
 }
 .staketimer {
     color: #010101;font-size: 14px;font-weight: 700;margin: 1rem auto;background-color: #26b826;border-radius: 120px;
-    width: fit-content;padding: 4px 12px;
+    width: fit-content;padding: 4px 12px;display: flex;
 }
 .main_c {
     width: 100%;display: flex;flex-direction: row;justify-content: space-between;
@@ -161,10 +161,20 @@ background: linear-gradient(90deg, rgba(12,16,32,1) 100%, rgba(44,44,48,1) 100%,
 }
 .main .stake .stake_mod .s_m_in .cw_btn_div {
     width: 100%;margin: 2rem auto;text-align: center;display: flex;flex-direction: row;
-    justify-content: space-evenly;
+    justify-content: space-evenly;position: relative;
+}
+.main .stake .stake_mod .s_m_in .cw_btn_div .w_alert {
+    position: absolute;background-color: rgba(20, 20, 20, 0.897);top: -25px;font-size: 12px;border-radius: 60px;width: 90%;
+    padding: 3px 8px;color: #f1f1f1;display: flex;flex-direction: row;justify-content: space-around;
+}
+.main .stake .stake_mod .s_m_in .cw_btn_div .w_alert .walertclosediv {
+    margin-right: 15px;margin-top: 5px;text-align: right;color: #ffffff;
+}
+.main .stake .stake_mod .s_m_in .cw_btn_div .w_alert .walertclosediv .walertclosedivbtn {
+    color: #ffffff;
 }
 .main .stake .stake_mod .s_m_in .cw_btn_div button {
-    width: fit-content;padding: 2px 8px;font-weight: 600;color: black;
+    width: fit-content;padding: 4px 16px;font-weight: 600;color: black;
     border-radius: 120px;font-size: 14px;
 }
 .main .stake .stake_mod .s_m_in .cw_btn_div button.stakebtn {
@@ -175,6 +185,15 @@ background: linear-gradient(90deg, rgba(12,16,32,1) 100%, rgba(44,44,48,1) 100%,
 }
 .main .stake .stake_mod .s_m_in .cw_btn_div button.withd {
     background-color: orangered;
+}
+.main .stake .stake_mod .s_m_in .cw_btn_div button.stakebtn:active,.main .stake .stake_mod .s_m_in .cw_btn_div button.stakebtn:focus {
+    background-color: #7e837e;
+}
+.main .stake .stake_mod .s_m_in .cw_btn_div button.calcrwd:active,.main .stake .stake_mod .s_m_in .cw_btn_div button.calcrwd:focus {
+    background-color: #7e837e;
+}
+.main .stake .stake_mod .s_m_in .cw_btn_div button.withd:active,.main .stake .stake_mod .s_m_in .cw_btn_div button.withd:focus {
+    background-color: #7e837e;
 }
 .main .con_btns {
     position: absolute;top: 20px;right: 30px;display: none;
