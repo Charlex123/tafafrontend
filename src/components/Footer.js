@@ -56,7 +56,7 @@ const handleCopyClick = () => {
                         <a href='https://t.me/tafaxtraweb' rel='noopener noreferrer' ><FontAwesomeIcon icon={faTelegram} size='lg' className={footerstyles.navdrbdwnbrandicon}/> <span className={footerstyles.brnd}>Telegram</span></a>
                      </div>
                      <div>
-                        <a href='https://www.dextools.io/app/en/bnb/pair-explorer/0x7c0406a570ca1407c412238c173898cd145fd52e' rel='noopener noreferrer' ><FontAwesomeIcon icon={faBandcamp} size='lg' className={footerstyles.navdrbdwnbrandicon}/> <span className={footerstyles.brnd}>DexTools</span></a>
+                        <a href='https://www.geckoterminal.com/bsc/pools/0x7c0406a570ca1407c412238c173898cd145fd52e' rel='noopener noreferrer' ><FontAwesomeIcon icon={faBandcamp} size='lg' className={footerstyles.navdrbdwnbrandicon}/> <span className={footerstyles.brnd}>Coin Gecko</span></a>
                      </div>
                      {/* <div><a href='/' rel='noopener noreferrer' ><FontAwesomeIcon icon={faDiscord} size='lg' className={footerstyles.navdrbdwnbrandicon}/> <span className={footerstyles.brnd}>Discord</span></a> </div> */}
                      {/* <div><a href='/' rel='noopener noreferrer' ><FontAwesomeIcon icon={faMedium} size='lg' className={footerstyles.navdrbdwnbrandicon}/> <span className={footerstyles.brnd}>Medium</span></a> </div>*/}

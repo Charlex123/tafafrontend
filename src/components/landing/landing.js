@@ -208,7 +208,7 @@ const toggleNav = () => {
           <h4>Buy TAFA from these listed exchanges</h4>
           <div className={styles.dexchanges}>
             <a href='https://pancakeswap.finance/swap?outputCurrency=0x5ae155F89308CA9050f8Ce1C96741BaDd342C26B' rel='noreferrer noopener'><Image src={pcslogo} className={styles.delginks} width={150} height={40} /></a>
-            <a href='https://www.dextools.io/app/en/bnb/pair-explorer/0x7c0406a570ca1407c412238c173898cd145fd52e' rel='noreferrer noopener'><Image src={dextools} className={styles.delginks} width={150} height={40} /></a>
+            <a href='https://www.geckoterminal.com/bsc/pools/0x7c0406a570ca1407c412238c173898cd145fd52e' rel='noreferrer noopener'><Image src={cgk} className={styles.delginks} width={150} height={40} /></a>
           </div>
         </div>
 

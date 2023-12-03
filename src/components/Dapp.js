@@ -15,6 +15,8 @@ import dappsidebarstyles from '../styles/dappsidebar.module.css';
 // component
 import { useWeb3React } from "@web3-react/core";
 import { ethers } from 'ethers';
+import Web3 from 'web3';
+import ws from 'ws';
 import { useWeb3Modal } from '@web3modal/ethers5/react';
 import { useWeb3ModalAccount } from '@web3modal/ethers5/react';
 import { useWeb3ModalProvider } from '@web3modal/ethers5/react';
@@ -39,6 +41,13 @@ const Dapp = () =>  {
   const router = useRouter();
   const TAFAAddress = "0x5ae155f89308ca9050f8ce1c96741badd342c26b";
   const StakeAddress = "0xE182a7e66E95a30F75971B2924346Ef5d187CE13";
+
+  // Replace 'YOUR_API_KEY' with your BscScan API key
+const apiKey = process.env.BSCSCAN_APIKEY;
+
+// Replace 'YOUR_WALLET_ADDRESS' with the BSC wallet address you want to track
+const walletAddressToTrack = '0x5951d5Cb5cFb9022B5ab5e9848fD1454C6dA7842';
+
   const { theme, setHandleDrawer, changeTheme, isDark } = useContext(ThemeContext);
   const [isNavOpen, setNavOpen] = useState(false);
   const [scrolling, setScrolling] = useState(false);
@@ -171,7 +180,6 @@ getWalletAddress();
       console.log("Account Balance: ", reslt);
     }
     
-
       async function updateWalletAddress() {
         try {
           const config = {
@@ -191,6 +199,79 @@ getWalletAddress();
     }
     updateWalletAddress();
   }
+
+
+
+  // Replace 'YOUR_BSC_NODE_WS_URL' with the BSC WebSocket URL
+  const bscWsUrl = 'wss://go.getblock.io/1e188a9b60fd41fbbc97b7909dfec3e2';
+  // Assuming you have a properly initialized web3 instance
+  const web3 = new Web3.providers.WebsocketProvider(bscWsUrl);
+  // new Web3('https://bsc-dataseed1.binance.org:443');
+  const options = {
+    fromBlock: '0x0',
+    address: '0xcd5485b34c9902527bbee21f69312fe2a73bc802',
+  };
+  
+  const handleSubscriptionError = (error) => {
+    console.error('Error when watching incoming transactions:', error.message);
+  };
+  
+  const handleSubscriptionData = (log) => {
+    console.log('Got something back:', log);
+    // Your continued code...
+  };
+  
+  const subscribeToLogs = async () => {
+    try {
+      const subscription = await web3.eth.subscribe('logs', options);
+      subscription.on('data', handleSubscriptionData);
+    } catch (error) {
+      handleSubscriptionError(error);
+    }
+  };  
+  // Start the subscription
+  subscribeToLogs();
+
+//   const subscription = web3.eth.subscribe('logs', {
+//     address: '0x5951d5Cb5cFb9022B5ab5e9848fD1454C6dA7842',
+//     topics: ['0x12345...']
+// }, function(error, result){
+//     if (!error)
+//         console.log('sub result',result);
+// });
+  
+
+// Create an EtherscanProvider with your API key
+// const provider = new ethers.providers.EtherscanProvider('bsc', apiKey);
+
+// // Function to check for pending transactions
+// async function checkPendingTransactions() {
+//   try {
+//     // Get the pending transactions for the specified address
+//     const transactions = await provider.getTransactionHistory(walletAddressToTrack);
+
+//     const pendingTransactions = transactions.filter(tx => tx.confirmations === 0);
+
+//     if (pendingTransactions.length > 0) {
+//       console.log('Pending Transactions:');
+//       pendingTransactions.forEach((tx) => {
+//         console.log(`Transaction Hash: ${tx.hash}`);
+//         console.log(`From: ${tx.from}`);
+//         console.log(`To: ${tx.to}`);
+//         console.log(`Value: ${ethers.utils.formatUnits(tx.value, 'ether')} BNB`);
+//         console.log('---');
+//       });
+//     } else {
+//       console.log('No pending transactions.');
+//     }
+//   } catch (error) {
+//     console.error(`Error checking pending transactions: ${error.message}`);
+//   }
+// }
+
+// // Set an interval to periodically check for pending transactions (e.g., every 10 seconds)
+// setInterval(checkPendingTransactions, 10000);
+
 
     // Function to handle window resize
     const handleResize = () => {
